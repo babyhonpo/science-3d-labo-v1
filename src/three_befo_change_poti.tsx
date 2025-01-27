@@ -4,17 +4,8 @@ import "./index.css";
 import App from "./App.tsx";
 import React from "react";
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById("main")!).render(
   <StrictMode>
     <App />
   </StrictMode>
 );
-
-
-
-
-
-
-
-
-
