@@ -6,11 +6,12 @@ type BoxProps = {
   position: [x: number, y: number, z: number];
   onDragStateChange: (isDragging: boolean) => void;
 };
-const DraggaSpreBox: React.FC<BoxProps> = (props) => {
+const DraggableBox: React.FC<BoxProps> = (props) => {
   const boxRef = useRef<THREE.Mesh>(null!);
-  const { raycaster, mouse, camera, gl } = useThree(); // Three.jsの基本ツールを取得
+  const { raycaster, mouse, camera } = useThree(); // Three.jsの基本ツールを取得
   const [isDragging, setIsDragging] = useState(false); // ドラッグ中かどうかの状態
-  const [offset, setOffset] = useState(new THREE.Vector3()); // ボックスの位置オフセット
+  const [intersectionPoint, setIntersectionPoint] = useState(new THREE.Vector3()); // マウスクリック時の交点を記録
+  const sensitivity = 1.05; // マウス感度の調整係数
 
   const handlePointerDown = (event: any) => {
     event.stopPropagation();
@@ -18,14 +19,16 @@ const DraggaSpreBox: React.FC<BoxProps> = (props) => {
     props.onDragStateChange(true); // 親にドラッグ開始を通知
     console.log("Dragging started");
 
-    // ボックスとカメラ前の平面の交差点を計算
+    // マウスクリック位置を計算
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+
+    // ボックスの交差点を計算
     const intersects = raycaster.intersectObject(boxRef.current!);
     if (intersects.length > 0) {
-      const intersectPoint = intersects[0].point;
-      setOffset(intersectPoint.clone().sub(boxRef.current!.position));
+      setIntersectionPoint(intersects[0].point.clone()); // 初期交差点を記録
     }
-    // カメラ操作を無効化
-    // gl.domElement.style.pointerEvents = "none"; // OrbitControlsを無効化
   };
 
   const handlePointerUp = () => {
@@ -42,14 +45,30 @@ const DraggaSpreBox: React.FC<BoxProps> = (props) => {
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
-    // 平面と光線の交差点を計算
-    const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-    const intersectPoint = raycaster.ray.intersectPlane(
-      plane,
-      new THREE.Vector3()
-    );
-    if (intersectPoint) {
-      boxRef.current!.position.copy(intersectPoint.sub(offset)); // ボックスの位置を更新
+    // カメラ方向の光線に沿った位置を計算
+    const plane = new THREE.Plane(); // 任意の平面（カメラ視線基準）
+    plane.setFromNormalAndCoplanarPoint(
+      camera.getWorldDirection(new THREE.Vector3()),
+      intersectionPoint
+    ); // 平面を視線方向で初期化
+
+    const newPosition = new THREE.Vector3();
+    raycaster.ray.intersectPlane(plane, newPosition); // 光線と平面の交点を計算
+
+    if (newPosition) {
+      const currentPosition = boxRef.current!.position;
+
+  // `newPosition` をクローンして差分を計算
+  const delta = newPosition.clone().sub(intersectionPoint);
+
+  // 感度を適用して現在位置を更新
+  currentPosition.add(delta.multiplyScalar(sensitivity));
+
+  // ボックスの位置をコピー
+  boxRef.current!.position.copy(currentPosition);
+
+  // 次フレーム用に基準点を更新
+  setIntersectionPoint(newPosition.clone());
     }
   };
 
@@ -68,4 +87,4 @@ const DraggaSpreBox: React.FC<BoxProps> = (props) => {
   );
 };
 
-export default DraggaSpreBox;
+export default DraggableBox;
