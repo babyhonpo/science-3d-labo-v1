@@ -81,8 +81,8 @@ const Home = () => {
       />
 
       {/* 看板 */}
-      <SignBoard position={[5, 5, 0]} text="グラフ表示" />
-      <SignBoard position={[5, -3, 0]} text="データ値に注意！" />
+      {/* <SignBoard position={[5, 5, 0]} text="グラフ表示" />
+      <SignBoard position={[5, -3, 0]} text="データ値に注意！" /> */}
 
       {/* カメラ制御 */}
       <OrbitControls enabled={!isDragging} />
@@ -94,29 +94,39 @@ const Home = () => {
       {/* <DraggableBox position={[1, 0, 0]} onDragStateChange={setIsDragging} /> */}
 
       {/* 任意のデータを渡して折れ線グラフを描画 */}
-        <GraphField data={graphData} />
+      {/* <GraphField data={graphData} /> */}
 
       {/* FormのMesh */}
-      <FormOnMesh />
+      {/* <FormOnMesh /> */}
 
       {/* 背景 (しかし、作られてないので、作る必要あり) */}
       <Background />
 
-      <InputOnMesh />
+      {/* <InputOnMesh /> */}
 
       {/* DraggableBoxを条件付きで表示 */}
-      {selectedItems.map((item, index) => (
-      <DraggaSpreBox
-        key={index}
-        position={[index * 2, 0, 0]}
-        // text={item}
-        onDragStateChange={setIsDragging}
-        />
+      {selectedItems
+        .filter((item) => item === "1") // "1" のみをフィルタリング
+        .map((_, filteredIndex) => (
+            <DraggaSpreBox
+                key={filteredIndex} // フィルタ後のインデックスを使用
+                position={[filteredIndex * 2, 0, 0]} // 位置を調整
+                onDragStateChange={setIsDragging}
+            />
+      ))}
+
+      {selectedItems
+        .filter((item) => item === "2") // "1" のみをフィルタリング
+        .map((_, filteredIndex) => (
+            <DraggableBox
+              key={filteredIndex}
+              position={[filteredIndex * 2, 2, 0]}
+              onDragStateChange={setIsDragging} />
       ))}
 
     </Canvas>
 
-    <HtmlForm />
+    {/* <HtmlForm /> */}
 
     {/* SelectFormに状態更新関数を渡す */}
     <SelectForm onAddItem={handleAddItem} />
