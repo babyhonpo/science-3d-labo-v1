@@ -6,7 +6,7 @@ type BoxProps = {
   position: [x: number, y: number, z: number];
   onDragStateChange: (isDragging: boolean) => void;
 };
-const DraggaSpreBox: React.FC<BoxProps> = (props) => {
+const DraggableBox: React.FC<BoxProps> = (props) => {
   const boxRef = useRef<THREE.Mesh>(null!);
   const { raycaster, mouse, camera, gl } = useThree(); // Three.jsの基本ツールを取得
   const [isDragging, setIsDragging] = useState(false); // ドラッグ中かどうかの状態
@@ -62,10 +62,10 @@ const DraggaSpreBox: React.FC<BoxProps> = (props) => {
       onPointerMove={handlePointerMove} // マウス移動で位置更新
       castShadow
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <sphereGeometry args={[0.5, 32, 32]} />
       <meshStandardMaterial color="orange" />
     </mesh>
   );
 };
 
-export default DraggaSpreBox;
+export default DraggableBox;

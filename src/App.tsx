@@ -12,11 +12,17 @@ import DraggableBox from "./components/DraggableBox";
 import SimpleBox from "./components/SimpleBox";
 import Background from "./components/Backgroud";
 import HtmlForm from "./forms/HtmlForm";
+import SelectForm from "./forms/SelectForm";
+import DraggaSpreBox from "./components/DraggableSphere";
 
 const Home = () => {
-
-  // const orbitRef = useRef<any>();
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
+  // const [showDraggableBox, setShowDraggableBox] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
+
+  const handleAddItem = (item: string) => {
+        setSelectedItems((prevItems) => [...prevItems, item]);
+  };
 
   // 折れ線グラフ用の任意のデータ
   const graphData = [
@@ -40,7 +46,7 @@ const Home = () => {
     >
       <ambientLight />
       <pointLight position={[100, 10, 10]} />
-      <SimpleBox position={[-1.2, 6, 0]} />
+      {/* <SimpleBox position={[-1.2, 6, 0]} /> */}
       {/* <Box position={[1.2, 0, 0]} /> */}
 
       {/* 環境光 */}
@@ -57,7 +63,7 @@ const Home = () => {
       {/* 地面 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -190, 0]} receiveShadow>
           <planeGeometry args={[1000, 1000]} />
-          <meshStandardMaterial color={0xc0c0c0} />
+          {/* <meshStandardMaterial color={0xc0c0c0} /> */}
       </mesh>
 
       {/* 箱 */}
@@ -85,7 +91,7 @@ const Home = () => {
 
       {/* ドラッグ可能なBox */}
       {/* <DraggableBox position={[-1, 0, 0]} onDragStateChange={setIsDragging} /> */}
-      <DraggableBox position={[1, 0, 0]} onDragStateChange={setIsDragging} />
+      {/* <DraggableBox position={[1, 0, 0]} onDragStateChange={setIsDragging} /> */}
 
       {/* 任意のデータを渡して折れ線グラフを描画 */}
         <GraphField data={graphData} />
@@ -98,9 +104,22 @@ const Home = () => {
 
       <InputOnMesh />
 
+      {/* DraggableBoxを条件付きで表示 */}
+      {selectedItems.map((item, index) => (
+      <DraggaSpreBox
+        key={index}
+        position={[index * 2, 0, 0]}
+        // text={item}
+        onDragStateChange={setIsDragging}
+        />
+      ))}
+
     </Canvas>
 
     <HtmlForm />
+
+    {/* SelectFormに状態更新関数を渡す */}
+    <SelectForm onAddItem={handleAddItem} />
 
   </div>
 );
