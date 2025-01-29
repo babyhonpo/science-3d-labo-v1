@@ -6,7 +6,7 @@ import Top from "./route/Top";
 const App = () => {
   return (
     <Routes>
-      <Route path='/' element={<Top />} />
+      <Route path='/top' element={<Top />} />
       <Route path='/' element={<Home />} />
     </Routes>
   );
