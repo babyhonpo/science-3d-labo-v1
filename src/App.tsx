@@ -15,8 +15,9 @@ const Home = () => {
         setSelectedItems((prevItems) => [...prevItems, item]);
   };
 
-  return (
 
+const App = () => {
+  return (
   // 画面いっぱいにCanvasが表示されるようdivでラップしている
   <div style={{ width: "100vw", height: "100vh" }}>
     <Canvas
@@ -86,7 +87,6 @@ const Home = () => {
     <SelectForm onAddItem={handleAddItem} />
 
   </div>
-);
-};
+)};
 
-export default Home;
+export default App;
