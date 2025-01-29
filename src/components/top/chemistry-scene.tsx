@@ -86,7 +86,7 @@ function Scene() {
           <ScienceItem
             key={i}
             type={item.type as "structure" | "magnet" | "flask" | "tube" | "bulb"}
-            position={item.position}
+            position={item.position as [number, number, number]}
             rotation-y={(i * Math.PI) / 2.5}
             color={colors[i]}
             scale={2}

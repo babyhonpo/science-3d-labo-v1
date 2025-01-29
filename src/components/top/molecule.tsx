@@ -1,17 +1,15 @@
-"use client"
-
 import { useRef } from "react"
 import { Sphere, Line } from "@react-three/drei"
 import * as THREE from "three"
-import type { MeshProps } from "@react-three/fiber"
+import type { GroupProps } from "@react-three/fiber"
 import React from "react"
 
-interface MoleculeProps extends MeshProps {
+interface MoleculeProps extends GroupProps {
   color?: string
 }
 
 export function Molecule({ color = "white", ...props }: MoleculeProps) {
-  const groupRef = useRef(null)
+  const groupRef = useRef<THREE.Group>(null);
 
   // より複雑な分子構造の座標
   const points = [

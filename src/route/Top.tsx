@@ -1,42 +1,39 @@
-"use client"
+import React from "react"
+import ChemistryScene from "../components/top/chemistry-scene"
+import "../css/top.css"
 
-import dynamic from "next/dynamic"
-import { Loader } from "@/components/loader"
-
-// 3Dコンポーネントを動的にインポートして、SSRの問題を回避
-const ChemistryScene = dynamic(() => import("@/components/chemistry-scene"), {
-  loading: () => <Loader />,
-  ssr: false,
-})
-
-export default function Home() {
+export default function Top() {
   return (
     <main className="w-full">
-      <div className="fixed top-0 left-0 w-full h-screen">
+      {/* 3Dシーンの背景 */}
+      <div className="scene-container">
         <ChemistryScene />
       </div>
-      <div className="relative">
-        <section className="h-screen flex items-center justify-center">
-          <h1 className="text-6xl font-bold text-white">Science3DLabo</h1>
+
+      {/* コンテンツエリア */}
+      <div className="content-wrapper">
+        <section className="section-hero">
+          <h1 className="title-main">Science3DLabo</h1>
         </section>
-        <section className="h-screen flex items-center justify-center">
-          <div className="max-w-2xl text-center text-white">
-            <h2 className="text-4xl font-bold mb-4">分子の結合</h2>
-            <p className="text-xl">
+        <section className="section-content">
+          <div className="box-content">
+            <h2 className="title-section">分子の結合</h2>
+            <p className="text-section">
               文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。
             </p>
           </div>
         </section>
-        <section className="h-screen flex items-center justify-center">
-          <div className="max-w-2xl text-center text-white">
-            <h2 className="text-4xl font-bold mb-4">分子の分裂</h2>
-            <p className="text-xl">
+        <section className="section-content">
+          <div className="box-content">
+            <h2 className="title-section">分子の分裂</h2>
+            <p className="text-section">
               文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。
             </p>
+            <a href="/Home">あああああああああ</a>
+            {/* <link href="/Home">ああああああ</link> */}
           </div>
         </section>
       </div>
     </main>
   )
 }
-

@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import Home from "./route/Home";
+import Home from "./route/Home.tsx";
 import Top from "./route/Top";
 
 const App = () => {
