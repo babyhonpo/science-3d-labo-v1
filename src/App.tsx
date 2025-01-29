@@ -6,8 +6,8 @@ import Top from "./route/Top";
 const App = () => {
   return (
     <Routes>
-      <Route path='/top' element={<Top />} />
-      <Route path='/' element={<Home />} />
+      <Route path='/' element={<Top />} />
+      <Route path='/home' element={<Home />} />
     </Routes>
   );
 };
