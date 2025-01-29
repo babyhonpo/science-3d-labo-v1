@@ -36,7 +36,8 @@ const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onColli
     onDragStateChange(false);
   };
 
-  //es
+  // オブジェクトを動かしているコード
+  //eslint-disable-next-line
   const handlePointerMove = (event: any) => {
     if (!isDragging) return;
 

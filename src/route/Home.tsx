@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef,useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Background from "../components/Backgroud";
@@ -13,11 +13,18 @@ const Home = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
 
   // すべてのオブジェクトのrefを格納するリスト
-  const objectRefs = useRef<React.RefObject<THREE.Mesh>[]>([]); // 衝突判定用のオブジェクトリスト
+  const objectRefs = useRef<React.RefObject<THREE.Mesh>[]>([]);; // 衝突判定用のオブジェクトリスト
 
   const handleAddItem = (item: string) => {
     setSelectedItems((prevItems) => [...prevItems, item]);
   };
+
+  useEffect(() => {
+    while (objectRefs.current.length < selectedItems.length) {
+      objectRefs.current.push(React.createRef<THREE.Mesh>());
+      console.log(objectRefs.current)
+    }
+  }, [selectedItems]); // 🔹 ここで正しく ref を追加
 
 
 
@@ -84,12 +91,12 @@ const Home = () => {
             />
           ))} */}
 
+
         {selectedItems
           .filter((item) => item === "2") // "1" のみをフィルタリング
           .map((_, filteredIndex) => {
-            const ref = React.createRef<THREE.Mesh>();
-            console.log(objectRefs.current)
-            objectRefs.current.push(ref);
+            // const ref = React.createRef<THREE.Mesh>();
+            // objectRefs.current.push(ref);
             return (
             <DraggableBox
               key={filteredIndex}
