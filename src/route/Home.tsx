@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef,useEffect,useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Background from "../components/Backgroud";
@@ -16,8 +16,14 @@ const Home = () => {
 const objectRefs = useRef<{mesh: React.RefObject<THREE.Mesh>, position: THREE.Vector3, radius: number }[]>([]); // 衝突判定用のオブジェクトリスト
 
 useEffect(() => {
+  if (selectedItems.length === 0) {
+    console.log("⚠️ `selectedItems` が空のため `useEffect()` をスキップ");
+    return;
+  }
+
   console.log("📌 `selectedItems` 更新:", selectedItems);
   console.log("📌 `objectRefs.current` 追加前:", [...objectRefs.current]); // 追加前の状態を出力
+
   while (objectRefs.current.length < selectedItems.length) {
     const newRef = {
       mesh: React.createRef<THREE.Mesh>(), // ✅ `createRef()` で作成
@@ -27,27 +33,65 @@ useEffect(() => {
     objectRefs.current.push(newRef);
   }
   console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]); // 追加後の状態を出力
-}, [selectedItems]);
+}, [selectedItems, objectRefs.current]);
 
-  // 選択フォームからアイテムを追加する関数
   const handleAddItem = (item: string) => {
-    setSelectedItems((prevItems) => [...prevItems, item]);
+    setSelectedItems((prevItems) => {
+      const newItems = [...prevItems, item];
+  
+      // ✅ `objectRefs.current` のサイズを `selectedItems.length` に揃える
+      while (objectRefs.current.length < newItems.length) {
+        objectRefs.current.push({
+          mesh: React.createRef<THREE.Mesh>(),
+          position: new THREE.Vector3(),
+          radius: 1
+        });
+      }
+  
+      console.log("📌 `selectedItems` 更新:", newItems);
+      console.log("📌 `objectRefs.current` 追加後:", [...objectRefs.current]);
+  
+      return newItems;
+    });
   };
 
-  useEffect(() => {
-  console.log("📌 `selectedItems` 更新:", selectedItems);
-  console.log("📌 `objectsRef.current` 追加前:", [...objectRefs.current]);
+  const memoizedDraggableBoxes = useMemo(() => {
+    if (objectRefs.current.length < selectedItems.length) {
+      console.error("🚨 `objectRefs.current.length` が不足しています！");
+      return null;  // ⚠️ `undefined` にならないように処理をスキップ
+    }
 
-  while (objectRefs.current.length < selectedItems.length) {
-    objectRefs.current.push({
-      mesh: React.createRef<THREE.Mesh>(),
-      position: new THREE.Vector3(),
-      radius: 1
+    return selectedItems.filter((item) => item === "2").map((_, filteredIndex) => {
+      if (!objectRefs.current[filteredIndex]) {
+        console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
+        return null; // ⚠️ `undefined` を渡さないようにする
+      }
+
+        console.log(`📌 Rendering DraggableBox - index: ${filteredIndex}`);
+        console.log("📌 `objectsRef.current`:", [...objectRefs.current]);
+        console.log("📌 `objectsRef.current.length`:", objectRefs.current.length);
+
+        if (!objectRefs.current[filteredIndex]) {
+          console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
+          return null;
+        }
+        console.log("✅ `refData` として渡すデータ:", objectRefs.current[filteredIndex]);
+
+
+        return (
+        <DraggableBox
+          key={filteredIndex}
+          position={[2, 2, 0]}
+          onDragStateChange={setIsDragging}
+          objectsRef={objectRefs.current}
+          onCollide={() => console.log("球体が衝突しました！")}
+          refData={objectRefs.current[filteredIndex]} // position と radius を渡す
+        />
+      );
     });
-  }
+  }, [selectedItems, objectRefs.current]);
 
-  console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]);
-}, [selectedItems]);
+
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -113,32 +157,7 @@ useEffect(() => {
           ))} */}
 
 
-        {selectedItems
-          .filter((item) => item === "2") // "1" のみをフィルタリング
-          .map((_, filteredIndex) => {
-
-            console.log(`📌 Rendering DraggableBox - index: ${filteredIndex}`);
-            console.log("📌 `objectsRef.current`:", [...objectRefs.current]);
-            console.log("📌 `objectsRef.current.length`:", objectRefs.current.length);
-
-            if (!objectRefs.current[filteredIndex]) {
-              console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
-            } else {
-              console.log("✅ `refData` として渡すデータ:", objectRefs.current[filteredIndex]);
-            }
-
-
-            return (
-            <DraggableBox
-              key={filteredIndex}
-              position={[2, 2, 0]}
-              onDragStateChange={setIsDragging}
-              objectsRef={objectRefs.current}
-              onCollide={() => console.log("球体が衝突しました！")}
-              refData={objectRefs.current[filteredIndex]} // position と radius を渡す
-            />
-          );
-        })}
+        {memoizedDraggableBoxes}
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
