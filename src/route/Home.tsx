@@ -1,31 +1,19 @@
+import React from "react";
 import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import React from "react";
 import { OrbitControls } from "@react-three/drei";
-
-import GraphField from "../components/GraphField";
-import InputOnMesh from "../components/InputOnMesh";
-import FormOnMesh from "../components/FormOnMesh";
-import SignBoard from "../components/SignBoard";
-import DraggableBox from "../components/DraggableBox";
-import SimpleBox from "../components/SimpleBox";
 import Background from "../components/Backgroud";
-import HtmlForm from "../forms/HtmlForm";
+import DraggableBox from "../components/DraggableBox";
+import DraggaSpreBox from "../components/DraggableSphere";
+import SelectForm from "../forms/SelectForm";
 
 const Home = () => {
-  // const orbitRef = useRef<any>();
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
 
-  // 折れ線グラフ用の任意のデータ
-  const graphData = [
-    { x: 0, y: 0 },
-    { x: 1, y: 2 },
-    { x: 2, y: 1 },
-    { x: 3, y: 3 },
-    { x: 4, y: 0 },
-    { x: 5, y: 2 },
-    { x: 6, y: -3 },
-  ];
+  const handleAddItem = (item: string) => {
+    setSelectedItems((prevItems) => [...prevItems, item]);
+  };
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -37,8 +25,6 @@ const Home = () => {
       >
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
-        <SimpleBox position={[-1.2, 6, 0]} />
-        {/* <Box position={[1.2, 0, 0]} /> */}
 
         {/* 環境光 */}
         <ambientLight intensity={0.5} />
@@ -58,14 +44,8 @@ const Home = () => {
           receiveShadow
         >
           <planeGeometry args={[1000, 1000]} />
-          <meshStandardMaterial color={0xc0c0c0} />
+          {/* <meshStandardMaterial color={0xc0c0c0} /> */}
         </mesh>
-
-        {/* 箱 */}
-        {/* <BoxComponent /> */}
-
-        {/* マウス制御 */}
-        {/* <MouseControls /> */}
 
         <ambientLight intensity={0.5} />
         <directionalLight
@@ -75,32 +55,38 @@ const Home = () => {
           shadow-mapSize={[1024, 1024]}
         />
 
-        {/* 看板 */}
-        <SignBoard position={[5, 5, 0]} text='グラフ表示' />
-        <SignBoard position={[5, -3, 0]} text='データ値に注意！' />
-
         {/* カメラ制御 */}
         <OrbitControls enabled={!isDragging} />
         <ambientLight intensity={0.5} />
         <directionalLight castShadow position={[0, 20, 20]} intensity={2} />
 
-        {/* ドラッグ可能なBox */}
-        {/* <DraggableBox position={[-1, 0, 0]} onDragStateChange={setIsDragging} /> */}
-        <DraggableBox position={[1, 0, 0]} onDragStateChange={setIsDragging} />
-
-        {/* 任意のデータを渡して折れ線グラフを描画 */}
-        <GraphField data={graphData} />
-
-        {/* FormのMesh */}
-        <FormOnMesh />
-
         {/* 背景 (しかし、作られてないので、作る必要あり) */}
         <Background />
 
-        <InputOnMesh />
+        {/* DraggableBoxを条件付きで表示 */}
+        {selectedItems
+          .filter((item) => item === "1") // "1" のみをフィルタリング
+          .map((_, filteredIndex) => (
+            <DraggaSpreBox
+              key={filteredIndex} // フィルタ後のインデックスを使用
+              position={[filteredIndex * 2, 0, 0]} // 位置を調整
+              onDragStateChange={setIsDragging}
+            />
+          ))}
+
+        {selectedItems
+          .filter((item) => item === "2") // "1" のみをフィルタリング
+          .map((_, filteredIndex) => (
+            <DraggableBox
+              key={filteredIndex}
+              position={[filteredIndex * 2, 2, 0]}
+              onDragStateChange={setIsDragging}
+            />
+          ))}
       </Canvas>
 
-      <HtmlForm />
+      {/* SelectFormに状態更新関数を渡す */}
+      <SelectForm onAddItem={handleAddItem} />
     </div>
   );
 };

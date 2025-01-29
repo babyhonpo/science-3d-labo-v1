@@ -1,11 +1,16 @@
-import * as THREE from 'three'; // Three.jsをインポート
-import { useEffect, useState } from 'react';
+import * as THREE from "three"; // Three.jsをインポート
+import { useEffect, useState } from "react";
 
 const MouseControls = () => {
   const [selectedObject, setSelectedObject] = useState<THREE.Mesh | null>(null);
 
   // カメラ、Raycaster、マウスベクトルを初期化
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
 
@@ -15,7 +20,9 @@ const MouseControls = () => {
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects([/* シーン内のオブジェクトを指定 */]);
+    const intersects = raycaster.intersectObjects([
+      /* シーン内のオブジェクトを指定 */
+    ]);
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object as THREE.Mesh;
@@ -39,24 +46,31 @@ const MouseControls = () => {
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
       raycaster.setFromCamera(mouse, camera);
-      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -camera.position.z);
+      const plane = new THREE.Plane(
+        new THREE.Vector3(0, 0, 1),
+        -camera.position.z
+      );
       const intersectPoint = raycaster.ray.intersectPlane(plane);
       if (intersectPoint) {
-        selectedObject.position.set(intersectPoint.x, intersectPoint.y, selectedObject.position.z);
+        selectedObject.position.set(
+          intersectPoint.x,
+          intersectPoint.y,
+          selectedObject.position.z
+        );
       }
     }
   };
 
   // イベントリスナーの登録と解除
   useEffect(() => {
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [selectedObject]);
 
