@@ -1,84 +1,96 @@
 import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { useThree } from "@react-three/fiber";
+import { useThree, useFrame } from "@react-three/fiber";
 
 type BoxProps = {
-  position: [x: number, y: number, z: number];
+  position: [number, number, number];
   onDragStateChange: (isDragging: boolean) => void;
+  onCollide: () => void;
+  objectsRef: React.RefObject<THREE.Mesh>[]; // 衝突判定用のオブジェクトリスト
 };
-const DraggableBox: React.FC<BoxProps> = (props) => {
+
+const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onCollide, objectsRef }) => {
   const boxRef = useRef<THREE.Mesh>(null!);
-  const { raycaster, mouse, camera } = useThree(); // Three.jsの基本ツールを取得
-  const [isDragging, setIsDragging] = useState(false); // ドラッグ中かどうかの状態
-  const [intersectionPoint, setIntersectionPoint] = useState(new THREE.Vector3()); // マウスクリック時の交点を記録
-  const sensitivity = 1.05; // マウス感度の調整係数
+  const { raycaster, mouse, camera } = useThree();
+  const [isDragging, setIsDragging] = useState(false);
+  const [intersectionPoint, setIntersectionPoint] = useState(new THREE.Vector3());
+  const sensitivity = 1.05;
 
   const handlePointerDown = (event: any) => {
     event.stopPropagation();
     setIsDragging(true);
-    props.onDragStateChange(true); // 親にドラッグ開始を通知
-    console.log("Dragging started");
+    onDragStateChange(true);
 
-    // マウスクリック位置を計算
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
-    // ボックスの交差点を計算
     const intersects = raycaster.intersectObject(boxRef.current!);
     if (intersects.length > 0) {
-      setIntersectionPoint(intersects[0].point.clone()); // 初期交差点を記録
+      setIntersectionPoint(intersects[0].point.clone());
     }
   };
 
   const handlePointerUp = () => {
     setIsDragging(false);
-    props.onDragStateChange(false); // 親にドラッグ終了を通知
-    console.log("Dragging ended");
+    onDragStateChange(false);
   };
 
+  //es
   const handlePointerMove = (event: any) => {
     if (!isDragging) return;
 
-    // マウス位置をThree.jsの座標系に変換
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
-    // カメラ方向の光線に沿った位置を計算
-    const plane = new THREE.Plane(); // 任意の平面（カメラ視線基準）
+    const plane = new THREE.Plane();
     plane.setFromNormalAndCoplanarPoint(
       camera.getWorldDirection(new THREE.Vector3()),
       intersectionPoint
-    ); // 平面を視線方向で初期化
+    );
 
     const newPosition = new THREE.Vector3();
-    raycaster.ray.intersectPlane(plane, newPosition); // 光線と平面の交点を計算
+    raycaster.ray.intersectPlane(plane, newPosition);
 
     if (newPosition) {
       const currentPosition = boxRef.current!.position;
-
-  // `newPosition` をクローンして差分を計算
-  const delta = newPosition.clone().sub(intersectionPoint);
-
-  // 感度を適用して現在位置を更新
-  currentPosition.add(delta.multiplyScalar(sensitivity));
-
-  // ボックスの位置をコピー
-  boxRef.current!.position.copy(currentPosition);
-
-  // 次フレーム用に基準点を更新
-  setIntersectionPoint(newPosition.clone());
+      const delta = newPosition.clone().sub(intersectionPoint);
+      currentPosition.add(delta.multiplyScalar(sensitivity));
+      boxRef.current!.position.copy(currentPosition);
+      setIntersectionPoint(newPosition.clone());
     }
   };
 
+  // **🎯 修正: Bounding Sphere で衝突検出**
+  useFrame(() => {
+    if (!boxRef.current) return;
+    // 1️⃣ `boundingSphere` を取得（`geometry.computeBoundingSphere()` を毎フレーム実行）
+    boxRef.current.geometry.computeBoundingSphere();
+    const sphere1 = new THREE.Sphere(boxRef.current.position, boxRef.current.geometry.boundingSphere?.radius || 1);
+
+    for (const objRef of objectsRef) {
+      if (!objRef.current || objRef.current === boxRef.current) continue;
+
+      // 2️⃣ 相手の `boundingSphere` も取得
+      objRef.current.geometry.computeBoundingSphere();
+      const sphere2 = new THREE.Sphere(objRef.current.position, objRef.current.geometry.boundingSphere?.radius || 1);
+
+      // 3️⃣ `intersectsSphere()` を使用して衝突判定
+      if (sphere1.intersectsSphere(sphere2)) {
+        console.log("Sphere に衝突しました！");
+        onCollide();
+      }
+    }
+  });
+
   return (
     <mesh
-      {...props}
       ref={boxRef}
-      onPointerDown={handlePointerDown} // ドラッグ開始
-      onPointerUp={handlePointerUp} // ドラッグ終了
-      onPointerMove={handlePointerMove} // マウス移動で位置更新
+      position={position}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerMove={handlePointerMove}
       castShadow
     >
       <boxGeometry args={[1, 1, 1]} />

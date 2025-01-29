@@ -51,10 +51,10 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
                     onChange={handleSelectChange}
                 >
                     <option value="default">選択してください</option>
-                    <option value="1">玉(デフォルト)</option>
+                    {/* <option value="1">玉(デフォルト)</option> */}
                     <option value="2">火</option>
-                    <option value="3">酸素</option>
-                    <option value="4">水素</option>
+                    {/* <option value="3">酸素</option> */}
+                    {/* <option value="4">水素</option> */}
                 </select>
                 <button
                     onClick={handleSubmit}

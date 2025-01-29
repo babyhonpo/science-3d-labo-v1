@@ -1,19 +1,25 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Background from "../components/Backgroud";
 import DraggableBox from "../components/DraggableBox";
-import DraggaSpreBox from "../components/DraggableSphere";
+// import DraggaSpreBox from "../components/DraggableSphere";
 import SelectForm from "../forms/SelectForm";
+import * as THREE from "three";
 
 const Home = () => {
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
 
+  // すべてのオブジェクトのrefを格納するリスト
+  const objectRefs = useRef<React.RefObject<THREE.Mesh>[]>([]); // 衝突判定用のオブジェクトリスト
+
   const handleAddItem = (item: string) => {
     setSelectedItems((prevItems) => [...prevItems, item]);
   };
+
+
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -63,26 +69,37 @@ const Home = () => {
         {/* 背景 (しかし、作られてないので、作る必要あり) */}
         <Background />
 
-        {/* DraggableBoxを条件付きで表示 */}
+        {/* DraggableBoxを条件付きで表示
         {selectedItems
           .filter((item) => item === "1") // "1" のみをフィルタリング
           .map((_, filteredIndex) => (
             <DraggaSpreBox
               key={filteredIndex} // フィルタ後のインデックスを使用
               position={[filteredIndex * 2, 0, 0]} // 位置を調整
-              onDragStateChange={setIsDragging}
+              onDragStateChange={setIsDragging} onCollide={function (): void {
+                throw new Error("Function not implemented.");
+              } } objectsRef={[]}              // ref={ref}
+              // objectsRef={objectRefs.current}
+              // onCollide={() => console.log("カーソルに接触！")}
             />
-          ))}
+          ))} */}
 
         {selectedItems
           .filter((item) => item === "2") // "1" のみをフィルタリング
-          .map((_, filteredIndex) => (
+          .map((_, filteredIndex) => {
+            const ref = React.createRef<THREE.Mesh>();
+            console.log(objectRefs.current)
+            objectRefs.current.push(ref);
+            return (
             <DraggableBox
               key={filteredIndex}
-              position={[filteredIndex * 2, 2, 0]}
+              position={[2, 2, 0]}
               onDragStateChange={setIsDragging}
+              objectsRef={objectRefs.current}
+              onCollide={() => console.log("球体が衝突しました！")}
             />
-          ))}
+          );
+        })}
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
