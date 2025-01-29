@@ -19,13 +19,13 @@ useEffect(() => {
   console.log("📌 `selectedItems` 更新:", selectedItems);
   console.log("📌 `objectRefs.current` 追加前:", [...objectRefs.current]); // 追加前の状態を出力
   while (objectRefs.current.length < selectedItems.length) {
-    objectRefs.current.push({
-      mesh: React.createRef<THREE.Mesh>(),
+    const newRef = {
+      mesh: React.createRef<THREE.Mesh>(), // ✅ `createRef()` で作成
       position: new THREE.Vector3(),
       radius: 1
-    });
+    };
+    objectRefs.current.push(newRef);
   }
-
   console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]); // 追加後の状態を出力
 }, [selectedItems]);
 
@@ -35,15 +35,19 @@ useEffect(() => {
   };
 
   useEffect(() => {
-      while (objectRefs.current.length < selectedItems.length) {
-        objectRefs.current.push({
-          mesh: React.createRef<THREE.Mesh>(),
-          position: new THREE.Vector3(),
-          radius: 1
-        });
-        console.log(objectRefs.current)
-      }
-    }, [selectedItems]); // 🔹 ここで正しく ref を追加
+  console.log("📌 `selectedItems` 更新:", selectedItems);
+  console.log("📌 `objectsRef.current` 追加前:", [...objectRefs.current]);
+
+  while (objectRefs.current.length < selectedItems.length) {
+    objectRefs.current.push({
+      mesh: React.createRef<THREE.Mesh>(),
+      position: new THREE.Vector3(),
+      radius: 1
+    });
+  }
+
+  console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]);
+}, [selectedItems]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -112,8 +116,18 @@ useEffect(() => {
         {selectedItems
           .filter((item) => item === "2") // "1" のみをフィルタリング
           .map((_, filteredIndex) => {
-            // const ref = React.createRef<THREE.Mesh>();
-            // objectRefs.current.push(ref);
+
+            console.log(`📌 Rendering DraggableBox - index: ${filteredIndex}`);
+            console.log("📌 `objectsRef.current`:", [...objectRefs.current]);
+            console.log("📌 `objectsRef.current.length`:", objectRefs.current.length);
+
+            if (!objectRefs.current[filteredIndex]) {
+              console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
+            } else {
+              console.log("✅ `refData` として渡すデータ:", objectRefs.current[filteredIndex]);
+            }
+
+
             return (
             <DraggableBox
               key={filteredIndex}

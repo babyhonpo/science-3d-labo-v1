@@ -19,16 +19,23 @@ const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onColli
 
   // ✅ `boxRef.current` を `refData.mesh.current` にセット
   useEffect(() => {
-    if (refData.mesh.current === null) {
-      refData.mesh.current = boxRef.current; // ✅ `current` にセット
-    }
-  }, []);
+    console.log("📌 `DraggableBox` がマウント:", { refData, boxRef: boxRef.current });
 
-  // ✅ `boundingSphere` がない場合に計算
-  useEffect(() => {
-    if (boxRef.current) {
-      boxRef.current.geometry.computeBoundingSphere();
-    }
+  if (!refData) {
+    console.error("🚨 `refData` が `undefined` です！");
+    return;
+  }
+
+  if (!refData.mesh) {
+    console.error("🚨 `refData.mesh` が `undefined` です！");
+    return;
+  }
+
+  if (!refData.mesh.current && boxRef.current) {
+    refData.mesh.current = boxRef.current;
+  }
+
+  console.log("✅ `refData.mesh.current` 設定後:", refData.mesh.current);
   }, []);
 
     //eslint-disable-next-line
