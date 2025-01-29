@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import * as THREE from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 
@@ -6,16 +6,32 @@ type BoxProps = {
   position: [number, number, number];
   onDragStateChange: (isDragging: boolean) => void;
   onCollide: () => void;
-  objectsRef: React.RefObject<THREE.Mesh>[]; // 衝突判定用のオブジェクトリスト
+  objectsRef: { mesh: React.RefObject<THREE.Mesh>; position: THREE.Vector3; radius: number }[]; // 衝突判定用のオブジェクトリスト
+  refData: { mesh: React.MutableRefObject<THREE.Mesh | null>; position: THREE.Vector3; radius: number };
 };
 
-const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onCollide, objectsRef }) => {
+const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onCollide, objectsRef, refData }) => {
   const boxRef = useRef<THREE.Mesh>(null!);
   const { raycaster, mouse, camera } = useThree();
   const [isDragging, setIsDragging] = useState(false);
   const [intersectionPoint, setIntersectionPoint] = useState(new THREE.Vector3());
   const sensitivity = 1.05;
 
+  // ✅ `boxRef.current` を `refData.mesh.current` にセット
+  useEffect(() => {
+    if (refData.mesh.current === null) {
+      refData.mesh.current = boxRef.current; // ✅ `current` にセット
+    }
+  }, []);
+
+  // ✅ `boundingSphere` がない場合に計算
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.geometry.computeBoundingSphere();
+    }
+  }, []);
+
+    //eslint-disable-next-line
   const handlePointerDown = (event: any) => {
     event.stopPropagation();
     setIsDragging(true);
@@ -63,23 +79,32 @@ const DraggableBox: React.FC<BoxProps> = ({ position, onDragStateChange, onColli
     }
   };
 
-  // **🎯 修正: Bounding Sphere で衝突検出**
   useFrame(() => {
     if (!boxRef.current) return;
-    // 1️⃣ `boundingSphere` を取得（`geometry.computeBoundingSphere()` を毎フレーム実行）
-    boxRef.current.geometry.computeBoundingSphere();
-    const sphere1 = new THREE.Sphere(boxRef.current.position, boxRef.current.geometry.boundingSphere?.radius || 1);
+    if (!refData.mesh.current) return;
+  
+    // ✅ `refData.position` に現在のオブジェクトの位置をコピー
+    refData.position.copy(boxRef.current.position);
+  
+    // ✅ `boundingSphere` がない場合に `computeBoundingSphere()` を実行
+    if (boxRef.current.geometry.boundingSphere) {
+      boxRef.current.geometry.computeBoundingSphere();
+    }
 
-    for (const objRef of objectsRef) {
-      if (!objRef.current || objRef.current === boxRef.current) continue;
+    refData.radius = boxRef.current.geometry.boundingSphere?.radius || 1;
 
-      // 2️⃣ 相手の `boundingSphere` も取得
-      objRef.current.geometry.computeBoundingSphere();
-      const sphere2 = new THREE.Sphere(objRef.current.position, objRef.current.geometry.boundingSphere?.radius || 1);
-
-      // 3️⃣ `intersectsSphere()` を使用して衝突判定
+    const sphere1 = new THREE.Sphere(refData.position, refData.radius);
+  
+    for (const obj of objectsRef) {
+      if (!obj.mesh.current || obj.mesh.current === boxRef.current) continue;
+  
+      obj.position.copy(obj.mesh.current.position);
+      obj.radius = obj.mesh.current.geometry.boundingSphere?.radius || 1;
+  
+      const sphere2 = new THREE.Sphere(obj.position, obj.radius);
+  
       if (sphere1.intersectsSphere(sphere2)) {
-        console.log("Sphere に衝突しました！");
+        console.log("⚠️ 衝突検出！");
         onCollide();
       }
     }

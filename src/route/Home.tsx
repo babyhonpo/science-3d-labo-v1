@@ -13,20 +13,37 @@ const Home = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
 
   // すべてのオブジェクトのrefを格納するリスト
-  const objectRefs = useRef<React.RefObject<THREE.Mesh>[]>([]);; // 衝突判定用のオブジェクトリスト
+const objectRefs = useRef<{mesh: React.RefObject<THREE.Mesh>, position: THREE.Vector3, radius: number }[]>([]); // 衝突判定用のオブジェクトリスト
 
+useEffect(() => {
+  console.log("📌 `selectedItems` 更新:", selectedItems);
+  console.log("📌 `objectRefs.current` 追加前:", [...objectRefs.current]); // 追加前の状態を出力
+  while (objectRefs.current.length < selectedItems.length) {
+    objectRefs.current.push({
+      mesh: React.createRef<THREE.Mesh>(),
+      position: new THREE.Vector3(),
+      radius: 1
+    });
+  }
+
+  console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]); // 追加後の状態を出力
+}, [selectedItems]);
+
+  // 選択フォームからアイテムを追加する関数
   const handleAddItem = (item: string) => {
     setSelectedItems((prevItems) => [...prevItems, item]);
   };
 
   useEffect(() => {
-    while (objectRefs.current.length < selectedItems.length) {
-      objectRefs.current.push(React.createRef<THREE.Mesh>());
-      console.log(objectRefs.current)
-    }
-  }, [selectedItems]); // 🔹 ここで正しく ref を追加
-
-
+      while (objectRefs.current.length < selectedItems.length) {
+        objectRefs.current.push({
+          mesh: React.createRef<THREE.Mesh>(),
+          position: new THREE.Vector3(),
+          radius: 1
+        });
+        console.log(objectRefs.current)
+      }
+    }, [selectedItems]); // 🔹 ここで正しく ref を追加
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -104,6 +121,7 @@ const Home = () => {
               onDragStateChange={setIsDragging}
               objectsRef={objectRefs.current}
               onCollide={() => console.log("球体が衝突しました！")}
+              refData={objectRefs.current[filteredIndex]} // position と radius を渡す
             />
           );
         })}
