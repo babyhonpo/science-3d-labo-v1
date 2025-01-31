@@ -4,7 +4,7 @@ import { RefObject } from "react";
 export type ObjectType = "box" | "sphere" | "cylinder";
 
 export type DraggableObject = {
-    id: number;
+    id: string;
     type: ObjectType;
     mesh: RefObject<THREE.Mesh>;
     position: THREE.Vector3;
@@ -13,7 +13,10 @@ export type DraggableObject = {
 
 export type DraggableProps = {
     refData: DraggableObject;
+    position: THREE.Vector3;
     onDragStateChange: (isDragging: boolean) => void;
-    onCollide: (idA: number, idB: number) => void; // ✅ handleCollision に統一
-    objectsRef: Map<number, DraggableObject>;
+    onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
+    objectsRef: Map<string, DraggableObject>;
+    cameraRef: React.RefObject<THREE.PerspectiveCamera>;
+    children: React.ReactNode;
 };
