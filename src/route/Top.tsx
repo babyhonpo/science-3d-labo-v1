@@ -4,7 +4,7 @@ const Top = () => {
   return (
     <div>
     Top
-    <a href="/effect">effect</a>
+    <a href="/test/effect">effect</a>
     </div>);
 };
 
