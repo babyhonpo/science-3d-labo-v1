@@ -24,7 +24,10 @@ const DraggableBase: React.FC<Props> = ({
   const [isDragging, setIsDragging] = useState(false);
   const previousMousePos = useRef(new THREE.Vector2());
   const dragOffset = useRef(new THREE.Vector3());
+  const intersectionPoint = useRef(new THREE.Vector3());
   const { camera, raycaster, mouse } = useThree();
+  const sensitivity = 1.05; // マウス感度調整
+  const moveSpeed = 0.05; // 移動スピード調整
 
   useEffect(() => {
     if (!groupRef.current) return;
@@ -52,14 +55,19 @@ const DraggableBase: React.FC<Props> = ({
 
   // **マウスが押された時の処理**
   const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
+    event.stopPropagation();
     setIsDragging(true);
     onDragStateChange(true);
-    previousMousePos.current.set(event.clientX, event.clientY);
 
-    if (groupRef.current) {
-      const worldPosition = new THREE.Vector3();
-      groupRef.current.getWorldPosition(worldPosition);
-      dragOffset.current.subVectors(worldPosition, event.point);
+    // マウスのクリック位置を取得
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+
+    // オブジェクトとの交差点を記録
+    const intersects = raycaster.intersectObject(groupRef.current, true);
+    if (intersects.length > 0) {
+        intersectionPoint.current.copy(intersects[0].point);
     }
   };
 
@@ -84,10 +92,15 @@ const DraggableBase: React.FC<Props> = ({
 
   // **マウスホイールで `z軸` を移動**
   const handleWheel = (event: ThreeEvent<WheelEvent>) => {
-    if (!groupRef.current) return;
+    if (!isDragging || !groupRef.current) return; // ✅ ドラッグ中のみ Z 軸移動を許可
 
-    const deltaZ = event.deltaY * -0.01;
-    groupRef.current.position.z += deltaZ;
+    const delta = event.deltaY * -0.04; // スクロール量に応じた移動量
+    const cameraDirection = new THREE.Vector3();
+    camera.getWorldDirection(cameraDirection); // カメラの向いている方向を取得
+
+    // カメラの向きに応じてオブジェクトを移動
+    cameraDirection.multiplyScalar(delta);
+    groupRef.current.position.add(cameraDirection);
     refData.position.copy(groupRef.current.position);
   };
 
