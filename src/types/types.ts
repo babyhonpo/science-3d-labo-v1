@@ -8,5 +8,5 @@ export type DraggableObject = {
     type: ObjectType;
     mesh: RefObject<THREE.Mesh>;
     position: THREE.Vector3;
-    radius:number;
-}
+    radius: number;
+};

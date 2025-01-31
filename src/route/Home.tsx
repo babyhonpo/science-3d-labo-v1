@@ -1,97 +1,93 @@
 import React from "react";
-import { useState, useRef,useEffect,useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Background from "../components/Backgroud";
 import DraggableBox from "../components/DraggableBox";
-// import DraggaSpreBox from "../components/DraggableSphere";
-import { DraggableObject, ObjectType } from "../types/typse";
+import DraggableSphere from "../components/DraggableSphere";
+import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import * as THREE from "three";
 
 const Home = () => {
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
+  const [selectedItems, setSelectedItems] = useState<{ id: number; type: ObjectType}[]>([]); // 表示中のアイテムを管理
   // すべてのオブジェクトのrefを格納するリスト
-const objectRefs = useRef<Map<number, DraggableObject>>(new Map());
+  const objectRefs = useRef<Map<number, DraggableObject>>(new Map());
 
-useEffect(() => {
-  if (selectedItems.length === 0) {
-    console.log("⚠️ `selectedItems` が空のため `useEffect()` をスキップ");
-    return;
-  }
+  // アイテム追加ボタンがクリックされたときのオブジェクトを追加
+  const handleAddItem = useCallback((type: ObjectType) => {
+    setSelectedItems((prevItems) => [
+      ...prevItems,
+      { id: prevItems.length, type},
+    ]);
+  }, []);
 
-  console.log("📌 `selectedItems` 更新:", selectedItems);
-  console.log("📌 `objectRefs.current` 追加前:", [...objectRefs.current]); // 追加前の状態を出力
 
-  while (objectRefs.current.length < selectedItems.length) {
-    const newRef = {
-      mesh: React.createRef<THREE.Mesh>(), // ✅ `createRef()` で作成
-      position: new THREE.Vector3(),
-      radius: 1
-    };
-    objectRefs.current.push(newRef);
-  }
-  console.log("📌 `objectsRef.current` 追加後:", [...objectRefs.current]); // 追加後の状態を出力
-}, [selectedItems, objectRefs.current]);
-
-  const handleAddItem = (item: string) => {
-    setSelectedItems((prevItems) => {
-      const newItems = [...prevItems, item];
-  
-      // ✅ `objectRefs.current` のサイズを `selectedItems.length` に揃える
-      while (objectRefs.current.length < newItems.length) {
-        objectRefs.current.push({
-          mesh: React.createRef<THREE.Mesh>(),
-          position: new THREE.Vector3(),
-          radius: 1
-        });
-      }
-  
-      console.log("📌 `selectedItems` 更新:", newItems);
-      console.log("📌 `objectRefs.current` 追加後:", [...objectRefs.current]);
-  
-      return newItems;
-    });
-  };
-
-  const memoizedDraggableBoxes = useMemo(() => {
-    if (objectRefs.current.length < selectedItems.length) {
-      console.error("🚨 `objectRefs.current.length` が不足しています！");
-      return null;  // ⚠️ `undefined` にならないように処理をスキップ
+  useEffect(() => {
+    if (selectedItems.length === 0) {
+      console.log("⚠️ `selectedItems` が空のため `useEffect()` をスキップ");
+      return;
     }
 
-    return selectedItems.filter((item) => item === "2").map((_, filteredIndex) => {
-      if (!objectRefs.current[filteredIndex]) {
-        console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
-        return null; // ⚠️ `undefined` を渡さないようにする
+    console.log("📌 `selectedItems` 更新:", selectedItems);
+    console.log("📌 `objectRefs.current` 追加前:", [...objectRefs.current]); // 追加前の状態を出力
+
+    let isUpdated = false;
+    selectedItems.forEach(({ id, type }) => {
+      console.log(`🔍 検証: id=${id}, type=${type} のオブジェクトを追加予定`);
+      if (!objectRefs.current.has(id)) {
+        objectRefs.current.set(id, {
+          id,
+          type,
+          mesh: React.createRef<THREE.Mesh>(),
+          position: new THREE.Vector3(0, 0, 0), // ランダムな初期位置の予定 (後でカメラがいる近くに変更)
+          radius: 1
+        });
+        isUpdated = true;
       }
-
-        console.log(`📌 Rendering DraggableBox - index: ${filteredIndex}`);
-        console.log("📌 `objectsRef.current`:", [...objectRefs.current]);
-        console.log("📌 `objectsRef.current.length`:", objectRefs.current.length);
-
-        if (!objectRefs.current[filteredIndex]) {
-          console.error("🚨 `objectsRef.current[filteredIndex]` が `undefined` です！", filteredIndex);
-          return null;
-        }
-        console.log("✅ `refData` として渡すデータ:", objectRefs.current[filteredIndex]);
-
-
-        return (
-        <DraggableBox
-          key={filteredIndex}
-          position={[2, 2, 0]}
-          onDragStateChange={setIsDragging}
-          objectsRef={objectRefs.current}
-          onCollide={() => console.log("球体が衝突しました！")}
-          refData={objectRefs.current[filteredIndex]} // position と radius を渡す
-        />
-      );
     });
-  }, [selectedItems, objectRefs.current]);
+
+  if (isUpdated) {
+      console.log("📌 `objectsRef.current` 更新後:", [...objectRefs.current.entries()]);
+    }
+}, [selectedItems]);
+
+// オブジェクトを描画
+const renderObjects = useMemo(() => {
+  console.log("🔍 `useMemo` 実行 - objectRefs:", [...objectRefs.current.entries()]);
+
+  return selectedItems.map(({ id, type}) => {
+    const refData = objectRefs.current.get(id);
+    console.log("🔍 get(id) の結果:", refData);
 
 
+    if (!refData) {
+      console.warn(`⚠️ 'refData' が未設定です。再レンダリングを待機 - id: ${id}`);
+      return null;
+    }
+
+    return type === "box" ? (
+      <DraggableBox
+        key={id}
+        refData={refData}
+        position={[refData.position.x, refData.position.y, refData.position.z]}
+        onDragStateChange={setIsDragging}
+        onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
+        objectsRef={objectRefs.current}
+      />
+    ) : (
+      <DraggableSphere
+        key={id}
+        refData={refData}
+        position={[refData.position.x, refData.position.y, refData.position.z]}
+        onDragStateChange={setIsDragging}
+        onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
+        objectsRef={objectRefs.current}
+      />
+    )
+  })
+}, [selectedItems, objectRefs.current.size]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -156,8 +152,8 @@ useEffect(() => {
             />
           ))} */}
 
+        {renderObjects}
 
-        {memoizedDraggableBoxes}
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
