@@ -17,11 +17,24 @@ const Home = () => {
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
-    setSelectedItems((prevItems) => [
-      ...prevItems,
-      { id: prevItems.length, type},
-    ]);
-  }, []);
+    setSelectedItems((prevItems) => {
+        const newItem = { id: prevItems.length + 1, type };
+        const updatedItems = [...prevItems, newItem];
+
+        // 追加後、即座にobjectRefs.currentを更新
+        objectRefs.current.set(newItem.id, {
+          id: newItem.id,
+          type: newItem.type,
+          mesh: React.createRef<THREE.Mesh>(),
+          position: new THREE.Vector3(),
+          radius: 1
+        });
+
+        console.log("✅ 追加されたオブジェクト:", objectRefs.current.get(newItem.id));
+
+        return updatedItems;
+  });
+}, []);
 
 
   useEffect(() => {
