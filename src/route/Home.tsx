@@ -7,6 +7,7 @@ import Background from "../components/Backgroud";
 import DraggableBox from "../components/DraggableBox";
 import DraggableSphere from "../components/DraggableSphere";
 import DraggableCylinder from "../components/DraggableCylinder";
+import DraggablePyramid from "../components/DraggablePyramid";
 import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
@@ -88,7 +89,8 @@ const renderObjects = useMemo(() => {
 
     return refData.type === "box" ? <DraggableBox key={id} {...props} /> :
     refData.type === "sphere" ? <DraggableSphere key={id} {...props} /> :
-    refData.type === "cylinder" ? <DraggableCylinder key={id} {...props} /> : null;
+    refData.type === "cylinder" ? <DraggableCylinder key={id} {...props} />:
+    refData.type === "pyramid" ? <DraggablePyramid key={id} {...props} />: null;
 });
 }, [selectedItems, objectRefs.current]);
 

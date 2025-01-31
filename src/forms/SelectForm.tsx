@@ -59,7 +59,7 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
                     <option value="box">立方体</option>
                     <option value="sphere">球体</option>
                     <option value="cylinder">円柱</option>
-                    {/* <option value="4">水素</option> */}
+                    <option value="pyramid">四角錐</option>
                 </select>
                 <button
                     onClick={handleSubmit}
