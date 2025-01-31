@@ -4,57 +4,55 @@ import { useFrame, ThreeEvent, useThree } from "@react-three/fiber";
 import { DraggableObject } from "../types/types";
 
 type Props = {
-  refData: DraggableObject;
-  position: [number, number, number];
-  onDragStateChange: (isDragging: boolean) => void;
-  onCollide: (idA: string, idB: string) => void;
-  objectsRef: Map<string, DraggableObject>;
-  children: React.ReactNode;
+    refData: DraggableObject;
+    position: [number, number, number];
+    onDragStateChange: (isDragging: boolean) => void;
+    onCollide: (idA: string, idB: string) => void;
+    objectsRef: Map<string, DraggableObject>;
+    children: React.ReactNode;
 };
 
 const DraggableBase: React.FC<Props> = ({
-  refData,
-  position,
-  onDragStateChange,
-  onCollide,
-  objectsRef,
-  children,
+    refData,
+    position,
+    onDragStateChange,
+    onCollide,
+    objectsRef,
+    children,
 }) => {
-  const groupRef = useRef<THREE.Group>(null!);
-  const [isDragging, setIsDragging] = useState(false);
-  const previousMousePos = useRef(new THREE.Vector2());
-  const dragOffset = useRef(new THREE.Vector3());
-  const intersectionPoint = useRef(new THREE.Vector3());
-  const { camera, raycaster, mouse } = useThree();
-  const sensitivity = 1.05; // マウス感度調整
-  const moveSpeed = 0.05; // 移動スピード調整
+    const groupRef = useRef<THREE.Group>(null!);
+    const [isDragging, setIsDragging] = useState(false);
+    const intersectionPoint = useRef(new THREE.Vector3());
+    const { camera, raycaster, mouse } = useThree();
+    const sensitivity = 1.05; // マウス感度調整
+    const moveSpeed = 0.05; // 移動スピード調整
 
-  useEffect(() => {
+useEffect(() => {
     if (!groupRef.current) return;
     if (!isDragging) {
-      groupRef.current.position.set(
+    groupRef.current.position.set(
         refData.position.x,
         refData.position.y,
         refData.position.z
-      );
+        );
     }
-  }, [refData.position, isDragging]);
+}, [refData.position, isDragging]);
 
-  useFrame(() => {
+useFrame(() => {
     if (groupRef.current) {
-      refData.position.copy(groupRef.current.position);
+        refData.position.copy(groupRef.current.position);
     }
 
     // 衝突判定
     Array.from(objectsRef.values()).forEach((obj) => {
-      if (obj.id !== refData.id && checkCollision(refData, obj)) {
-        onCollide(refData.id, obj.id);
-      }
+        if (obj.id !== refData.id && checkCollision(refData, obj)) {
+            onCollide(refData.id, obj.id);
+        }
     });
-  });
+});
 
   // **マウスが押された時の処理**
-  const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
+const handlePointerDown = (event: ThreeEvent<PointerEvent>) => {
     event.stopPropagation();
     setIsDragging(true);
     onDragStateChange(true);
@@ -69,69 +67,95 @@ const DraggableBase: React.FC<Props> = ({
     if (intersects.length > 0) {
         intersectionPoint.current.copy(intersects[0].point);
     }
-  };
+};
 
   // **マウスドラッグで `x, y` 軸を移動**
-  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
+const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     if (!isDragging || !groupRef.current) return;
 
-    // `Raycaster` を使ってスクリーン座標を `Three.js` のワールド座標に変換
+    // マウスの新しい位置を取得
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
-    const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-    const intersectPoint = new THREE.Vector3();
-    raycaster.ray.intersectPlane(plane, intersectPoint);
 
-    const newPosition = new THREE.Vector3().subVectors(
-      intersectPoint,
-      dragOffset.current
+    // カメラの視線方向を考慮した `仮想の平面` を作成
+    const plane = new THREE.Plane();
+    plane.setFromNormalAndCoplanarPoint(
+        camera.getWorldDirection(new THREE.Vector3()),
+        intersectionPoint.current
     );
 
-    groupRef.current.position.lerp(newPosition, 0.8);
-    refData.position.copy(groupRef.current.position);
-  };
+    // 平面との交差点を取得
+    const newPosition = new THREE.Vector3();
+    if (raycaster.ray.intersectPlane(plane, newPosition)) {
+        const delta = newPosition.clone().sub(intersectionPoint.current);
+        groupRef.current.position.add(delta.multiplyScalar(sensitivity));
+        refData.position.copy(groupRef.current.position);
 
-  // **マウスホイールで `z軸` を移動**
-  const handleWheel = (event: ThreeEvent<WheelEvent>) => {
-    if (!isDragging || !groupRef.current) return; // ✅ ドラッグ中のみ Z 軸移動を許可
+      // 次フレームの基準点を更新
+    intersectionPoint.current.copy(newPosition);
+    }
+};
 
-    const delta = event.deltaY * -0.04; // スクロール量に応じた移動量
+    // **マウスホイールで `カメラの方向` に移動**
+const handleWheel = (event: ThreeEvent<WheelEvent>) => {
+    if (!groupRef.current) return;
+
+    const delta = event.deltaY * -0.02; // ホイール感度調整
     const cameraDirection = new THREE.Vector3();
-    camera.getWorldDirection(cameraDirection); // カメラの向いている方向を取得
+    camera.getWorldDirection(cameraDirection);
 
-    // カメラの向きに応じてオブジェクトを移動
-    cameraDirection.multiplyScalar(delta);
+    // XZ 平面でのみ移動するように Y 軸の影響をカット
+    cameraDirection.y = 0;
+    cameraDirection.normalize().multiplyScalar(delta);
+
+    // オブジェクトの移動
     groupRef.current.position.add(cameraDirection);
     refData.position.copy(groupRef.current.position);
-  };
+};
+
+  // **カメラの動きをスムーズにする**
+useFrame(() => {
+    if (groupRef.current) {
+        refData.position.copy(groupRef.current.position);
+    }
+
+    // **衝突判定**
+    objectsRef.forEach((obj) => {
+        if (obj.id !== refData.id && checkCollision(refData, obj)) {
+            onCollide(refData.id, obj.id);
+        }
+    });
+});
 
   // **マウスボタンを離したら移動を終了**
-  const handlePointerUp = () => {
+const handlePointerUp = () => {
     setIsDragging(false);
     onDragStateChange(false);
-  };
+};
 
-  return (
-    <group
-      ref={groupRef}
-      position={position}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerMove={handlePointerMove}
-      onWheel={handleWheel} // ✅ マウスホイールのイベントを追加
-    >
-      {children}
-    </group>
-  );
+    return (
+        <group
+            ref={groupRef}
+            position={position}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerMove={handlePointerMove}
+        onWheel={handleWheel} // ✅ マウスホイールのイベントを追加
+        >
+            {children}
+        </group>
+    );
 };
 
 // **衝突判定関数**
 const checkCollision = (objA: DraggableObject, objB: DraggableObject): boolean => {
-  const radiusA = objA.radius || 1;
-  const radiusB = objB.radius || 1;
-  const distance = objA.position.distanceTo(objB.position);
+    const radiusA = objA.radius || 1;
+    const radiusB = objB.radius || 1;
+    const distance = objA.position.distanceTo(objB.position);
 
-  const dz = Math.abs(objA.position.z - objB.position.z);
-  return distance < radiusA + radiusB && dz < radiusA + radiusB;
+    const dz = Math.abs(objA.position.z - objB.position.z);
+    return distance < radiusA + radiusB && dz < radiusA + radiusB;
 };
 
 export default DraggableBase;

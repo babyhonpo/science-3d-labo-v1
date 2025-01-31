@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { v4 as uuidv4 } from "uuid";
@@ -10,74 +10,15 @@ import DraggableCylinder from "../components/DraggableCylinder";
 import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
-import { PointerLockControls } from "@react-three/drei";
+import FreeCamera from "../components/FreeCamera";
+
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  const moveSpeed = useRef(0.2); // 移動速度
 
-
-  // **カメラの移動を処理**
-  const CameraController = () => {
-    const { camera } = useThree();
-    const velocity = new THREE.Vector3();
-    const direction = new THREE.Vector3();
-
-    useFrame(() => {
-      camera.getWorldDirection(direction);
-      direction.y = 0;
-      direction.normalize();
-
-      velocity.multiplyScalar(0.9); // 減速処理
-      camera.position.addScaledVector(direction, velocity.z);
-      camera.position.addScaledVector(new THREE.Vector3(1, 0, 0), velocity.x);
-    });
-
-    useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        switch (event.code) {
-          case "KeyW":
-            velocity.z = moveSpeed.current;
-            break;
-          case "KeyS":
-            velocity.z = -moveSpeed.current;
-            break;
-          case "KeyA":
-            velocity.x = -moveSpeed.current;
-            break;
-          case "KeyD":
-            velocity.x = moveSpeed.current;
-            break;
-        }
-      };
-
-      const handleKeyUp = (event: KeyboardEvent) => {
-        switch (event.code) {
-          case "KeyW":
-          case "KeyS":
-            velocity.z = 0;
-            break;
-          case "KeyA":
-          case "KeyD":
-            velocity.x = 0;
-            break;
-        }
-      };
-
-      window.addEventListener("keydown", handleKeyDown);
-      window.addEventListener("keyup", handleKeyUp);
-
-      return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-        window.removeEventListener("keyup", handleKeyUp);
-      };
-    }, []);
-
-    return null;
-  };
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
@@ -140,6 +81,8 @@ const renderObjects = useMemo(() => {
       onDragStateChange: setIsDragging,
       objectsRef: objectRefs.current,
       onCollide: handleCollision,
+      cameraRef: React.createRef<THREE.Camera>(),
+      children: null,
     };
 
 
@@ -200,8 +143,7 @@ const renderObjects = useMemo(() => {
 
         {renderObjects}
 
-        {/* <PointerLockControls /> ✅ クリックでマウスロック & 360° 視点移動 */}
-        <CameraController /> ✅ WASD キーで移動
+        <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
 
       </Canvas>
 
