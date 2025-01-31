@@ -7,15 +7,15 @@ type Props = {
     refData: DraggableObject;
     position: [number, number, number];
     onDragStateChange: (isDragging: boolean) => void;
-    onCollide: () => void;
+    onCollide: (idA: number, idB: number, position: THREE.Vector3) => void;
     objectsRef: Map<number, DraggableObject>;
     children: React.ReactNode;  // ボックスやスフィアをラップするため
 };
 
-const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, onCollide, objectsRef, children }) => {
+const DraggableBase: React.FC<Props> = ({ refData, onDragStateChange, onCollide, objectsRef, children }) => {
     const groupRef = useRef<THREE.Group>(null!);
     const [isDragging, setIsDragging] = useState(false);
-    const prevPosition = useRef(new THREE.Vector3()); // 慣性処理用
+    // const prevPosition = useRef(new THREE.Vector3()); // 慣性処理用
     const velocity = useRef(new THREE.Vector3());
     const dragOffset = useRef(new THREE.Vector3()); // マウスのクリック位置とオブジェクトのオフセットを保存
 
@@ -42,7 +42,8 @@ const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, 
         // 衝突判定
         Array.from(objectsRef.values()).forEach((obj) => {
             if (obj.id !== refData.id && checkCollision(refData, obj)) {
-                onCollide();
+                // console.log(`🔴 衝突検出: ${refData.id} と ${obj.id}`);
+                onCollide(refData.id, obj.id, refData.position);
             }
         });
 
