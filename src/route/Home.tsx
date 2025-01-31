@@ -8,34 +8,39 @@ import DraggableSphere from "../components/DraggableSphere";
 import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import * as THREE from "three";
+import PeriodicTable from "../components/PeriodicTable";
 
 const Home = () => {
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  const [selectedItems, setSelectedItems] = useState<{ id: number; type: ObjectType}[]>([]); // 表示中のアイテムを管理
+  const [selectedItems, setSelectedItems] = useState<
+    { id: number; type: ObjectType }[]
+  >([]); // 表示中のアイテムを管理
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<number, DraggableObject>>(new Map());
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
     setSelectedItems((prevItems) => {
-        const newItem = { id: prevItems.length + 1, type };
-        const updatedItems = [...prevItems, newItem];
+      const newItem = { id: prevItems.length + 1, type };
+      const updatedItems = [...prevItems, newItem];
 
-        // 追加後、即座にobjectRefs.currentを更新
-        objectRefs.current.set(newItem.id, {
-          id: newItem.id,
-          type: newItem.type,
-          mesh: React.createRef<THREE.Mesh>(),
-          position: new THREE.Vector3(),
-          radius: 1
-        });
+      // 追加後、即座にobjectRefs.currentを更新
+      objectRefs.current.set(newItem.id, {
+        id: newItem.id,
+        type: newItem.type,
+        mesh: React.createRef<THREE.Mesh>(),
+        position: new THREE.Vector3(),
+        radius: 1,
+      });
 
-        console.log("✅ 追加されたオブジェクト:", objectRefs.current.get(newItem.id));
+      console.log(
+        "✅ 追加されたオブジェクト:",
+        objectRefs.current.get(newItem.id)
+      );
 
-        return updatedItems;
-  });
-}, []);
-
+      return updatedItems;
+    });
+  }, []);
 
   useEffect(() => {
     if (selectedItems.length === 0) {
@@ -55,52 +60,65 @@ const Home = () => {
           type,
           mesh: React.createRef<THREE.Mesh>(),
           position: new THREE.Vector3(0, 0, 0), // ランダムな初期位置の予定 (後でカメラがいる近くに変更)
-          radius: 1
+          radius: 1,
         });
         isUpdated = true;
       }
     });
 
-  if (isUpdated) {
-      console.log("📌 `objectsRef.current` 更新後:", [...objectRefs.current.entries()]);
+    if (isUpdated) {
+      console.log("📌 `objectsRef.current` 更新後:", [
+        ...objectRefs.current.entries(),
+      ]);
     }
-}, [selectedItems]);
+  }, [selectedItems]);
 
-// オブジェクトを描画
-const renderObjects = useMemo(() => {
-  console.log("🔍 `useMemo` 実行 - objectRefs:", [...objectRefs.current.entries()]);
+  // オブジェクトを描画
+  const renderObjects = useMemo(() => {
+    console.log("🔍 `useMemo` 実行 - objectRefs:", [
+      ...objectRefs.current.entries(),
+    ]);
 
-  return selectedItems.map(({ id, type}) => {
-    const refData = objectRefs.current.get(id);
-    console.log("🔍 get(id) の結果:", refData);
+    return selectedItems.map(({ id, type }) => {
+      const refData = objectRefs.current.get(id);
+      console.log("🔍 get(id) の結果:", refData);
 
+      if (!refData) {
+        console.warn(
+          `⚠️ 'refData' が未設定です。再レンダリングを待機 - id: ${id}`
+        );
+        return null;
+      }
 
-    if (!refData) {
-      console.warn(`⚠️ 'refData' が未設定です。再レンダリングを待機 - id: ${id}`);
-      return null;
-    }
-
-    return type === "box" ? (
-      <DraggableBox
-        key={id}
-        refData={refData}
-        position={[refData.position.x, refData.position.y, refData.position.z]}
-        onDragStateChange={setIsDragging}
-        onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
-        objectsRef={objectRefs.current}
-      />
-    ) : (
-      <DraggableSphere
-        key={id}
-        refData={refData}
-        position={[refData.position.x, refData.position.y, refData.position.z]}
-        onDragStateChange={setIsDragging}
-        onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
-        objectsRef={objectRefs.current}
-      />
-    )
-  })
-}, [selectedItems, objectRefs.current.size]);
+      return type === "box" ? (
+        <DraggableBox
+          key={id}
+          refData={refData}
+          position={[
+            refData.position.x,
+            refData.position.y,
+            refData.position.z,
+          ]}
+          onDragStateChange={setIsDragging}
+          onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
+          objectsRef={objectRefs.current}
+        />
+      ) : (
+        <DraggableSphere
+          key={id}
+          refData={refData}
+          position={[
+            refData.position.x,
+            refData.position.y,
+            refData.position.z,
+          ]}
+          onDragStateChange={setIsDragging}
+          onCollide={() => console.log(`衝突検出: ${type} (ID: ${id})`)}
+          objectsRef={objectRefs.current}
+        />
+      );
+    });
+  }, [selectedItems, objectRefs.current.size]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -166,11 +184,12 @@ const renderObjects = useMemo(() => {
           ))} */}
 
         {renderObjects}
-
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
       <SelectForm onAddItem={handleAddItem} />
+
+      <PeriodicTable />
     </div>
   );
 };
