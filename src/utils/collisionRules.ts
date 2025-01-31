@@ -17,6 +17,10 @@ export const collisionRules = new Map<
 >([
     ["box-sphere", "cylinder"],
     ["sphere-box", "cylinder"], // 入れ替えも考慮
+    ["cylinder-box", "sphere"],
+    ["box-cylinder", "sphere"],
+    ["sphere-sphere", "box"],
+    ["sphere-sphere", "box"],
 ]);
 
 // **衝突結果を取得**

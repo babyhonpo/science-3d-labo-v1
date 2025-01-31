@@ -11,7 +11,7 @@ import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
 import FreeCamera from "../components/FreeCamera";
-
+import GlassWall from "../components/GlassWall";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
@@ -145,6 +145,10 @@ const renderObjects = useMemo(() => {
 
         <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
 
+        <GlassWall position={[0, 0, -5]} /> {/* 奥側 */}
+        <GlassWall position={[0, 0, 5]} />  {/* 手前側 */}
+        <GlassWall position={[-5, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> {/* 左側 */}
+        <GlassWall position={[5, 0, 0]} rotation={[0, -Math.PI / 2, 0]} /> {/* 右側 */}
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
