@@ -5,15 +5,15 @@ import { OrbitControls } from "@react-three/drei";
 import Background from "../components/Backgroud";
 import DraggableBox from "../components/DraggableBox";
 // import DraggaSpreBox from "../components/DraggableSphere";
+import { DraggableObject, ObjectType } from "../types/typse";
 import SelectForm from "../forms/SelectForm";
 import * as THREE from "three";
 
 const Home = () => {
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // 表示中のアイテムを管理
-
   // すべてのオブジェクトのrefを格納するリスト
-const objectRefs = useRef<{mesh: React.RefObject<THREE.Mesh>, position: THREE.Vector3, radius: number }[]>([]); // 衝突判定用のオブジェクトリスト
+const objectRefs = useRef<Map<number, DraggableObject>>(new Map());
 
 useEffect(() => {
   if (selectedItems.length === 0) {
