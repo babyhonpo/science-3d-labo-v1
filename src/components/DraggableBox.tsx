@@ -16,7 +16,8 @@ const DraggableBox: React.FC<Props> = (props) => {
       <DraggableBase {...props}>
         <mesh ref={props.refData.mesh}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="blue" />
+            {/* <meshStandardMaterial color="blue" /> */}
+            <meshStandardMaterial color="blue" transparent opacity={0.8} />
         </mesh>
       </DraggableBase>
     );
