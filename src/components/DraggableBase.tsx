@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, ThreeEvent } from "@react-three/fiber";
 import { DraggableObject } from "../types/types";
 
 type Props = {
@@ -15,21 +15,28 @@ type Props = {
 const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, onCollide, objectsRef, children }) => {
     const groupRef = useRef<THREE.Group>(null!);
     const [isDragging, setIsDragging] = useState(false);
-    const prevPosition = useRef(new THREE.Vector3());
+    const prevPosition = useRef(new THREE.Vector3()); // 慣性処理用
     const velocity = useRef(new THREE.Vector3());
+    const dragOffset = useRef(new THREE.Vector3()); // マウスのクリック位置とオブジェクトのオフセットを保存
 
     // 初期位置を設定
     useEffect(() => {
-        if (groupRef.current) {
-            groupRef.current.position.set(...position);
-            refData.position.set(...position);
+        if (!groupRef.current) return;
+        if (!isDragging) {
+            groupRef.current.position.set(refData.position.x, refData.position.y, refData.position.z);
         }
-    })
+    }, [refData.position, isDragging]);
 
     // Three.jsのオブジェクトとrefData.positionを同期
     useFrame(() => {
-        if (refData.mesh.current && groupRef.current) {
-            groupRef.current.position.copy(refData.position);
+        if (groupRef.current) {
+            if (!isDragging) {
+                // オブジェクトがドラッグされていないときのみ、位置を同期
+                refData.position.add(velocity.current.multiplyScalar(0.95)); // 減速
+            } else {
+                // 移動中は refData.position を Three.js のオブジェクトの位置と同期
+                refData.position.copy(groupRef.current.position);
+            }
         }
 
         // 衝突判定
@@ -49,9 +56,16 @@ const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, 
         // prevPosition.current.copy(refData.position);
     });
 
-    const handlePointerDown = () => {
+
+    const handlePointerDown = (event: ThreeEvent<PointerEvent> ) => {
         setIsDragging(true);
         onDragStateChange(true);
+
+        if (groupRef.current) {
+            // マウスのクリック位置とオブジェクトの現在位置の差分を計算
+            const mousePos = new THREE.Vector3(event.point.x, event.point.y, event.point.z);
+            dragOffset.current.subVectors(mousePos, groupRef.current.position);
+        }
     };
 
     const handlePointerUp = () => {
@@ -61,12 +75,21 @@ const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, 
 
     //eslint-disable-next-line
     const handlePointerMove = (event: any) => {
+        // `camera` の視点を考慮して動くようにする
         if (isDragging && groupRef.current) {
-            const delta = new THREE.Vector3(event.movementX * 0.01, -event.movementY * 0.01, 0);
-            groupRef.current.position.add(delta);  // ✅ Three.js の座標を更新
-            refData.position.copy(groupRef.current.position);  // ✅ refData も更新
+            const sensitivity = 0.8; // マウス感度の設定
+
+            // `Three.js` の座標に基づいた相対移動
+            const mousePos = new THREE.Vector3(event.point.x, event.point.y, event.point.z);
+            const newPosition = new THREE.Vector3().subVectors(mousePos, dragOffset.current);
+
+
+        // ワールド座標に変換
+        groupRef.current.position.lerp(newPosition, sensitivity);
+        refData.position.copy(groupRef.current.position);
         }
     };
+
 
     return (
         <group ref={groupRef}
@@ -82,10 +105,13 @@ const DraggableBase: React.FC<Props> = ({ refData, position, onDragStateChange, 
 
 // 衝突判定関数
 const checkCollision = (objA: DraggableObject, objB: DraggableObject): boolean => {
-    const radiusA = objA.radius || 1; // ✅ デフォルト値
+    const radiusA = objA.radius || 1; // デフォルト値
     const radiusB = objB.radius || 1;
     const distance = objA.position.distanceTo(objB.position);
-    return distance < radiusA + radiusB;
+
+    // z軸方向を考慮
+    const dz = Math.abs(objA.position.z - objB.position.z);
+    return distance < radiusA + radiusB && dz < radiusA + radiusB;
 };
 
 export default DraggableBase;
