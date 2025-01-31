@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { ObjectType } from "../types/types";
 
 interface SelectFormProps {
-    onAddItem: (item: string) => void;
+    onAddItem: (type: ObjectType) => void;
 }
 
 const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
-    const [selectedValue, setSelectedValue] = useState<string>("default");
+    const [selectedValue, setSelectedValue] = useState<ObjectType | "default">("default");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    // 選択フォームの値が変更されたときの処理
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedValue(event.target.value);
+        setSelectedValue(event.target.value as ObjectType | "default");
         setErrorMessage(""); // エラーメッセージをクリア
     };
 
@@ -21,7 +23,10 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
 
         // 選択された値を onAddItem に渡す
         onAddItem(selectedValue);
-        console.log(`選択された値: ${selectedValue}`);
+        console.log(`選択されたオブジェクト: ${selectedValue}`);
+
+        // 初期化
+        setSelectedValue("default");
     };
 
     return (
@@ -51,10 +56,10 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
                     onChange={handleSelectChange}
                 >
                     <option value="default">選択してください</option>
-                    <option value="1">玉(デフォルト)</option>
-                    <option value="2">火</option>
-                    <option value="3">酸素</option>
-                    <option value="4">水素</option>
+                    <option value="sphere">球体</option>
+                    <option value="box">立方体</option>
+                    {/* <option value="3">酸素</option> */}
+                    {/* <option value="4">水素</option> */}
                 </select>
                 <button
                     onClick={handleSubmit}
