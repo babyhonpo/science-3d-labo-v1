@@ -1,5 +1,3 @@
-"use client"
-
 import { useRef, useMemo, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { ScrollControls, useScroll, Environment, Stars } from "@react-three/drei"

@@ -14,23 +14,22 @@ export default function Top() {
       <div className="content-wrapper">
         <section className="section-hero">
           <h1 className="title-main">Science3DLabo</h1>
+          <a href="/Home" className="move-Home"><img src="../public/Labo.png" alt="" /></a>
         </section>
         <section className="section-content">
           <div className="box-content">
-            <h2 className="title-section">分子の結合</h2>
+            <h2 className="title-section">元素をくっつけると爆発</h2>
             <p className="text-section">
-              文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。
+              爆発実験...怖いけど一度は見てみたくないですか？
             </p>
           </div>
         </section>
         <section className="section-content">
           <div className="box-content">
-            <h2 className="title-section">分子の分裂</h2>
+            <h2 className="title-section">元素をくっつけると毒ガス</h2>
             <p className="text-section">
-              文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。文字が入ります。
+              有毒ガスや爆発...やろうと思ってできるようなことじゃないですよね
             </p>
-            <a href="/Home">あああああああああ</a>
-            {/* <link href="/Home">ああああああ</link> */}
           </div>
         </section>
       </div>

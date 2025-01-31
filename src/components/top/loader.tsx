@@ -7,5 +7,3 @@ export function Loader() {
       </div>
     )
   }
-  
-  

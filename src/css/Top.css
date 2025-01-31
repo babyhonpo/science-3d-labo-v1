@@ -11,18 +11,11 @@
       "Helvetica Neue", sans-serif;
   }
 
-  .title-main{
+  .title-main , .title-section , .text-section{
     color: white;
+    text-align: center;
   }
 
-  .text-section{
-    color: white;
-  }
-
-  .title-section{
-    color: white;
-  }
-  
   .app {
     position: relative;
     width: 100%;
@@ -40,6 +33,10 @@
   }
   
   .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
     z-index: 1;
   }
@@ -47,7 +44,7 @@
   .hero-section,
   .content-section {
     height: 100vh;
-    width: 100%;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,11 +73,38 @@
     margin-bottom: 1.5rem;
     color: white;
   }
+
+  .section-hero{
+    text-align: center;
+    font-size: 1.5rem;
+    padding-top: 250px;
+    height: 100vh;
+    width: 100vw;
+  }
   
   .section-text {
     font-size: clamp(1rem, 3vw, 1.25rem);
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.9);
+  }
+
+  .section-content{
+    font-size: 1.5rem;
+    padding-top: 250px;
+    height: 100vh;
+    width: 100%;
+  }
+  .move-Home {
+    border-radius: 30px;
+    display: inline-block; /* 画像サイズにピッタリ合わせる */
+  }
+
+  .move-Home img{
+    display: block; /* 画像の下の余白を消す */
+    margin: auto;
+    margin-top: 20px;
+    width: 300px;
+    height: auto;
   }
   
   @media (max-width: 768px) {
