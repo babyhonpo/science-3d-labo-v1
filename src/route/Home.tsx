@@ -17,14 +17,14 @@ import FreeCamera from "../components/FreeCamera";
 import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
-import { useObjInfo } from "../hooks/useObjInfo";
+// import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  const { objInfo, setObjInfo } = useObjInfo();
+  // const { objInfo, setObjInfo } = useObjInfo();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
