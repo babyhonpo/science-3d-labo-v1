@@ -67,7 +67,11 @@ const Home = () => {
 
     const newObj: DraggableObject = {
       id: newId,
-      objInfo: newType,
+      objInfo: {
+        //エフェクト用
+        symbol: newType,
+        color: "red",
+      },
       mesh: React.createRef<THREE.Mesh>(),
       position: newPosition,
       radius: 1,
@@ -155,7 +159,7 @@ const Home = () => {
         }}
       >
         <Button
-          variant="contained"
+          variant='contained'
           onClick={handleOpen}
           sx={{
             fontSize: "1.4rem",
@@ -168,8 +172,8 @@ const Home = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <Box
           width={"70%"}
