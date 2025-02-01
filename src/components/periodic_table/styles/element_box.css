@@ -1,0 +1,108 @@
+.periodic-table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.lanthanide-actinide-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+}
+
+/* 元素の色分け（109〜111, 113〜116を追加） */
+.alkali-metal {
+  background: lightcoral;
+}
+.alkaline-earth {
+  background: lightsalmon;
+}
+.transition-metal {
+  background: lightgoldenrodyellow;
+}
+.post-transition-metal {
+  background: lightgreen;
+}
+.metalloid {
+  background: lightseagreen;
+}
+.nonmetal {
+  background: lightblue;
+}
+.halogen {
+  background: lightsteelblue;
+}
+.noble-gas {
+  background: plum;
+}
+.lanthanide {
+  background: lightpink;
+}
+.actinide {
+  background: lightgray;
+}
+
+/* 追加: 109〜111, 113〜116 */
+.unknown {
+  background: lightskyblue;
+}
+.atomic-number {
+  font-size: 10px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.symbol,
+.name {
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease-in-out;
+  width: 100%; /* 文字幅を統一 */
+  text-align: center;
+}
+
+.name {
+  opacity: 0;
+}
+
+/* ホバー時にシンボルを消し、名前を表示 */
+.element:hover .symbol {
+  opacity: 0;
+}
+
+.element:hover .name {
+  opacity: 1;
+}
