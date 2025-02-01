@@ -17,14 +17,14 @@ import FreeCamera from "../components/FreeCamera";
 import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
+import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-
-  const [open, setOpen] = React.useState(false);
+  const { objInfo, setObjInfo } = useObjInfo();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -33,12 +33,12 @@ const Home = () => {
     const id = uuidv4();
     const newObj: DraggableObject = {
       id,
-      type,
+      objInfo,
       mesh: React.createRef<THREE.Mesh>(),
       position: new THREE.Vector3(),
       radius: 1,
     };
-
+    setObjInfo(type);
     objectRefs.current.set(id, newObj);
     setSelectedItems((prev) => [...prev, id]);
   }, []);
@@ -62,7 +62,7 @@ const Home = () => {
 
     const newObj: DraggableObject = {
       id: newId,
-      type: newType,
+      objInfo: newType,
       mesh: React.createRef<THREE.Mesh>(),
       position: newPosition,
       radius: 1,
@@ -92,6 +92,7 @@ const Home = () => {
         onCollide: handleCollision,
         cameraRef: React.createRef<THREE.Camera>(),
         children: null,
+        objInfo: objInfo,
       };
 
       return <DraggableSphere key={id} {...props} />;
@@ -154,7 +155,7 @@ const Home = () => {
         }}
       >
         <Button
-          variant="contained"
+          variant='contained'
           onClick={handleOpen}
           sx={{
             fontSize: "1.4rem",
@@ -167,8 +168,8 @@ const Home = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <Box
           width={"60%"}

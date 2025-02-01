@@ -4,12 +4,11 @@ import { RefObject } from "react";
 export type ObjectType = {
   symbol: string;
   color: string;
-  name?: string;
 };
 
 export type DraggableObject = {
   id: string;
-  type: ObjectType;
+  objInfo: ObjectType;
   mesh: RefObject<THREE.Mesh>;
   position: THREE.Vector3;
   radius: number;
@@ -23,4 +22,5 @@ export type DraggableProps = {
   objectsRef: Map<string, DraggableObject>;
   cameraRef: Map<string, DraggableObject>;
   children: React.ReactNode;
+  objInfo: ObjectType;
 };
