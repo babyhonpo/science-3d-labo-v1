@@ -23,7 +23,7 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
 
         // 選択された値を onAddItem に渡す
         onAddItem(selectedValue);
-        console.log(`選択されたオブジェクト: ${selectedValue}`);
+        // console.log(`選択されたオブジェクト: ${selectedValue}`);
 
         // 初期化
         setSelectedValue("default");
@@ -56,10 +56,10 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
                     onChange={handleSelectChange}
                 >
                     <option value="default">選択してください</option>
-                    <option value="sphere">球体</option>
                     <option value="box">立方体</option>
-                    {/* <option value="3">酸素</option> */}
-                    {/* <option value="4">水素</option> */}
+                    <option value="sphere">球体</option>
+                    <option value="cylinder">円柱</option>
+                    <option value="pyramid">四角錐</option>
                 </select>
                 <button
                     onClick={handleSubmit}
