@@ -4,6 +4,7 @@ import { RefObject } from "react";
 export type ObjectType = {
   symbol: string;
   color: string;
+  name?: string;
 };
 
 export type DraggableObject = {

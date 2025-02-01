@@ -3,17 +3,24 @@ import ElementBox from "./ElementBox";
 import { periodicTableData } from "./periodic_table/data/elementData";
 import "./periodic_table/styles/preriodic_table.css"; // CSS適用
 import { ObjectType } from "../types/types";
+import { Snackbar } from "@mui/material";
 
 interface PeriodicTableProps {
   onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
 }
 
 const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
-  const [, setSelectedValue] = useState<ObjectType | null>(null);
+  const [selectedValue, setSelectedValue] = useState<ObjectType | null>(null);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = (obj: ObjectType) => {
     setSelectedValue(obj); // 選択された要素を状態にセット
     onAddItem(obj); // 選択された要素を onAddItem に渡す
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const lanthanides = periodicTableData.filter(
@@ -57,6 +64,18 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
           ))}
         </div>
       </div>
+
+      {selectedValue?.name && open && (
+        <Snackbar
+          open={open}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={handleClose}
+          message={`${selectedValue.name}を追加しました！`}
+          sx={{
+            fontSize: "1.2rem",
+          }}
+        />
+      )}
     </div>
   );
 };

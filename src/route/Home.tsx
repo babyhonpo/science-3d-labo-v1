@@ -12,20 +12,21 @@ import { v4 as uuidv4 } from "uuid";
 import Background from "../components/Backgroud";
 import DraggableSphere from "../components/DraggableSphere";
 import { DraggableObject, ObjectType } from "../types/types";
-import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
 import FreeCamera from "../components/FreeCamera";
-import ExplosionEffect from "../components/ExplosionEffect";
-import Virus from "../components/Virus";
-import SlowVirus from "../components/SlowVirus";
 import PeriodicTable from "../components/PeriodicTable";
-
+import Button from "@mui/material/Button";
+import { Box, Modal } from "@mui/material";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
@@ -143,10 +144,43 @@ const Home = () => {
         <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
       </Canvas>
 
-      {/* SelectFormに状態更新関数を渡す */}
-      <SelectForm onAddItem={handleAddItem} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          position: "absolute",
+          top: "90%",
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={handleOpen}
+          sx={{
+            fontSize: "1.4rem",
+          }}
+        >
+          周期表を開く
+        </Button>
+      </Box>
 
-      <PeriodicTable onAddItem={handleAddItem} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          width={"60%"}
+          margin={"auto"}
+          sx={{
+            position: "relative",
+            top: "15%",
+          }}
+        >
+          <PeriodicTable onAddItem={handleAddItem} />
+        </Box>
+      </Modal>
     </div>
   );
 };
