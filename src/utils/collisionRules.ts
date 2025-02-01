@@ -7,6 +7,10 @@ export const collisionRules = new Map<
   ["Rh-Tc", "Bom"],
   ["B-C", "Bom"],
   ["C-B", "Bom"],
+  ["Al-Si", "EnergyBurst"],
+  ["Si-Al", "EnergyBurst"],
+  ["Ga-Ge", "ToxicGasEffect"],
+  ["Ge-Ga", "ToxicGasEffect"],
 ]);
 
 // **衝突結果を取得**

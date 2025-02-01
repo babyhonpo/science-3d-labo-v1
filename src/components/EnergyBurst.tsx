@@ -104,11 +104,11 @@ export function EnergyBurst() {
         light.current.intensity = Math.exp(-time * 2) * 50;
       }
       
-      state.camera.position.lerp(
-        new Vector3(Math.sin(time * 0.5) * 10, 5, Math.cos(time * 0.5) * 10),
-        0.05
-      );
-      state.camera.lookAt(0, 0, 0);
+      // state.camera.position.lerp(
+      //   new Vector3(Math.sin(time * 0.5) * 10, 5, Math.cos(time * 0.5) * 10),
+      //   0.05
+      // );
+      // state.camera.lookAt(0, 0, 0);
     }
   });
 
