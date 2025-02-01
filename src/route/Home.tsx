@@ -8,7 +8,6 @@ import DraggableSphere from "../components/DraggableSphere";
 import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import * as THREE from "three";
-import PeriodicTable from "../components/PeriodicTable";
 
 const Home = () => {
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
@@ -188,8 +187,6 @@ const Home = () => {
 
       {/* SelectFormに状態更新関数を渡す */}
       <SelectForm onAddItem={handleAddItem} />
-
-      <PeriodicTable />
     </div>
   );
 };
