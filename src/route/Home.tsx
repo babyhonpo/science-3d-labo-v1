@@ -13,6 +13,9 @@ import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
 import FreeCamera from "../components/FreeCamera";
 import GlassWall from "../components/GlassWall";
+import ExplosionEffect from "../components/ExplosionEffect";
+import Virus from "../components/Virus";
+import SlowVirus from "../components/SlowVirus";
 
 const Home = () => {
 
@@ -92,7 +95,11 @@ const renderObjects = useMemo(() => {
     return refData.type === "box" ? <DraggableBox key={id} {...props} /> :
     refData.type === "sphere" ? <DraggableSphere key={id} {...props} /> :
     refData.type === "cylinder" ? <DraggableCylinder key={id} {...props} />:
-    refData.type === "pyramid" ? <DraggablePyramid key={id} {...props} />: null;
+    refData.type === "pyramid" ? <DraggablePyramid key={id} {...props} />:
+    refData.type === "explosion" ? <ExplosionEffect key={id} {...props} />:
+    refData.type === "virus" ? <Virus key={id} {...props} />:
+    refData.type === "slowvirus" ? <SlowVirus key={id} {...props} />:
+    null;
 });
 }, [selectedItems, objectRefs.current]);
 
@@ -136,7 +143,6 @@ const renderObjects = useMemo(() => {
           intensity={2}
           shadow-mapSize={[1024, 1024]}
         />
-
         {/* カメラ制御 */}
         <OrbitControls enabled={!isDragging} />
         <ambientLight intensity={0.5} />
@@ -147,7 +153,10 @@ const renderObjects = useMemo(() => {
 
         {renderObjects}
 
+        {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
+
         <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
+
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}

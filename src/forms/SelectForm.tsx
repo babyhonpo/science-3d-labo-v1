@@ -60,6 +60,8 @@ const SelectForm: React.FC<SelectFormProps> = ({ onAddItem }) => {
                     <option value="sphere">球体</option>
                     <option value="cylinder">円柱</option>
                     <option value="pyramid">四角錐</option>
+                    <option value="virus">ウイルス</option>
+                    <option value="slowvirus">遅いウイルス</option>
                 </select>
                 <button
                     onClick={handleSubmit}
