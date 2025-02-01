@@ -8,7 +8,7 @@ const waterMaterialProps = {
     color: "#1E90FF",
     roughness: 0.1, //表面の粗さ
     metalness: 0.1, //金属度
-    transmission: 0.8, // 透過度
+    transmission: 0.1, // 透過度
     clearcoat: 0.6, // 表面の反射
     clearcoatRoughness: 0.3, //反射層の粗さ
 };
