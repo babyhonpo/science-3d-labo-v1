@@ -15,6 +15,7 @@ import FreeCamera from "../components/FreeCamera";
 import GlassWall from "../components/GlassWall";
 
 const Home = () => {
+
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -23,6 +24,7 @@ const Home = () => {
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
+
     const id = uuidv4();
     const newObj: DraggableObject = {
       id,
