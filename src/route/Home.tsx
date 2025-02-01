@@ -17,14 +17,15 @@ import FreeCamera from "../components/FreeCamera";
 import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
-import { useObjInfo } from "../hooks/useObjInfo";
+import ExplosionEffect from "../components/ExplosionEffect";
+// import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  const { objInfo, setObjInfo } = useObjInfo();
+  // const { objInfo, setObjInfo } = useObjInfo();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -67,7 +68,11 @@ const Home = () => {
 
     const newObj: DraggableObject = {
       id: newId,
-      objInfo: newType,
+      objInfo: {
+        //エフェクト用
+        symbol: newType,
+        color: "red",
+      },
       mesh: React.createRef<THREE.Mesh>(),
       position: newPosition,
       radius: 1,
@@ -88,7 +93,9 @@ const Home = () => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
 
-      return (
+      return refData.objInfo.symbol === "Bom" ? (
+        <ExplosionEffect position={refData.position} />
+      ) : (
         <DraggableSphere
           key={id}
           refData={refData}
@@ -96,8 +103,8 @@ const Home = () => {
           onDragStateChange={setIsDragging}
           objectsRef={objectRefs.current}
           onCollide={handleCollision}
-          cameraRef={React.createRef<THREE.Camera>()}
-          objInfo={refData.objInfo} // ここで refData の objInfo を正しく渡す
+          objInfo={refData.objInfo}
+          cameraRef={undefined}
         />
       );
     });
@@ -155,7 +162,7 @@ const Home = () => {
         }}
       >
         <Button
-          variant="contained"
+          variant='contained'
           onClick={handleOpen}
           sx={{
             fontSize: "1.4rem",
@@ -168,8 +175,8 @@ const Home = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <Box
           width={"70%"}
