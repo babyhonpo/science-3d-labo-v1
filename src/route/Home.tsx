@@ -95,8 +95,27 @@ const Home = () => {
         children: null,
         objInfo: objInfo,
       };
-
-      return <DraggableSphere key={id} {...props} />;
+      switch (objInfo?.color) {
+        case "transparent":
+          if (objInfo) {
+            // Ensure objInfo is not undefined before rendering DraggableSphere
+            return (
+              <DraggableSphere
+                key={id}
+                {...props}
+                objInfo={{
+                  symbol: objInfo.symbol,
+                  color: "transparent",
+                  name: objInfo.name,
+                }}
+              />
+            );
+          }
+          break; // Break to avoid rendering if objInfo is undefined
+        // 他の色やケースに基づいて異なるコンポーネントを追加する場合は、ここに追記
+        default:
+          return null;
+      }
     });
   }, [selectedItems, objectRefs.current]);
 

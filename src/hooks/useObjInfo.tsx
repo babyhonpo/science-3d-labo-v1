@@ -1,6 +1,6 @@
-import React from "react";
-
+import { useState } from "react";
+import { ObjectType } from "../types/types";
 export const useObjInfo = () => {
-  const [objInfo, setObjInfo] = React.useState();
+  const [objInfo, setObjInfo] = useState<ObjectType>();
   return { objInfo, setObjInfo };
 };
