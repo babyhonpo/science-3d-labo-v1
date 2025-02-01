@@ -18,6 +18,8 @@ import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
 import ExplosionEffect from "../components/ExplosionEffect";
+import { EnergyBurst } from "../components/EnergyBurst";
+import ToxicGasEffect from "../components/ToxicGasEffect";
 // import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
@@ -100,7 +102,11 @@ const Home = () => {
       console.log(refData.objInfo.symbol);
       return refData.objInfo.symbol === "Bom" ? (
         <ExplosionEffect position={refData.position} />
-      ) : (
+      ) :refData.objInfo.symbol === "EnergyBurst" ? (
+        <EnergyBurst />
+      ): refData.objInfo.symbol === "ToxicGasEffect" ? (
+        <ToxicGasEffect position={refData.position} />
+      ): (
         <DraggableSphere
           key={id}
           refData={refData}
