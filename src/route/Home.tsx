@@ -44,14 +44,18 @@ const Home = () => {
     setSelectedItems((prev) => [...prev, id]);
   }, []);
 
-  // 衝突処理
   const handleCollision = (idA: string, idB: string) => {
     const objA = objectRefs.current.get(idA);
     const objB = objectRefs.current.get(idB);
 
     if (!objA || !objB) return;
 
-    const newType = getCollisionResult(objA.type, objB.type);
+    // Ensure symbols are defined before proceeding
+    const symbolA = objA.objInfo.symbol;
+    const symbolB = objB.objInfo.symbol;
+    if (!symbolA || !symbolB) return;
+
+    const newType = getCollisionResult(symbolA, symbolB);
     if (newType === null) return;
 
     const newPosition = objA.position.clone().lerp(objB.position, 0.5); // ✅ 先に `position` を取得
@@ -75,7 +79,6 @@ const Home = () => {
       newId,
     ]); // ✅ 配列順を明示
   };
-
   useEffect(() => {
     setSelectedItems(Array.from(objectRefs.current.keys())); // ✅ `objectRefs` を `selectedItems` に同期
   }, [objectRefs.current]);

@@ -22,10 +22,10 @@ export const DraggableSphere: React.FC<DraggableProps> = (props) => {
   };
 
   return (
-    <DraggableBase {...props}>
-      <mesh ref={props.refData.mesh}>
-        <sphereGeometry args={[0.5, 32, 32]} />
-        <meshPhysicalMaterial {...waterMaterialProps} />
+      <DraggableBase {...props}>
+        <mesh ref={props.refData.mesh}>
+          <sphereGeometry args={[0.5, 32, 32]} />
+          <meshPhysicalMaterial {...waterMaterialProps} />
       </mesh>
 
       {/* 文字を表示 */}
