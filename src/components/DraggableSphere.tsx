@@ -1,8 +1,9 @@
 import React from "react";
-// import * as THREE from "three";
 import DraggableBase from "./DraggableBase";
 import { DraggableProps } from "../types/types";
+import { useObjInfo } from "../hooks/useObjInfo";
 export const DraggableSphere: React.FC<DraggableProps> = (props) => {
+  const { setObjInfo } = useObjInfo();
   const waterMaterialProps = {
     color: props.objInfo.color,
     roughness: 0.1, //表面の粗さ
@@ -12,6 +13,9 @@ export const DraggableSphere: React.FC<DraggableProps> = (props) => {
     clearcoatRoughness: 0.3, //反射層の粗さ
   };
 
+  if (!waterMaterialProps.color) {
+    setObjInfo(undefined);
+  }
   return (
     <DraggableBase {...props}>
       <mesh ref={props.refData.mesh}>

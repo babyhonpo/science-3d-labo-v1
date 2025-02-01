@@ -102,11 +102,7 @@ const Home = () => {
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Canvas
-      // shadows
-      // camera={{ position: [0, 0, 1000], fov: 45 }}
-      // style={{ width: "100vw", height: "100vh" }}
-      >
+      <Canvas>
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
         {/* 環境光 */}
