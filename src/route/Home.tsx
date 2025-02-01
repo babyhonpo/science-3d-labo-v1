@@ -34,12 +34,12 @@ const Home = () => {
     const id = uuidv4();
     const newObj: DraggableObject = {
       id,
-      objInfo,
+      objInfo: type, // ここで type を直接格納
       mesh: React.createRef<THREE.Mesh>(),
       position: new THREE.Vector3(),
       radius: 1,
     };
-    setObjInfo(type);
+
     objectRefs.current.set(id, newObj);
     setSelectedItems((prev) => [...prev, id]);
   }, []);
@@ -85,37 +85,18 @@ const Home = () => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
 
-      const props = {
-        refData,
-        position: refData.position,
-        onDragStateChange: setIsDragging,
-        objectsRef: objectRefs.current,
-        onCollide: handleCollision,
-        cameraRef: React.createRef<THREE.Camera>(),
-        children: null,
-        objInfo: objInfo,
-      };
-      switch (objInfo?.color) {
-        case "transparent":
-          if (objInfo) {
-            // Ensure objInfo is not undefined before rendering DraggableSphere
-            return (
-              <DraggableSphere
-                key={id}
-                {...props}
-                objInfo={{
-                  symbol: objInfo.symbol,
-                  color: "transparent",
-                  name: objInfo.name,
-                }}
-              />
-            );
-          }
-          break; // Break to avoid rendering if objInfo is undefined
-        // 他の色やケースに基づいて異なるコンポーネントを追加する場合は、ここに追記
-        default:
-          return null;
-      }
+      return (
+        <DraggableSphere
+          key={id}
+          refData={refData}
+          position={refData.position}
+          onDragStateChange={setIsDragging}
+          objectsRef={objectRefs.current}
+          onCollide={handleCollision}
+          cameraRef={React.createRef<THREE.Camera>()}
+          objInfo={refData.objInfo} // ここで refData の objInfo を正しく渡す
+        />
+      );
     });
   }, [selectedItems, objectRefs.current]);
 
@@ -171,7 +152,7 @@ const Home = () => {
         }}
       >
         <Button
-          variant='contained'
+          variant="contained"
           onClick={handleOpen}
           sx={{
             fontSize: "1.4rem",
@@ -184,8 +165,8 @@ const Home = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box
           width={"70%"}
