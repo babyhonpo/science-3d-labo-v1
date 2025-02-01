@@ -18,6 +18,7 @@ import Virus from "../components/Virus";
 import SlowVirus from "../components/SlowVirus";
 
 const Home = () => {
+
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -26,6 +27,7 @@ const Home = () => {
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
+
     const id = uuidv4();
     const newObj: DraggableObject = {
       id,
@@ -155,10 +157,6 @@ const renderObjects = useMemo(() => {
 
         <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
 
-        {/* <GlassWall position={[0, 0, -5]} /> {/* 奥側 */}
-        {/* <GlassWall position={[0, 0, 5]} />  手前側 */}
-        {/* <GlassWall position={[-5, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> 左側 */}
-        {/* <GlassWall position={[5, 0, 0]} rotation={[0, -Math.PI / 2, 0]} /> 右側 */}
       </Canvas>
 
       {/* SelectFormに状態更新関数を渡す */}
