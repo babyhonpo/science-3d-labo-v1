@@ -17,14 +17,15 @@ import FreeCamera from "../components/FreeCamera";
 import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
+import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-
-  const [open, setOpen] = React.useState(false);
+  const { objInfo, setObjInfo } = useObjInfo();
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -33,7 +34,7 @@ const Home = () => {
     const id = uuidv4();
     const newObj: DraggableObject = {
       id,
-      type,
+      objInfo: type, // ここで type を直接格納
       mesh: React.createRef<THREE.Mesh>(),
       position: new THREE.Vector3(),
       radius: 1,
@@ -62,7 +63,7 @@ const Home = () => {
 
     const newObj: DraggableObject = {
       id: newId,
-      type: newType,
+      objInfo: newType,
       mesh: React.createRef<THREE.Mesh>(),
       position: newPosition,
       radius: 1,
@@ -84,28 +85,25 @@ const Home = () => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
 
-      const props = {
-        refData,
-        position: refData.position,
-        onDragStateChange: setIsDragging,
-        objectsRef: objectRefs.current,
-        onCollide: handleCollision,
-        cameraRef: React.createRef<THREE.Camera>(),
-        children: null,
-      };
-
-      return <DraggableSphere key={id} {...props} />;
+      return (
+        <DraggableSphere
+          key={id}
+          refData={refData}
+          position={refData.position}
+          onDragStateChange={setIsDragging}
+          objectsRef={objectRefs.current}
+          onCollide={handleCollision}
+          cameraRef={React.createRef<THREE.Camera>()}
+          objInfo={refData.objInfo} // ここで refData の objInfo を正しく渡す
+        />
+      );
     });
   }, [selectedItems, objectRefs.current]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Canvas
-      // shadows
-      // camera={{ position: [0, 0, 1000], fov: 45 }}
-      // style={{ width: "100vw", height: "100vh" }}
-      >
+      <Canvas>
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
         {/* 環境光 */}
