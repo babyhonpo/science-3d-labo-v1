@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { RefObject } from "react";
 
-export type ObjectType = "box" | "sphere" | "cylinder";
+export type ObjectType = "box" | "sphere" | "cylinder" | "explosion" | "slowvirus";
 
 export type DraggableObject = {
     id: string;

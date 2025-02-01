@@ -8,7 +8,7 @@ interface ExplosionEffectProps {
   particleCount?: number
 }
 
-export default function ExplosionEffect({ position, color = "#ffaa00", particleCount = 1000 }: ExplosionEffectProps) {
+export default function ExplosionEffect({ position, color = "#ff4000", particleCount = 1000 }: ExplosionEffectProps) {
   const particles = useRef<THREE.Points>(null!)
   const clock = useRef(new THREE.Clock())
 
