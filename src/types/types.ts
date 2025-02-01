@@ -1,22 +1,25 @@
 import * as THREE from "three";
 import { RefObject } from "react";
 
-export type ObjectType = "box" | "sphere" | "cylinder" | "explosion" | "slowvirus";
+export type ObjectType = {
+  symbol: string;
+  color: string;
+};
 
 export type DraggableObject = {
-    id: string;
-    type: ObjectType;
-    mesh: RefObject<THREE.Mesh>;
-    position: THREE.Vector3;
-    radius: number;
+  id: string;
+  type: ObjectType;
+  mesh: RefObject<THREE.Mesh>;
+  position: THREE.Vector3;
+  radius: number;
 };
 
 export type DraggableProps = {
-    refData: DraggableObject;
-    position: THREE.Vector3;
-    onDragStateChange: (isDragging: boolean) => void;
-    onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
-    objectsRef: Map<string, DraggableObject>;
-    cameraRef: Map<string, DraggableObject>;
-    children: React.ReactNode;
+  refData: DraggableObject;
+  position: THREE.Vector3;
+  onDragStateChange: (isDragging: boolean) => void;
+  onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
+  objectsRef: Map<string, DraggableObject>;
+  cameraRef: Map<string, DraggableObject>;
+  children: React.ReactNode;
 };

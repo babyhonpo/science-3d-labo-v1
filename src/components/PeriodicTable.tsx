@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import ElementBox from "./ElementBox";
 import { periodicTableData } from "./periodic_table/data/elementData";
 import "./periodic_table/styles/preriodic_table.css"; // CSS適用
+import { ObjectType } from "../types/types";
 
-const PeriodicTable: React.FC = () => {
+interface PeriodicTableProps {
+  onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
+}
+
+const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
+  const [, setSelectedValue] = useState<ObjectType | null>(null);
+
+  const handleClick = (obj: ObjectType) => {
+    setSelectedValue(obj); // 選択された要素を状態にセット
+    onAddItem(obj); // 選択された要素を onAddItem に渡す
+  };
+
   const lanthanides = periodicTableData.filter(
     (el) => el.atomicNumber >= 57 && el.atomicNumber <= 71
   );
@@ -22,7 +34,9 @@ const PeriodicTable: React.FC = () => {
       {/* 上部の元素グリッド */}
       <div className="grid">
         {mainElements.map((element, index) => (
-          <ElementBox key={index} {...element} />
+          <div key={index} onClick={() => handleClick(element)}>
+            <ElementBox {...element} />
+          </div>
         ))}
       </div>
 
@@ -30,12 +44,16 @@ const PeriodicTable: React.FC = () => {
       <div className="lanthanide-actinide-container">
         <div className="row lanthanides">
           {lanthanides.map((element, index) => (
-            <ElementBox key={index} {...element} />
+            <div key={index} onClick={() => handleClick(element)}>
+              <ElementBox {...element} />
+            </div>
           ))}
         </div>
         <div className="row actinides">
           {actinides.map((element, index) => (
-            <ElementBox key={index} {...element} />
+            <div key={index} onClick={() => handleClick(element)}>
+              <ElementBox {...element} />
+            </div>
           ))}
         </div>
       </div>
