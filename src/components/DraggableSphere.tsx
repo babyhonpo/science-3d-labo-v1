@@ -7,6 +7,11 @@ import { useObjInfo } from "../hooks/useObjInfo";
 export const DraggableSphere: React.FC<DraggableProps> = (props) => {
   const { setObjInfo } = useObjInfo();
 
+  // symbol が存在しない場合は何もレンダリングしない
+  if (!props.objInfo?.symbol) {
+    return null;
+  }
+
   const waterMaterialProps = {
     color: props.objInfo.color,
     roughness: 0.1, // 表面の粗さ
@@ -15,10 +20,6 @@ export const DraggableSphere: React.FC<DraggableProps> = (props) => {
     clearcoat: 0.6, // 表面の反射
     clearcoatRoughness: 0.3, // 反射層の粗さ
   };
-
-  if (!waterMaterialProps.color) {
-    setObjInfo(undefined);
-  }
 
   return (
     <DraggableBase {...props}>
