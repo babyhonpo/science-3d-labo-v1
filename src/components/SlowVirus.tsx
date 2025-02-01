@@ -71,6 +71,7 @@ export const SlowVirus: React.FC<DraggableProps> = (props) => {
     const noise = new PerlinNoise(); // Perlinノイズの代わりにSimplexNoiseを使用
     const k = 3; // ノイズのスケール倍率
     const noiseStrength = 0.5 // ノイズの強さ
+    const baseNoiseStrength = 0.5; // 基本のノイズの強さ
 
     useFrame(() => {
         if (!meshRef.current) return;
@@ -79,9 +80,13 @@ export const SlowVirus: React.FC<DraggableProps> = (props) => {
         const positions = geometry.attributes.position.array;
         const uvs = geometry.attributes.uv.array;
         const index = geometry.index ? geometry.index.array : null; // 面のインデックス
+        const colors: number[] = []; // 色の配列を作成
 
         // 時間のオフセットを適用 (動的な変形)
         const time = performance.now() * 0.01;
+
+        // 爆発エフェクト: 時間とともに大きく変形
+        const explosionFactor = Math.abs(Math.sin(time * 0.2)) * baseNoiseStrength;
 
         if (index) {
             for (let i = 0; i < index.length; i += 3) {
@@ -108,10 +113,20 @@ export const SlowVirus: React.FC<DraggableProps> = (props) => {
                 positions[posIndex] = x;
                 positions[posIndex + 1] = y;
                 positions[posIndex + 2] = z;
+
+                // **ノイズ値に基づいたグラデーションカラー**
+                const r = 1.0;
+                const g = 0.5 + noiseValue * 0.5;
+                const b = 0.5 - noiseValue * 0.5;
+
+                colors.push(r, g, b);
         }
     }
 
         geometry.attributes.position.needsUpdate = true; // 必須: 頂点の更新をThree.jsに伝える
+        geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+        geometry.attributes.position.needsUpdate = true;
+        geometry.attributes.color.needsUpdate = true;
 
     // **法線を更新してブロブの見た目を改善**
     geometry.computeVertexNormals();
@@ -122,7 +137,7 @@ export const SlowVirus: React.FC<DraggableProps> = (props) => {
         <DraggableBase {...props}>
             <mesh ref={meshRef}>
                 <sphereGeometry args={[1, 18, 18]} />
-                <meshStandardMaterial color="red" />
+                <meshStandardMaterial vertexColors={true} roughness={0.5} metalness={0.3} />
             </mesh>
         </DraggableBase>
     );
