@@ -15,7 +15,11 @@ import { DraggableObject, ObjectType } from "../types/types";
 import SelectForm from "../forms/SelectForm";
 import { getCollisionResult } from "../utils/collisionRules";
 import FreeCamera from "../components/FreeCamera";
+import ExplosionEffect from "../components/ExplosionEffect";
+import Virus from "../components/Virus";
+import SlowVirus from "../components/SlowVirus";
 import PeriodicTable from "../components/PeriodicTable";
+
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
