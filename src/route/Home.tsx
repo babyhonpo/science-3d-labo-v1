@@ -17,6 +17,7 @@ import FreeCamera from "../components/FreeCamera";
 import PeriodicTable from "../components/PeriodicTable";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
+import ExplosionEffect from "../components/ExplosionEffect";
 // import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
@@ -92,7 +93,9 @@ const Home = () => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
 
-      return (
+      return refData.objInfo.symbol === "Bom" ? (
+        <ExplosionEffect position={refData.position} />
+      ) : (
         <DraggableSphere
           key={id}
           refData={refData}
@@ -100,8 +103,8 @@ const Home = () => {
           onDragStateChange={setIsDragging}
           objectsRef={objectRefs.current}
           onCollide={handleCollision}
-          cameraRef={React.createRef<THREE.Camera>()}
-          objInfo={refData.objInfo} // ここで refData の objInfo を正しく渡す
+          objInfo={refData.objInfo}
+          cameraRef={undefined}
         />
       );
     });
