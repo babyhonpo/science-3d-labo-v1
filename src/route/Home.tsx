@@ -25,7 +25,6 @@ const Home = () => {
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
-  // const { objInfo, setObjInfo } = useObjInfo();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,11 +32,16 @@ const Home = () => {
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
     const id = uuidv4();
+    const distance = 2;
+    const direction = new THREE.Vector3(1, 0, 0).normalize();
+    const offset = objectRefs.current.size * 2;
+    const initialPosition = new THREE.Vector3(-2, 0, -0.6); // 初期位置を設定
+
     const newObj: DraggableObject = {
       id,
       objInfo: type, // ここで type を直接格納
       mesh: React.createRef<THREE.Mesh>(),
-      position: new THREE.Vector3(),
+      position: initialPosition.add(direction.multiplyScalar(distance + offset)), // 初期位置に基づいて位置を設定
       radius: 1,
     };
 
@@ -66,6 +70,7 @@ const Home = () => {
     const newId = uuidv4();
     // **衝突した位置の中間地点に新しいアイテムを配置**
 
+
     const newObj: DraggableObject = {
       id: newId,
       objInfo: {
@@ -92,7 +97,7 @@ const Home = () => {
     return selectedItems.map((id) => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
-
+      console.log(refData.objInfo.symbol);
       return refData.objInfo.symbol === "Bom" ? (
         <ExplosionEffect position={refData.position} />
       ) : (
