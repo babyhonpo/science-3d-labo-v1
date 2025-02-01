@@ -171,11 +171,11 @@ const Home = () => {
         aria-describedby="modal-modal-description"
       >
         <Box
-          width={"60%"}
+          width={"70%"}
           margin={"auto"}
           sx={{
             position: "relative",
-            top: "15%",
+            top: "10%",
           }}
         >
           <PeriodicTable onAddItem={handleAddItem} />
