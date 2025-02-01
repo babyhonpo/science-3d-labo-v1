@@ -2,7 +2,6 @@ import React from "react";
 // import * as THREE from "three";
 import DraggableBase from "./DraggableBase";
 import { DraggableProps } from "../types/types";
-import { useObjInfo } from "../hooks/useObjInfo";
 export const DraggableSphere: React.FC<DraggableProps> = (props) => {
   const waterMaterialProps = {
     color: props.objInfo.color,
