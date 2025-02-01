@@ -25,7 +25,7 @@ const DraggableBase: React.FC<Props> = ({
     const intersectionPoint = useRef(new THREE.Vector3());
     const { camera, raycaster, mouse } = useThree();
     const sensitivity = 1.05; // マウス感度調整
-    const moveSpeed = 0.05; // 移動スピード調整
+    // const moveSpeed = 0.05; // 移動スピード調整
 
 useEffect(() => {
     if (!groupRef.current) return;

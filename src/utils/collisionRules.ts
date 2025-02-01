@@ -16,7 +16,5 @@ export const getCollisionResult = (
 ): string | null => {
   // **キーを統一するためにソート**
   const key = [typeA, typeB].sort().join("-"); // "box-sphere"
-  console.log(typeA, typeB);
-  console.log("衝突しました");
   return collisionRules.get(key) || null;
 };
