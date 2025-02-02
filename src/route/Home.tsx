@@ -21,6 +21,7 @@ import ExplosionEffect from "../components/ExplosionEffect";
 import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import SmokeEffect from "../components/SmokeEffect";
+import { LightningEffect } from "../components/LightningEffect";
 // import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
@@ -100,7 +101,7 @@ const Home = () => {
     return selectedItems.map((id) => {
       const refData = objectRefs.current.get(id);
       if (!refData) return null;
-      console.log(refData.objInfo.symbol);
+
       return refData.objInfo.symbol === "Bom" ? (
         <ExplosionEffect position={refData.position} />
       ) :refData.objInfo.symbol === "EnergyBurst" ? (
@@ -109,6 +110,8 @@ const Home = () => {
         <ToxicGasEffect position={refData.position} />
       ): refData.objInfo.symbol === "SmokeEffect" ? (
         <SmokeEffect />
+      ) : refData.objInfo.symbol === "LightningEffect" ? (
+        <LightningEffect position={refData.position}/>
       ) : (
         <DraggableSphere
           key={id}
