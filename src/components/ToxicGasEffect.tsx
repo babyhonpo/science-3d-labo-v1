@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -11,6 +11,24 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
 
   // パーティクルの数をさらに増やす
   const count = 2000
+
+  // 音声再生処理を追加**
+  useEffect(() => {
+    const sound = new Audio("/explosion1.mp3");
+  
+    const playSound = () => {
+      sound.volume = 1;
+      sound.currentTime = 0; // 毎回最初から再生
+      sound.play().catch((error) => console.error("音声再生エラー:", error));
+    };
+  
+    // クリックするたびに音を再生
+    document.addEventListener("click", playSound);
+  
+    return () => {
+      document.removeEventListener("click", playSound);
+    };
+  }, []);
 
   // パーティクルのプロパティを初期化
   const particleProps = useMemo(() => {
@@ -115,6 +133,7 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
     geometry.setAttribute("opacity", new THREE.Float32BufferAttribute(particleProps.opacities, 1))
     return geometry
   }, [particleProps.positions, particleProps.sizes, particleProps.opacities])
+  
 
   // カスタムシェーダーマテリアル
   const material = useMemo(() => {
