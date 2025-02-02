@@ -21,10 +21,6 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const lanthanides = periodicTableData.filter(
     (el) => el.atomicNumber >= 57 && el.atomicNumber <= 71
   );
@@ -39,9 +35,9 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
   );
 
   return (
-    <div className='periodic-table-container'>
+    <div className="periodic-table-container">
       {/* 上部の元素グリッド */}
-      <div className='grid'>
+      <div className="grid">
         {mainElements.map((element, index) => (
           <div key={index} onClick={() => handleClick(element)}>
             <ElementBox {...element} />
@@ -50,15 +46,15 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
       </div>
 
       {/* ランタノイドとアクチノイド（2行配置） */}
-      <div className='lanthanide-actinide-container'>
-        <div className='row lanthanides'>
+      <div className="lanthanide-actinide-container">
+        <div className="row lanthanides">
           {lanthanides.map((element, index) => (
             <div key={index} onClick={() => handleClick(element)}>
               <ElementBox {...element} />
             </div>
           ))}
         </div>
-        <div className='row actinides'>
+        <div className="row actinides">
           {actinides.map((element, index) => (
             <div key={index} onClick={() => handleClick(element)}>
               <ElementBox {...element} />
@@ -71,7 +67,6 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => {
         <Snackbar
           open={open}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          onClose={handleClose}
           message={`${selectedValue.name}を追加しました！`}
           sx={{
             fontSize: "1.2rem",
