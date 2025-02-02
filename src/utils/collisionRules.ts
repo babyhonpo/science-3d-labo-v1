@@ -3,16 +3,25 @@ export const collisionRules = new Map<
   string, // "box-sphere" のような文字列のキー
   string
 >([
-  ["Tc-Rh", "Bom"],
-  ["Rh-Tc", "Bom"],
-  ["B-C", "Bom"],
-  ["C-B", "Bom"],
-  ["Al-Si", "EnergyBurst"],
-  ["Si-Al", "EnergyBurst"],
-  ["Ga-Ge", "ToxicGasEffect"],
-  ["Ge-Ga", "ToxicGasEffect"],
-  ["In-Sn", "SmokeEffect"],
-  ["Sn-In", "SmokeEffect"],
+  ["N-O", "Bom"], ["O-N", "Bom"],
+
+  ["Cl-H", "EnergyBurst"], ["H-Cl", "EnergyBurst"],
+
+  ["Al-Si", "EnergyBurst"], // 任せる
+  ["Si-Al", "EnergyBurst"], // 任せる
+  ["Ga-Ge", "ToxicGasEffect"], // 任せる
+  ["Ge-Ga", "ToxicGasEffect"], // 任せる
+
+  ["H-H", "ToxicGasEffect"],
+
+  ["C-O", "SmokeEffect"], ["O-C", "SmokeEffect"],
+  ["S-O", "SmokeEffect"], ["O-S", "SmokeEffect"],
+  ["P-O", "SmokeEffect"], ["O-P", "SmokeEffect"],
+  ["Mg-O", "SmokeEffect"], ["O-Mg", "SmokeEffect"],
+
+  ["H-O", "LightningEffect"], ["O-H", "LightningEffect"],
+  ["Na-S", "LightningEffect"], ["S-Na", "LightningEffect"],
+  ["Ni-Cd", "LightningEffect"], ["Cd-Ni", "LightningEffect"]
 
 ]);
 
