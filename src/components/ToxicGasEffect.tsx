@@ -10,7 +10,7 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
   const particles = useRef<THREE.Points>(null!)
 
   // パーティクルの数をさらに増やす
-  const count = 200000
+  const count = 2000
 
   // パーティクルのプロパティを初期化
   const particleProps = useMemo(() => {
