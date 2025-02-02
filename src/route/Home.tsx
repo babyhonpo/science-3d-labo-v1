@@ -20,6 +20,7 @@ import { Box, Modal } from "@mui/material";
 import ExplosionEffect from "../components/ExplosionEffect";
 import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
+import SmokeEffect from "../components/SmokeEffect";
 // import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
@@ -106,7 +107,9 @@ const Home = () => {
         <EnergyBurst />
       ): refData.objInfo.symbol === "ToxicGasEffect" ? (
         <ToxicGasEffect position={refData.position} />
-      ): (
+      ): refData.objInfo.symbol === "SmokeEffect" ? (
+        <SmokeEffect />
+      ) : (
         <DraggableSphere
           key={id}
           refData={refData}
