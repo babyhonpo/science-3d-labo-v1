@@ -21,7 +21,5 @@ export type DraggableProps = {
   onDragStateChange: (isDragging: boolean) => void;
   onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
   objectsRef: Map<string, DraggableObject>;
-  cameraRef: Map<string, DraggableObject>;
-  children: React.ReactNode;
   objInfo: ObjectType;
 };

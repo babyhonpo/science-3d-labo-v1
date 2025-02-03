@@ -2,15 +2,7 @@ import React from "react";
 import * as THREE from "three";
 
 const Background: React.FC = () => {
-
-    const uniforms = {
-        topColor: { value: new THREE.Color(0x87ceeb) },
-        bottomColor: { value: new THREE.Color(0xffffff) },
-        offset: { value: 0.0 },
-        exponent: { value: 0.6 },
-    };
-
-    const vertexShader = `
+  const vertexShader = `
     varying vec2 vUv;
     void main() {
       vUv = uv;
@@ -35,14 +27,14 @@ const Background: React.FC = () => {
     <mesh>
       <sphereGeometry args={[10000, 32, 32]} />
       <shaderMaterial
-        attach="material"
+        attach='material'
         vertexShader={vertexShader} // シェーダーコードを省略
         fragmentShader={fragmentShader}
         uniforms={{
-        topColor: { value: new THREE.Color(0x87ceeb) },
-        bottomColor: { value: new THREE.Color(0xffffff) },
-        offset: { value: 0.0 },
-        exponent: { value: 0.6 },
+          topColor: { value: new THREE.Color(0x87ceeb) },
+          bottomColor: { value: new THREE.Color(0xffffff) },
+          offset: { value: 0.0 },
+          exponent: { value: 0.6 },
         }}
         // uniforms={uniforms}
         side={THREE.BackSide}

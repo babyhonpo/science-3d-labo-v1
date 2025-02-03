@@ -22,7 +22,6 @@ import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import { LightningEffect } from "../components/LightningEffect";
-// import { useObjInfo } from "../hooks/useObjInfo";
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
@@ -45,7 +44,9 @@ const Home = () => {
       id,
       objInfo: type, // ここで type を直接格納
       mesh: React.createRef<THREE.Mesh>(),
-      position: initialPosition.add(direction.multiplyScalar(distance + offset)), // 初期位置に基づいて位置を設定
+      position: initialPosition.add(
+        direction.multiplyScalar(distance + offset)
+      ), // 初期位置に基づいて位置を設定
       radius: 1,
     };
 
@@ -73,7 +74,6 @@ const Home = () => {
 
     const newId = uuidv4();
     // **衝突した位置の中間地点に新しいアイテムを配置**
-
 
     const newObj: DraggableObject = {
       id: newId,
@@ -104,14 +104,14 @@ const Home = () => {
 
       return refData.objInfo.symbol === "Bom" ? (
         <ExplosionEffect position={refData.position} />
-      ) :refData.objInfo.symbol === "EnergyBurst" ? (
+      ) : refData.objInfo.symbol === "EnergyBurst" ? (
         <EnergyBurst />
-      ): refData.objInfo.symbol === "ToxicGasEffect" ? (
+      ) : refData.objInfo.symbol === "ToxicGasEffect" ? (
         <ToxicGasEffect position={refData.position} />
-      ): refData.objInfo.symbol === "SmokeEffect" ? (
+      ) : refData.objInfo.symbol === "SmokeEffect" ? (
         <SmokeEffect />
       ) : refData.objInfo.symbol === "LightningEffect" ? (
-        <LightningEffect position={refData.position}/>
+        <LightningEffect position={refData.position} />
       ) : (
         <DraggableSphere
           key={id}
@@ -121,7 +121,6 @@ const Home = () => {
           objectsRef={objectRefs.current}
           onCollide={handleCollision}
           objInfo={refData.objInfo}
-          cameraRef={undefined}
         />
       );
     });
