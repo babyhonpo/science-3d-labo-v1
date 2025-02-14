@@ -6,7 +6,7 @@ import "../css/top.css"
 export default function Top() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]); // 各セクションの参照を保存
   const sectionIndex = useRef(0); // 現在のセクションのインデックス
-
+  
   useEffect(() => {
     let isScrolling = false;
   

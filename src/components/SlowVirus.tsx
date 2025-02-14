@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import DraggableBase from "./DraggableBase";
 import { DraggableProps } from "../types/types";

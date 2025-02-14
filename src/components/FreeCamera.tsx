@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { OrbitControls } from "@react-three/drei";
+import React from "react";
 
 type Props = {
     isDragging: boolean; // ✅ ドラッグ中かどうかを判定
