@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import DraggableBase from "./DraggableBase";
 import { DraggableProps } from "../types/types";
@@ -103,10 +103,10 @@ export const Virus: React.FC<DraggableProps> = (props) => {
 
         geometry.attributes.position.needsUpdate = true; // 必須: 頂点の更新をThree.jsに伝える
 
-    // **法線を更新してブロブの見た目を改善**
-    geometry.computeVertexNormals();
-    geometry.attributes.normal.needsUpdate = true;
-});
+        // **法線を更新してブロブの見た目を改善**
+        geometry.computeVertexNormals();
+        geometry.attributes.normal.needsUpdate = true;
+    });
 
     return (
         <DraggableBase {...props}>

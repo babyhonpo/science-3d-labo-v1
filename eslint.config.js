@@ -23,6 +23,14 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error', // または 'error' に変更可
+        {
+          vars: 'all', // すべての変数を対象に
+          args: 'after-used', // 使用されていない引数のみ警告
+          ignoreRestSiblings: true, // 残余プロパティを無視
+        },
+      ],
     },
   },
 )

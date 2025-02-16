@@ -15,16 +15,16 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
   // 音声再生処理を追加**
   useEffect(() => {
     const sound = new Audio("/explosion1.mp3");
-  
+
     const playSound = () => {
       sound.volume = 1;
       sound.currentTime = 0; // 毎回最初から再生
       sound.play().catch((error) => console.error("音声再生エラー:", error));
     };
-  
+
     // クリックするたびに音を再生
     document.addEventListener("click", playSound);
-  
+
     return () => {
       document.removeEventListener("click", playSound);
     };
@@ -73,8 +73,6 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
     if (!particles.current) return
 
     const positionArray = particles.current.geometry.attributes.position.array as Float32Array
-    const sizeArray = particles.current.geometry.attributes.size.array as Float32Array
-    const opacityArray = particles.current.geometry.attributes.opacity.array as Float32Array
 
     const newPositions = new Float32Array(count * 3)
     const newSizes = new Float32Array(count)
@@ -133,7 +131,7 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
     geometry.setAttribute("opacity", new THREE.Float32BufferAttribute(particleProps.opacities, 1))
     return geometry
   }, [particleProps.positions, particleProps.sizes, particleProps.opacities])
-  
+
 
   // カスタムシェーダーマテリアル
   const material = useMemo(() => {
@@ -158,12 +156,12 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
           float r = length(gl_PointCoord - vec2(0.5));
           if (r > 0.5) discard;
           float alpha = smoothstep(0.5, 0.0, r) * vOpacity;
-          
+
           // 赤色のグラデーション
           vec3 baseColor = vec3(0.9, 0.1, 0.1);  // 濃い赤
           vec3 glowColor = vec3(1.0, 0.3, 0.2);  // 明るい赤
           vec3 color = mix(baseColor, glowColor, alpha * 0.5);
-          
+
           // より高い不透明度
           gl_FragColor = vec4(color, alpha * 0.8);
         }
