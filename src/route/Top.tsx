@@ -1,25 +1,25 @@
 import React, { useEffect, useRef } from "react";
 // import ChemistryScene from "../components/top/chemistry-scene";
 import ChemistryScene from "../components/top/chemistry-scene"
-import "../css/top.css"
+import "../css/Top.css"
 
 export default function Top() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]); // 各セクションの参照を保存
   const sectionIndex = useRef(0); // 現在のセクションのインデックス
-  
+
   useEffect(() => {
     let isScrolling = false;
-  
+
     const handleScroll = (event) => {
       event.preventDefault(); // デフォルトのスクロール動作を無効化
-  
+
       if (isScrolling) return; // 連続スクロールを防ぐ
-  
+
       const scrollThreshold = 10; // 10px 以上のスクロール量で移動
       if (Math.abs(event.deltaY) < scrollThreshold) return; // 小さいスクロールを無視
-  
+
       isScrolling = true; // スクロール中フラグをON
-  
+
       if (event.deltaY > 0) {
         // 下スクロール（次のセクションへ）
         sectionIndex.current = Math.min(
@@ -30,24 +30,24 @@ export default function Top() {
         // 上スクロール（前のセクションへ）
         sectionIndex.current = Math.max(sectionIndex.current - 1, 0);
       }
-  
+
       sectionsRef.current[sectionIndex.current]?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-  
+
       setTimeout(() => {
         isScrolling = false; // 一定時間経過後にスクロールを許可
       }, 500); // 500ms クールダウン
     };
-  
+
     window.addEventListener("wheel", handleScroll, { passive: false });
-  
+
     return () => {
       window.removeEventListener("wheel", handleScroll);
     };
   }, []);
-  
+
   return (
     <main className="w-full">
       {/* 3Dシーンの背景 */}
