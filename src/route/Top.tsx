@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 // import ChemistryScene from "../components/top/chemistry-scene";
 import ChemistryScene from "../components/top/chemistry-scene"
 import "../css/Top.css"
+import { Link } from "react-router";
 
 export default function Top() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]); // 各セクションの参照を保存
@@ -61,9 +62,9 @@ export default function Top() {
         <div className="center-container">
           <div>
               <h1 className="title-main">Science3DLabo</h1>
-              <div>
-                <a href="/Home" className="move-Home"><img src="../public/Labo.png" alt="実験室へ" /></a>
-              </div>
+              <Link to="/Home" className="move-Home">
+                <img src="/Labo.png" alt="実験室へ" />
+              </Link>
             </div>
         </div>
         </section>
