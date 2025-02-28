@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+// import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { v4 as uuidv4 } from "uuid";
 import Background from "../components/Backgroud";
@@ -129,7 +129,7 @@ const Home = () => {
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Canvas>
+      <Canvas camera={{ position: [0, 5, 10] }}>
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
         {/* 環境光 */}
@@ -158,14 +158,14 @@ const Home = () => {
           shadow-mapSize={[1024, 1024]}
         />
         {/* カメラ制御 */}
-        <OrbitControls enabled={!isDragging} />
+        {/* <OrbitControls enabled={!isDragging} /> */}
         <ambientLight intensity={0.5} />
         <directionalLight castShadow position={[0, 20, 20]} intensity={2} />
         {/* 背景 (しかし、作られてないので、作る必要あり) */}
         <Background />
         {renderObjects}
         {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
-        <FreeCamera isDragging={isDragging} /> {/* ✅ カメラ操作を追加 */}
+        <FreeCamera /> {/* カメラ操作を追加 */}
       </Canvas>
 
       <Box
@@ -178,7 +178,7 @@ const Home = () => {
         }}
       >
         <Button
-          variant='contained'
+          variant="contained"
           onClick={handleOpen}
           sx={{
             fontSize: "1.4rem",
@@ -191,8 +191,8 @@ const Home = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box
           width={"70%"}

@@ -1,90 +1,105 @@
 import { useRef, useEffect } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { OrbitControls } from "@react-three/drei";
-import React from "react";
 
-type Props = {
-    isDragging: boolean; // ✅ ドラッグ中かどうかを判定
-};
+const FreeCamera = () => {
+  const { camera, gl } = useThree();
+  const moveSpeed = 0.2; // 基本の移動速度
+  const lookSpeed = 0.002; // 視点の感度
 
-const FreeCamera: React.FC<Props> = ({ isDragging }) => {
-    const { camera } = useThree();
-    const moveSpeed = 0.1; // 基本の移動速度
-    const shiftMultiplier = 3; // Shift キーを押したときの加速倍率
-    const rotationSpeed = 0.002; // カメラの回転速度
-    const direction = useRef(new THREE.Vector3());
-    const keys = useRef<{ [key: string]: boolean }>({});
+  const direction = useRef(new THREE.Vector3());
+  const velocity = useRef(new THREE.Vector3(0, 0, 0));
+  const pitch = useRef(new THREE.Euler(0, 0, 0, "YXZ"));
+  const isMouseDown = useRef(false);
 
-    // **キーボードイベントのリスナー**
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            keys.current[event.key.toLowerCase()] = true;
-        };
-        const handleKeyUp = (event: KeyboardEvent) => {
-            keys.current[event.key.toLowerCase()] = false;
-        };
+  useEffect(() => {
+    console.log("カメラ初期位置:", camera.position);
+    camera.position.set(0, 0, 10);
+    camera.lookAt(new THREE.Vector3(0, 5, 10));
 
-        window.addEventListener("keydown", handleKeyDown);
-        window.addEventListener("keyup", handleKeyUp);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-            window.removeEventListener("keyup", handleKeyUp);
-        };
-    }, []);
+    camera.getWorldDirection(direction.current);
+    console.log("カメラの向き:", direction.current);
+  }, []);
 
-    // **マウスドラッグでカメラの方向を変更**
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            if (isDragging) return;
+  // **キーボードイベントのリスナー**
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!isMouseDown.current) return;
+      pitch.current.y -= event.movementX * lookSpeed; // 左右の回転のみ
+    };
 
-            const sensitivity = 0.8; // **回転の感度を調整**
-            const deltaX = event.movementX * rotationSpeed * sensitivity;
-            const deltaY = event.movementY * rotationSpeed * sensitivity;
+    const handleMouseDown = () => {
+      isMouseDown.current = true;
+      gl.domElement.requestPointerLock(); // マウスをロック
+    };
 
-            // **不要なブレを防ぐ**
-            if (Math.abs(deltaX) > 0.0001 || Math.abs(deltaY) > 0.0001) {
-                camera.rotation.y -= deltaX;
-                camera.rotation.x -= deltaY;
-                camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
-            }
-        };
+    const handleMouseUp = () => {
+      isMouseDown.current = false;
+      document.exitPointerLock(); // マウスロックを解除
+    };
 
-        if (!isDragging) {
-            document.addEventListener("mousemove", handleMouseMove);
-        } else {
-            document.removeEventListener("mousemove", handleMouseMove);
-        }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "KeyW":
+          velocity.current.y = moveSpeed;
+          break;
+        case "KeyS":
+          velocity.current.y = -moveSpeed;
+          break;
+        case "KeyA":
+          velocity.current.x = -moveSpeed;
+          break;
+        case "KeyD":
+          velocity.current.x = moveSpeed;
+          break;
+      }
+      console.log("キー押下:", event.code, "速度:", velocity.current);
+    };
 
-        return () => document.removeEventListener("mousemove", handleMouseMove);
-    }, [isDragging,camera.rotation]);
+    const handleKeyUp = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case "KeyW":
+        case "KeyS":
+          velocity.current.y = 0;
+          break;
+        case "KeyA":
+        case "KeyD":
+          velocity.current.x = 0;
+          break;
+      }
+    };
 
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
 
-    // **カメラ移動処理**
-    useFrame(() => {
-        if (isDragging) return;
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [gl]);
 
-        direction.current.set(0, 0, 0);
-        let speed = moveSpeed;
-        if (keys.current["shift"]) speed *= shiftMultiplier; // Shift を押したら加速
+  useFrame(() => {
+    // z 軸の回転はしない
+    // camera.position.z = 10;
 
-        if (keys.current["w"]) direction.current.z -= speed; // 前進
-        if (keys.current["s"]) direction.current.z += speed; // 後退
-        if (keys.current["a"]) direction.current.x -= speed; // 左移動
-        if (keys.current["d"]) direction.current.x += speed; // 右移動
+    // // カメラの方向を更新
+    camera.getWorldDirection(direction.current);
 
-        // カメラの向きを考慮して移動方向を調整
-        direction.current.applyEuler(camera.rotation);
-        camera.position.add(direction.current);
-    });
+    // X,Y軸の移動(Z軸は固定)
+    camera.position.x += direction.current.x * moveSpeed * velocity.current.x;
+    camera.position.y += direction.current.y * moveSpeed * velocity.current.y;
 
+    // カメラの回転を更新
+    camera.rotation.set(pitch.current.x, pitch.current.y, 0);
+  });
 
-    return (
-        <>
-            {/* **オブジェクト操作時はオービットカメラを有効にする** */}
-            {isDragging && <OrbitControls />}
-        </>
-    );
+  return null;
 };
 
 export default FreeCamera;
