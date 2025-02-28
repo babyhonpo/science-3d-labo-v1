@@ -57,7 +57,7 @@ const FreeCamera: React.FC<Props> = ({ isDragging }) => {
         }
 
         return () => document.removeEventListener("mousemove", handleMouseMove);
-    }, [isDragging]);
+    }, [isDragging,camera.rotation]);
 
 
     // **カメラ移動処理**

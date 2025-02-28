@@ -95,7 +95,7 @@ const Home = () => {
   };
   useEffect(() => {
     setSelectedItems(Array.from(objectRefs.current.keys())); // ✅ `objectRefs` を `selectedItems` に同期
-  }, [objectRefs.current]);
+  }, []);
 
   const renderObjects = useMemo(() => {
     return selectedItems.map((id) => {
@@ -124,7 +124,7 @@ const Home = () => {
         />
       );
     });
-  }, [selectedItems, objectRefs.current]);
+  }, [selectedItems]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
