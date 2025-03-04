@@ -37,13 +37,16 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
       if (isModalOpen) return; // モーダルが開いているときは `Pointer Lock` を適用しない
 
       // 右クリック (button === 2) のときだけ Pointer Lock を適用
-      if (event.button === 2 && document.pointerLockElement !== gl.domElement) {
-        gl.domElement.requestPointerLock();
+      if (event.button === 2) {
+        if (isPointerLocked) {
+          document.exitPointerLock(); // 解除
+        } else {
+          gl.domElement.requestPointerLock(); // 適用
+        }
+      } else if (isPointerLocked) {
+        isMouseDown.current = true;
       }
-      // else {
-      //   isMouseDown.current = true;
-      // }
-      isMouseDown.current = true;
+      // isMouseDown.current = true;
     };
 
     const handleMouseUp = () => {
@@ -90,11 +93,7 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
 
     // Pointer Lock の状態を監視
     const handlePointerLockChange = () => {
-      // const isLocked = document.pointerLockElement === gl.domElement;
       setIsPointerLocked(document.pointerLockElement === gl.domElement);
-      // if (!isLocked) {
-      //   isMouseDown.current = false;
-      // }
     };
 
     document.addEventListener("pointerlockchange", handlePointerLockChange);
@@ -122,9 +121,9 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
   useFrame(() => {
     if (isModalOpen) return;
 
-    if (!isPointerLocked) {
-      pitch.current.y = 0; // 視点をリセット
-    }
+    // if (!isPointerLocked) {
+    //   pitch.current.y = 0; // 視点をリセット
+    // }
 
     // y 軸の回転はしない
 
