@@ -27,7 +27,8 @@ const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
   const [isModalOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -178,7 +179,6 @@ const Home = () => {
         <FreeCamera isModalOpen={isModalOpen} />
       </Canvas>
 
-      {console.log("isModalOpen の値:", isModalOpen)}
       <Box
         sx={{
           display: "flex",

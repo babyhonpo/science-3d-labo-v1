@@ -17,7 +17,7 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
   useEffect(() => {
     camera.position.set(0, 0, 10);
     camera.lookAt(new THREE.Vector3(0, 5, 10));
-  }, []);
+  }, [camera]);
 
   // モーダルが開いたらPointer Lockを解除
   useEffect(() => {
