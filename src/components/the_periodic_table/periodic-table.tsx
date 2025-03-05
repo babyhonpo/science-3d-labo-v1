@@ -1,211 +1,133 @@
-"use client"
+// filepath: /c:/sagyo/honpo/src/components/the_periodic_table/periodic-table.tsx
 
-import { useState } from "react"
-import { useToast } from "@/components/ui/use-toast"
-import { Toaster } from "@/components/ui/toaster"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Atom, Beaker, Zap, Heart, Sun, Moon } from "lucide-react"
-import { elements } from "./data/elements"
-import type { Element, ReactionType } from "./types"
-import { ElementCard } from "./parts/element-card"
-import { getCategoryName, getReactionTypeName } from "./utils/element-helpers"
-import { Switch } from "@/components/ui/switch"
-import React from "react"
+import React, { useState } from "react";
+import { elements } from "./data/elements";
+import type { Element, ReactionType } from "./types";
+import { ElementCard } from "./parts/element-card";
+import { getCategoryName } from "./utils/element-helpers";
+
+// === MUI Components ===
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+  Switch,
+  FormControl,
+  InputLabel,
+  Box,
+} from "@mui/material";
+
+import { Brightness4, Brightness7, Science, ElectricBolt, Favorite, BubbleChart } from "@mui/icons-material";
 
 export default function PeriodicTable() {
-  const { toast } = useToast()
-  const [selectedElement, setSelectedElement] = useState<Element | null>(null)
-  const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+  const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all");
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const handleElementClick = (element: Element) => {
-    setSelectedElement(element)
-    toast({
-      title: `${element.name}を選択しました！`,
-      description: `原子番号: ${element.atomicNumber}、分類: ${getCategoryName(element.category)}`,
-    })
-  }
+    setSelectedElement(element);
+  };
 
   const filteredElements = elements.filter(
-    (element) => reactionFilter === "all" || element.reactions?.some((reaction) => reaction.type === reactionFilter),
-  )
+    (element) => reactionFilter === "all" || element.reactions?.some((reaction) => reaction.type === reactionFilter)
+  );
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-  }
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ease-in-out ${isDarkMode ? "bg-gradient-to-br from-gray-900 to-gray-800" : "bg-gradient-to-br from-blue-100 to-purple-100"}`}
+    <Box
+      minHeight="100vh"
+      sx={{
+        transition: "background-color 0.3s ease-in-out",
+        background: isDarkMode
+          ? "linear-gradient(to bottom right, #1f2937, #374151)"
+          : "linear-gradient(to bottom right, #e0f7fa, #ede7f6)",
+      }}
     >
-      <div className="absolute top-4 right-4 flex items-center space-x-2">
-        <Sun className="h-4 w-4 text-yellow-500" />
-        <Switch checked={isDarkMode} onCheckedChange={toggleDarkMode} />
-        <Moon className="h-4 w-4 text-blue-500" />
-      </div>
-      <div className="mx-auto max-w-7xl p-4 md:p-6">
-        <div className="mb-6 md:mb-8 text-center">
-          <h1
-            className={`text-3xl md:text-5xl font-bold mb-2 ${isDarkMode ? "text-white" : "text-gray-800"} transition-colors duration-300`}
-          >
-            <Atom className="inline-block mr-2 animate-spin-slow" />
-            元素の魔法世界
-          </h1>
-          <p
-            className={`text-base md:text-xl mb-4 ${isDarkMode ? "text-gray-300" : "text-gray-600"} transition-colors duration-300`}
-          >
-            クリックして元素の秘密を解き明かそう！
-          </p>
+      {/* ダークモード切り替え */}
+      <Box position="absolute" top={16} right={16} display="flex" alignItems="center" gap={1}>
+        <Brightness7 color="warning" />
+        <Switch checked={isDarkMode} onChange={toggleDarkMode} />
+        <Brightness4 color="primary" />
+      </Box>
 
-          <Select value={reactionFilter} onValueChange={(value: ReactionType | "all") => setReactionFilter(value)}>
-            <SelectTrigger className="w-full md:w-[250px] mx-auto">
-              <SelectValue placeholder="反応タイプで絞り込み" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">すべての反応</SelectItem>
-              <SelectItem value="電気分解">電気分解</SelectItem>
-              <SelectItem value="燃焼">燃焼</SelectItem>
-              <SelectItem value="加熱">加熱</SelectItem>
-              <SelectItem value="光合成">光合成</SelectItem>
-              <SelectItem value="酸化">酸化</SelectItem>
-              <SelectItem value="火花">火花</SelectItem>
-            </SelectContent>
+      <Box textAlign="center" py={4}>
+        <Typography variant="h3" fontWeight="bold" color={isDarkMode ? "white" : "text.primary"}>
+          <Science sx={{ mr: 1, animation: "spin 4s linear infinite" }} />
+          元素の魔法世界
+        </Typography>
+        <Typography variant="subtitle1" color={isDarkMode ? "grey.400" : "text.secondary"}>
+          クリックして元素の秘密を解き明かそう！
+        </Typography>
+
+        {/* フィルターセレクト */}
+        <FormControl sx={{ mt: 2, width: "250px" }}>
+          <InputLabel>反応タイプで絞り込み</InputLabel>
+          <Select value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
+            <MenuItem value="all">すべての反応</MenuItem>
+            <MenuItem value="電気分解">電気分解</MenuItem>
+            <MenuItem value="燃焼">燃焼</MenuItem>
+            <MenuItem value="加熱">加熱</MenuItem>
+            <MenuItem value="光合成">光合成</MenuItem>
+            <MenuItem value="酸化">酸化</MenuItem>
+            <MenuItem value="火花">火花</MenuItem>
           </Select>
-        </div>
+        </FormControl>
+      </Box>
 
-        <div className="grid grid-cols-9 md:grid-cols-18 gap-1 md:gap-2">
-          {filteredElements.map((element) =>
-            element.category !== "placeholder" ? (
-              <ElementCard key={element.symbol} element={element} onClick={handleElementClick} />
-            ) : (
-              <div key={`placeholder-${element.atomicNumber}`} className="w-full h-full aspect-square" />
-            ),
-          )}
-        </div>
-      </div>
-
-      <Dialog open={!!selectedElement} onOpenChange={() => setSelectedElement(null)}>
-        {selectedElement && (
-          <DialogContent
-            className={`${isDarkMode ? "bg-gray-900" : "bg-white"} border-none text-white max-w-full md:max-w-2xl rounded-xl backdrop-blur-lg bg-opacity-90`}
-          >
-            <DialogHeader>
-              <DialogTitle
-                className={`text-2xl md:text-3xl flex items-center gap-2 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-              >
-                {selectedElement.name}
-                <Badge variant="outline" className="ml-2 text-base md:text-lg">
-                  {selectedElement.symbol}
-                </Badge>
-              </DialogTitle>
-              <DialogDescription className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}>
-                原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
-              </DialogDescription>
-            </DialogHeader>
-
-            <Tabs defaultValue="info" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="info">基本情報</TabsTrigger>
-                <TabsTrigger value="compounds">化合物</TabsTrigger>
-                <TabsTrigger value="reactions">反応</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="info" className="space-y-4">
-                <div className="flex items-start gap-2">
-                  <Beaker className={`w-5 h-5 md:w-6 md:h-6 mt-1 ${isDarkMode ? "text-blue-400" : "text-blue-600"}`} />
-                  <div>
-                    <div
-                      className={`font-semibold text-lg md:text-xl mb-1 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-                    >
-                      特徴
-                    </div>
-                    <p className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}>
-                      {selectedElement.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2">
-                  <Zap className={`w-5 h-5 md:w-6 md:h-6 mt-1 ${isDarkMode ? "text-yellow-400" : "text-yellow-600"}`} />
-                  <div>
-                    <div
-                      className={`font-semibold text-lg md:text-xl mb-1 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-                    >
-                      おもしろ情報
-                    </div>
-                    <p className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}>
-                      {selectedElement.funFact}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2">
-                  <Heart className={`w-5 h-5 md:w-6 md:h-6 mt-1 ${isDarkMode ? "text-pink-400" : "text-pink-600"}`} />
-                  <div>
-                    <div
-                      className={`font-semibold text-lg md:text-xl mb-1 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-                    >
-                      主な用途
-                    </div>
-                    <p className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}>
-                      {selectedElement.commonUse}
-                    </p>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="compounds" className="space-y-4">
-                {selectedElement.compounds?.map((compound) => (
-                  <div
-                    key={compound.formula}
-                    className={`${isDarkMode ? "bg-gray-800" : "bg-gray-100"} rounded-lg p-3 md:p-4`}
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <Beaker className={`w-4 h-4 md:w-5 md:h-5 ${isDarkMode ? "text-green-400" : "text-green-600"}`} />
-                      <h3 className={`font-bold text-lg md:text-xl ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-                        {compound.name}
-                      </h3>
-                      <Badge variant="outline">{compound.formula}</Badge>
-                    </div>
-                    <p className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}>
-                      {compound.description}
-                    </p>
-                  </div>
-                ))}
-              </TabsContent>
-
-              <TabsContent value="reactions" className="space-y-4">
-                {selectedElement.reactions?.map((reaction, index) => (
-                  <div key={index} className={`${isDarkMode ? "bg-gray-800" : "bg-gray-100"} rounded-lg p-3 md:p-4`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Zap className={`w-4 h-4 md:w-5 md:h-5 ${isDarkMode ? "text-orange-400" : "text-orange-600"}`} />
-                      <h3 className={`font-bold text-lg md:text-xl ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-                        {getReactionTypeName(reaction.type)}
-                      </h3>
-                    </div>
-                    <div
-                      className={`flex items-center gap-2 ${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg`}
-                    >
-                      <span>{reaction.reactants.join(" + ")}</span>
-                      <Zap className="w-3 h-3 md:w-4 md:h-4" />
-                      <span>{reaction.products.join(" + ")}</span>
-                    </div>
-                    <p className={`${isDarkMode ? "text-gray-300" : "text-gray-600"} text-base md:text-lg mt-2`}>
-                      {reaction.note}
-                    </p>
-                  </div>
-                ))}
-              </TabsContent>
-            </Tabs>
-          </DialogContent>
+      {/* 元素一覧 */}
+      <Box display="grid" gridTemplateColumns="repeat(9, 1fr)" gap={1} px={2}>
+        {filteredElements.map((element) =>
+          element.category !== "placeholder" ? (
+            <ElementCard key={element.symbol} element={element} onClick={handleElementClick} />
+          ) : (
+            <Box key={`placeholder-${element.atomicNumber}`} />
+          )
         )}
-      </Dialog>
+      </Box>
 
-      <Toaster />
-    </div>
-  )
+      {/* 元素詳細ダイアログ */}
+      {selectedElement && (
+        <Dialog open={!!selectedElement} onClose={() => setSelectedElement(null)}>
+          <DialogTitle>
+            {selectedElement.name} ({selectedElement.symbol})
+          </DialogTitle>
+          <DialogContent>
+            <Typography variant="body1">
+              原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
+            </Typography>
+
+            <Box mt={2}>
+              <Typography display="flex" alignItems="center" gap={1} variant="h6">
+                <BubbleChart color="primary" /> 特徴
+              </Typography>
+              <Typography>{selectedElement.description}</Typography>
+            </Box>
+
+            <Box mt={2}>
+              <Typography display="flex" alignItems="center" gap={1} variant="h6">
+                <ElectricBolt color="warning" /> おもしろ情報
+              </Typography>
+              <Typography>{selectedElement.funFact}</Typography>
+            </Box>
+
+            <Box mt={2}>
+              <Typography display="flex" alignItems="center" gap={1} variant="h6">
+                <Favorite color="error" /> 主な用途
+              </Typography>
+              <Typography>{selectedElement.commonUse}</Typography>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setSelectedElement(null)}>閉じる</Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </Box>
+  );
 }
-
