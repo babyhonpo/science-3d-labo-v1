@@ -16,18 +16,16 @@ import {
   Button,
   Select,
   MenuItem,
-  Switch,
   FormControl,
   InputLabel,
   Box,
 } from "@mui/material";
 
-import { Brightness4, Brightness7, Science, ElectricBolt, Favorite, BubbleChart } from "@mui/icons-material";
+import { Science, ElectricBolt, Favorite, BubbleChart } from "@mui/icons-material";
 
 export default function PeriodicTable() {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null);
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all");
-  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const handleElementClick = (element: Element) => {
     setSelectedElement(element);
@@ -37,31 +35,19 @@ export default function PeriodicTable() {
     (element) => reactionFilter === "all" || element.reactions?.some((reaction) => reaction.type === reactionFilter)
   );
 
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-
   return (
     <Box
       minHeight="100vh"
       sx={{
-        transition: "background-color 0.3s ease-in-out",
-        background: isDarkMode
-          ? "linear-gradient(to bottom right, #1f2937, #374151)"
-          : "linear-gradient(to bottom right, #e0f7fa, #ede7f6)",
+        background: "linear-gradient(to bottom right, #1f2937, #374151)",
       }}
     >
-      {/* ダークモード切り替え */}
-      <Box position="absolute" top={16} right={16} display="flex" alignItems="center" gap={1}>
-        <Brightness7 color="warning" />
-        <Switch checked={isDarkMode} onChange={toggleDarkMode} />
-        <Brightness4 color="primary" />
-      </Box>
-
       <Box textAlign="center" py={4}>
-        <Typography variant="h3" fontWeight="bold" color={isDarkMode ? "white" : "text.primary"}>
+        <Typography variant="h3" fontWeight="bold" color="#fff">
           <Science sx={{ mr: 1, animation: "spin 4s linear infinite" }} />
           元素の魔法世界
         </Typography>
-        <Typography variant="subtitle1" color={isDarkMode ? "grey.400" : "text.secondary"}>
+        <Typography variant="subtitle1" color="#fff">
           クリックして元素の秘密を解き明かそう！
         </Typography>
 
@@ -101,7 +87,7 @@ export default function PeriodicTable() {
             <Typography variant="body1">
               原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
             </Typography>
-
+            
             <Box mt={2}>
               <Typography display="flex" alignItems="center" gap={1} variant="h6">
                 <BubbleChart color="primary" /> 特徴

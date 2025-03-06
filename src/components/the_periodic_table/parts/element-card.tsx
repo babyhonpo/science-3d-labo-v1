@@ -17,22 +17,6 @@ interface ElementCardProps {
   onClick: (element: Element) => void
 }
 
-// MUIスタイルカスタマイズ
-const StyledCard = styled(motion(Card))(({ theme }) => ({
-  aspectRatio: "1 / 1",
-  position: "relative",
-  overflow: "hidden",
-  borderRadius: theme.shape.borderRadius * 2,
-  cursor: "pointer",
-  transition: "all 0.3s ease-in-out",
-  backdropFilter: "blur(10px)",
-  backgroundColor: "rgba(255, 255, 255, 0.1)",
-  border: "1px solid rgba(255, 255, 255, 0.1)",
-  "&:hover": {
-    boxShadow: "0 0 15px rgba(255,255,255,0.3)"
-  }
-}))
-
 export function ElementCard({ element, onClick }: ElementCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -97,7 +81,7 @@ export function ElementCard({ element, onClick }: ElementCardProps) {
         {/* 名前 */}
         <Typography
           variant="caption"
-          sx={{ mt: 0.5, color: "rgba(255, 255, 255, 0.8)" }}
+          sx={{whiteSpace: "nowrap", mt: 0.5, color: "rgba(255, 255, 255, 0.8)" }}
         >
           {element.name}
         </Typography>
@@ -116,3 +100,19 @@ export function ElementCard({ element, onClick }: ElementCardProps) {
     </StyledCard>
   )
 }
+
+// MUIスタイルカスタマイズ
+const StyledCard = styled(motion(Card))(({ theme }) => ({
+  aspectRatio: "1 / 1",
+  position: "relative",
+  overflow: "hidden",
+  borderRadius: theme.shape.borderRadius * 2,
+  cursor: "pointer",
+  transition: "all 0.3s ease-in-out",
+  backdropFilter: "blur(10px)",
+  backgroundColor: "rgba(255, 255, 255, 0.1)",
+  border: "1px solid rgba(255, 255, 255, 0.1)",
+  "&:hover": {
+    boxShadow: "0 0 15px rgba(255,255,255,0.3)"
+  }
+}))
