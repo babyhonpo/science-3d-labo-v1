@@ -57,7 +57,7 @@ export function ElementCard({ element, onClick }: ElementCardProps) {
         {/* 原子番号 */}
         <Typography
           variant="caption"
-          sx={{ position: "absolute", top: 4, left: 4, fontWeight: "bold", fontSize: "0.75rem" }}
+          sx={{ position: "absolute",color: "#fff", top: 4, left: 4, fontWeight: "bold", fontSize: "0.75rem" }}
         >
           {element.atomicNumber}
         </Typography>

@@ -53,8 +53,8 @@ export default function PeriodicTable() {
 
         {/* フィルターセレクト */}
         <FormControl sx={{ mt: 2, width: "250px" }}>
-          <InputLabel>反応タイプで絞り込み</InputLabel>
-          <Select value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
+          <InputLabel sx={{ color: "#fff" }}>反応タイプで絞り込み</InputLabel>
+          <Select sx={{ color: "#fff" }}  value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
             <MenuItem value="all">すべての反応</MenuItem>
             <MenuItem value="電気分解">電気分解</MenuItem>
             <MenuItem value="燃焼">燃焼</MenuItem>
