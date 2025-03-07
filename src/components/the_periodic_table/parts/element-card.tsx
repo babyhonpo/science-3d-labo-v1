@@ -3,7 +3,6 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import type { Element } from "../types"
-import { getCategoryColor } from "../utils/element-helpers"
 import { Beaker, Zap, Droplet, Wind } from "lucide-react"
 
 // MUI Imports
@@ -15,9 +14,10 @@ import { styled } from "@mui/material/styles"
 interface ElementCardProps {
   element: Element
   onClick: (element: Element) => void
+  backgroundColor: string
 }
 
-export function ElementCard({ element, onClick }: ElementCardProps) {
+export function ElementCard({ element, onClick, backgroundColor }: ElementCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   const getStateIcon = () => {
@@ -36,12 +36,12 @@ export function ElementCard({ element, onClick }: ElementCardProps) {
 
   return (
     <StyledCard
-      className={`${getCategoryColor(element.category)}`}
       whileHover={{ scale: 1.05, rotate: 3 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => onClick(element)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      sx = {{backgroundColor: backgroundColor}}
     >
       <CardContent
         sx={{
@@ -110,7 +110,6 @@ const StyledCard = styled(motion(Card))(({ theme }) => ({
   cursor: "pointer",
   transition: "all 0.3s ease-in-out",
   backdropFilter: "blur(10px)",
-  backgroundColor: "rgba(255, 255, 255, 0.1)",
   border: "1px solid rgba(255, 255, 255, 0.1)",
   "&:hover": {
     boxShadow: "0 0 15px rgba(255,255,255,0.3)"

@@ -1,6 +1,15 @@
 import type { ElementCategory } from "../types"
+import type { ColorType } from "./colorType"
 
-export const periodicTableData = [
+type PeriodicTableDataType = {
+  symbol: string
+  name: string
+  atomicNumber: number
+  category: ElementCategory
+  group: number
+  color: ColorType
+} 
+export const periodicTableData:PeriodicTableDataType[] = [
   {
     symbol: "H",
     name: "水素",

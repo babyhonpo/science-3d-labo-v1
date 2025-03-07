@@ -52,10 +52,11 @@ export default function PeriodicTable() {
         </Typography>
 
         {/* フィルターセレクト */}
-        <FormControl sx={{ mt: 2, width: "250px" }}>
-          <InputLabel sx={{ color: "#fff" }}>反応タイプで絞り込み</InputLabel>
-          <Select sx={{ color: "#fff" }}  value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
-            <MenuItem value="all">すべての反応</MenuItem>
+        <FormControl sx={{ mt: 2, width: "250px", "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "#fff" } } }}>
+          <InputLabel  id="demo-simple-select-label" sx={{ color: "#fff" }}>反応タイプ</InputLabel>
+          <Select labelId="demo-simple-select-label" label="反応タイプ" sx={{ color: "#fff" }}  value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
+            {/* <MenuItem value="all">すべての反応</MenuItem> */}
+            <MenuItem value="">選択してください</MenuItem>
             <MenuItem value="電気分解">電気分解</MenuItem>
             <MenuItem value="燃焼">燃焼</MenuItem>
             <MenuItem value="加熱">加熱</MenuItem>
@@ -67,10 +68,14 @@ export default function PeriodicTable() {
       </Box>
 
       {/* 元素一覧 */}
-      <Box display="grid" gridTemplateColumns="repeat(9, 1fr)" gap={1} px={2}>
+      <Box display="grid" gridTemplateColumns={{
+          xs: "repeat(5, 1fr)", // スマホ
+          sm: "repeat(7, 1fr)", // タブレット
+          md: "repeat(9, 1fr)", // PC
+        }} gap={1} px={2}>
         {filteredElements.map((element) =>
           element.category !== "placeholder" ? (
-            <ElementCard key={element.symbol} element={element} onClick={handleElementClick} />
+            <ElementCard key={element.symbol} backgroundColor={element.color} element={element} onClick={handleElementClick} />
           ) : (
             <Box key={`placeholder-${element.atomicNumber}`} />
           )
