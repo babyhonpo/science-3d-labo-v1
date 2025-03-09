@@ -57,12 +57,12 @@ export default function PeriodicTable() {
           <Select labelId="demo-simple-select-label" label="反応タイプ" sx={{ color: "#fff" }}  value={reactionFilter} onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}>
             {/* <MenuItem value="all">すべての反応</MenuItem> */}
             <MenuItem value="">選択してください</MenuItem>
-            <MenuItem value="電気分解">電気分解</MenuItem>
-            <MenuItem value="燃焼">燃焼</MenuItem>
-            <MenuItem value="加熱">加熱</MenuItem>
-            <MenuItem value="光合成">光合成</MenuItem>
-            <MenuItem value="酸化">酸化</MenuItem>
-            <MenuItem value="火花">火花</MenuItem>
+            <MenuItem value="electrolysis">電気分解</MenuItem>
+            <MenuItem value="combustion">燃焼</MenuItem>
+            <MenuItem value="heating">加熱</MenuItem>
+            <MenuItem value="photosynthesis">光合成</MenuItem>
+            <MenuItem value="oxidation">酸化</MenuItem>
+            <MenuItem value="spark">火花</MenuItem>
           </Select>
         </FormControl>
       </Box>
