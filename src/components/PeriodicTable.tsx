@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ElementBox from "./ElementBox";
-import { periodicTableData } from "./periodic_table/data/elementData";
+import {  } from "./periodic_table/data/elementData";
 import "./periodic_table/styles/preriodic_table.css"; // CSS適用
 import { ObjectType } from "../types/types";
 import { Snackbar } from "@mui/material";

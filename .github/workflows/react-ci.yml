@@ -18,17 +18,23 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pnpm
+        run: npm install -g pnpm@10.4.1
+
+      - name: Check pnpm version
+        run: pnpm --version
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run Build
-        run: npm run build
+        run: pnpm build
 
       - name: Run Biome
-        run: npm run biome
+        run: pnpm run biome
 
       - name: Run Lint
-        run: npm run lint
+        run: pnpm run lint
 
       # - name: Run Test
-      #   run: npm run test
+      #   run: pnpm run test

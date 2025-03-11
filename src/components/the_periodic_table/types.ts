@@ -14,7 +14,7 @@ export type ElementCategory =
   | "unknown"
   | "placeholder"
 
-export type ReactionType = "電気分解" | "燃焼" | "加熱" | "光合成" | "酸化" | "火花"
+export type ReactionType = "electrolysis" | "combustion" | "heating" | "photosynthesis" | "oxidation" | "spark"
 
 export type Element = {
   commonUse: ReactNode
