@@ -1,36 +1,32 @@
-// **衝突ルールをオブジェクトのペアとして管理**
-export const collisionRules = new Map<
-  string, // "box-sphere" のような文字列のキー
-  string
->([
-  ["N-O", "Bom"], ["O-N", "Bom"],
+const rule = (types: string[], effect: string) =>
+  [types.sort().join("-"), effect] as const;
 
-  ["Cl-H", "EnergyBurst"], ["H-Cl", "EnergyBurst"],
+// **衝突ルール**
+export const collisionRules = new Map<string,string>([
+  rule(["N", "O"], "Bom"),
 
-  ["Al-Si", "EnergyBurst"], // 任せる
-  ["Si-Al", "EnergyBurst"], // 任せる
-  ["Ga-Ge", "ToxicGasEffect"], // 任せる
-  ["Ge-Ga", "ToxicGasEffect"], // 任せる
+  rule(["Cl", "H"], "EnergyBurst"),
+  rule(["Al", "Si"], "EnergyBurst"),
 
-  ["H-H", "ToxicGasEffect"],
+  rule(["Ga", "Ge"], "ToxicGasEffect"),
+  rule(["H", "H"], "ToxicGasEffect"),
 
-  ["C-O", "SmokeEffect"], ["O-C", "SmokeEffect"],
-  ["S-O", "SmokeEffect"], ["O-S", "SmokeEffect"],
-  ["P-O", "SmokeEffect"], ["O-P", "SmokeEffect"],
-  ["Mg-O", "SmokeEffect"], ["O-Mg", "SmokeEffect"],
+  rule(["C", "O"], "SmokeEffect"),
+  rule(["S", "O"], "SmokeEffect"),
+  rule(["P", "O"], "SmokeEffect"),
+  rule(["Mg", "O"], "SmokeEffect"),
 
-  ["H-O", "LightningEffect"], ["O-H", "LightningEffect"],
-  ["Na-S", "LightningEffect"], ["S-Na", "LightningEffect"],
-  ["Ni-Cd", "LightningEffect"], ["Cd-Ni", "LightningEffect"]
+  rule(["H", "O"], "LightningEffect"),
+  rule(["Na", "S"], "LightningEffect"),
+  rule(["Ni", "Cd"], "LightningEffect"),
 
+  rule(["Ru", "Ru", "Ru"], "SuperLightningEffect"),
 ]);
 
 // **衝突結果を取得**
 export const getCollisionResult = (
-  typeA: string,
-  typeB: string
-): string | null => {
-  // **キーを統一するためにソート**
-  const key = [typeA, typeB].sort().join("-"); // "box-sphere"
+  types: string[] // ["O", "N"] ["H", "O", "H"]など
+) : string | null => {
+  const key = [...types].sort().join("-");
   return collisionRules.get(key) || null;
-};
+}

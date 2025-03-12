@@ -66,27 +66,30 @@ const Home = () => {
     setSelectedItems((prev) => [...prev, id]);
   }, []);
 
-  const handleCollision = (idA: string, idB: string) => {
-    const objA = objectRefs.current.get(idA);
-    const objB = objectRefs.current.get(idB);
+  const handleCollision = (ids: string[]) => {
+    if (ids.length < 2 ) return; // 2つ未満では何も起こさない
 
-    if (!objA || !objB) return;
+    const objects = ids
+      .map((id) => objectRefs.current.get(id))
+      .filter((obj): obj is DraggableObject => obj !== undefined);
 
-    // Ensure symbols are defined before proceeding
-    const symbolA = objA.objInfo.symbol;
-    const symbolB = objB.objInfo.symbol;
-    if (!symbolA || !symbolB) return;
+    if (objects.length != ids.length) return;
 
-    const newType = getCollisionResult(symbolA, symbolB);
+    const symbols = objects.map((obj) => obj.objInfo.symbol);
+    // if (symbols.includes(undefined)) return;
+
+    const newType = getCollisionResult(symbols);
     if (newType === null) return;
 
-    const newPosition = objA.position.clone().lerp(objB.position, 0.5); // 先に `position` を取得
-    objectRefs.current.delete(idA);
-    objectRefs.current.delete(idB);
+    const newPosition = objects
+    .map((obj) => obj.position)
+    .reduce((acc, pos) => acc.add(pos.clone()), new THREE.Vector3())
+    .multiplyScalar(1 / objects.length);
+
+    ids.forEach((id) => objectRefs.current.delete(id)); // 衝突したアイテムを削除
 
     const newId = uuidv4();
     // **衝突した位置の中間地点に新しいアイテムを配置**
-
     const newObj: DraggableObject = {
       id: newId,
       objInfo: {
@@ -100,11 +103,18 @@ const Home = () => {
     };
 
     objectRefs.current.set(newId, newObj);
+
     setSelectedItems((prev) => [
-      ...prev.filter((id) => id !== idA && id !== idB),
+      ...prev.filter((id) => !ids.includes(id)),
       newId,
-    ]); // 配列順を明示
+    ]);
   };
+
+  // ラッパー関数：2個だけ受け取ったときの旧呼び出し元と互換性を保つ
+  const handleCollisionWrapper = (idA: string, idB: string) => {
+    handleCollision([idA, idB]);
+  };
+
   useEffect(() => {
     setSelectedItems(Array.from(objectRefs.current.keys())); // `objectRefs` を `selectedItems` に同期
   }, []);
@@ -131,7 +141,7 @@ const Home = () => {
           position={refData.position}
           onDragStateChange={setIsDragging}
           objectsRef={objectRefs.current}
-          onCollide={handleCollision}
+          onCollide={handleCollisionWrapper}
           objInfo={refData.objInfo}
         />
       );
