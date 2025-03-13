@@ -32,16 +32,16 @@ const Home = () => {
   const [isModalOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log("周期表を開くボタンが押された");
+    // console.log("周期表を開くボタンが押された");
     setOpen(true);
   };
   const handleClose = () => {
-    console.log("周期表を閉じる");
+    // console.log("周期表を閉じる");
     setOpen(false);
   };
 
   useEffect(() => {
-    console.log("isModalOpen の値:", isModalOpen);
+    // console.log("isModalOpen の値:", isModalOpen);
   }, [isModalOpen]);
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
@@ -110,10 +110,6 @@ const Home = () => {
     ]);
   };
 
-  // ラッパー関数：2個だけ受け取ったときの旧呼び出し元と互換性を保つ
-  const handleCollisionWrapper = (idA: string, idB: string) => {
-    handleCollision([idA, idB]);
-  };
 
   useEffect(() => {
     setSelectedItems(Array.from(objectRefs.current.keys())); // `objectRefs` を `selectedItems` に同期
@@ -125,15 +121,15 @@ const Home = () => {
       if (!refData) return null;
 
       return refData.objInfo.symbol === "Bom" ? (
-        <ExplosionEffect position={refData.position} />
+        <ExplosionEffect key={id} position={refData.position} />
       ) : refData.objInfo.symbol === "EnergyBurst" ? (
-        <EnergyBurst />
+        <EnergyBurst key={id} />
       ) : refData.objInfo.symbol === "ToxicGasEffect" ? (
-        <ToxicGasEffect position={refData.position} />
+        <ToxicGasEffect key={id} position={refData.position} />
       ) : refData.objInfo.symbol === "SmokeEffect" ? (
-        <SmokeEffect />
+        <SmokeEffect key={id}  />
       ) : refData.objInfo.symbol === "LightningEffect" ? (
-        <LightningEffect position={refData.position} />
+        <LightningEffect key={id} position={refData.position} />
       ) : (
         <DraggableSphere
           key={id}
@@ -141,7 +137,7 @@ const Home = () => {
           position={refData.position}
           onDragStateChange={setIsDragging}
           objectsRef={objectRefs.current}
-          onCollide={handleCollisionWrapper}
+          onCollide={handleCollision}
           objInfo={refData.objInfo}
         />
       );

@@ -4,6 +4,7 @@ const rule = (types: string[], effect: string) =>
 // **衝突ルール**
 export const collisionRules = new Map<string,string>([
   rule(["N", "O"], "Bom"),
+  rule(["H", "H"], "Bom"),
 
   rule(["Cl", "H"], "EnergyBurst"),
   rule(["Al", "Si"], "EnergyBurst"),
@@ -20,7 +21,7 @@ export const collisionRules = new Map<string,string>([
   rule(["Na", "S"], "LightningEffect"),
   rule(["Ni", "Cd"], "LightningEffect"),
 
-  rule(["Ru", "Ru", "B"], "SuperLightningEffect"),
+  rule(["Ru", "Ru", "Ru"], "LightningEffect"),
 ]);
 
 // **衝突結果を取得**

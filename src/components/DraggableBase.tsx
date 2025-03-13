@@ -53,8 +53,11 @@ const DraggableBase: React.FC<Props> = ({
     });
 
     if (collidingIds.length > 1) {
-      const allids = [refData.id, ...collidingIds];
-      onCollide(allids);
+      const allIds = [refData.id, ...collidingIds];
+
+      console.log("💥 衝突検出:", allIds);
+
+      onCollide(allIds);
     }
   });
 
@@ -120,20 +123,6 @@ const DraggableBase: React.FC<Props> = ({
     groupRef.current.position.add(cameraDirection);
     refData.position.copy(groupRef.current.position);
   };
-
-  // **カメラの動きをスムーズにする**
-  useFrame(() => {
-    if (groupRef.current) {
-      refData.position.copy(groupRef.current.position);
-    }
-
-    // **衝突判定**
-    objectsRef.forEach((obj) => {
-      if (obj.id !== refData.id && checkCollision(refData, obj)) {
-        onCollide(refData.id, obj.id);
-      }
-    });
-  });
 
   // **マウスボタンを離したら移動を終了**
   const handlePointerUp = () => {
