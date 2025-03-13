@@ -22,6 +22,7 @@ import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import { LightningEffect } from "../components/LightningEffect";
+import { Stars } from "@react-three/drei"
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
@@ -148,6 +149,16 @@ const Home = () => {
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
       <Canvas camera={{ position: [0, 5, 10] }}>
+      <color attach="background" args={["#000"]} />
+        <Stars
+          radius={100} // 星が配置される球体の半径
+          depth={50} // 星の奥行きの深さ
+          count={7000} // 星の数
+          factor={4} // 星の大きさの係数
+          saturation={0} // 彩度（0で白色）
+          fade // フェードエフェクトを有効化
+          speed={0.5} // アニメーションの速度
+        />
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
         {/* 環境光 */}
