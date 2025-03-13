@@ -52,7 +52,7 @@ const DraggableBase: React.FC<Props> = ({
       }
     });
 
-    if (collidingIds.length > 1) {
+    if (collidingIds.length >= 1) {
       const allIds = [refData.id, ...collidingIds];
 
       console.log("💥 衝突検出:", allIds);

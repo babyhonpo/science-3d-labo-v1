@@ -22,6 +22,8 @@ export const collisionRules = new Map<string,string>([
   rule(["Ni", "Cd"], "LightningEffect"),
 
   rule(["Ru", "Ru", "Ru"], "LightningEffect"),
+  rule(["H", "Ru", "Ru"], "ToxicGasEffect"),
+  rule(["H", "Fe", "Co", "Ru"], "ToxicGasEffect"),
 ]);
 
 // **衝突結果を取得**
