@@ -4,13 +4,7 @@ import DraggableBase from "./DraggableBase";
 import { DraggableProps } from "../types/types";
 
 export const DraggableSphere: React.FC<DraggableProps> = (props) => {
-  const meshRef = props.refData.mesh;
-  const id = props.objInfo.id;
-  const radius = props.objInfo.radius;
-
-  // useFrame(() => {
-  //   if (!meshRef.current) return;
-  // });
+  if (!props.objInfo?.symbol) return null;
 
   const waterMaterialProps = {
     color: props.objInfo.color,

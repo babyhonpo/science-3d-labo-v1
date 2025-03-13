@@ -19,7 +19,7 @@ export type DraggableProps = {
   refData: DraggableObject;
   position: THREE.Vector3;
   onDragStateChange: (isDragging: boolean) => void;
-  onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
+  onCollide: (ids: string[]) => void; // ✅ handleCollision に統一
   objectsRef: Map<string, DraggableObject>;
   objInfo: ObjectType;
 };

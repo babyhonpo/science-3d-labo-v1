@@ -8,7 +8,7 @@ type Props = {
   refData: DraggableObject;
   position: Vector3;
   onDragStateChange: (isDragging: boolean) => void;
-  onCollide: (idA: string, idB: string) => void;
+  onCollide: (ids: string[]) => void;
   objectsRef: Map<string, DraggableObject>;
   children: React.ReactNode;
 };
@@ -44,12 +44,18 @@ const DraggableBase: React.FC<Props> = ({
       refData.position.copy(groupRef.current.position);
     }
 
-    // 衝突判定
-    Array.from(objectsRef.values()).forEach((obj) => {
+    const collidingIds: string[] = [];
+
+    objectsRef.forEach((obj) => {
       if (obj.id !== refData.id && checkCollision(refData, obj)) {
-        onCollide(refData.id, obj.id);
+        collidingIds.push(obj.id);
       }
     });
+
+    if (collidingIds.length > 1) {
+      const allids = [refData.id, ...collidingIds];
+      onCollide(allids);
+    }
   });
 
   // **マウスが押された時の処理**

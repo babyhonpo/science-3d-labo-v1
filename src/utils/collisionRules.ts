@@ -20,7 +20,7 @@ export const collisionRules = new Map<string,string>([
   rule(["Na", "S"], "LightningEffect"),
   rule(["Ni", "Cd"], "LightningEffect"),
 
-  rule(["Ru", "Ru", "Ru"], "SuperLightningEffect"),
+  rule(["Ru", "Ru", "B"], "SuperLightningEffect"),
 ]);
 
 // **衝突結果を取得**
