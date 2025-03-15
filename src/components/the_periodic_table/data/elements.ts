@@ -1,4 +1,4 @@
-import type { Element } from "../types"
+import type { Element, PeriodicTableDataType } from "../types"
 import { periodicTableData } from "./periodic-table-data"
 import { compounds } from "./compounds"
 import { reactions } from "./reactions"
@@ -10,7 +10,8 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
     compounds: compounds.filter((c) => c.elements.includes("H")),
     reactions: reactions.filter(
       (r) =>
-        r.reactants.some((reactant) => reactant.includes("H")) || r.products.some((product) => product.includes("H")),
+        r.reactants.some((reactant) => reactant.includes("H")) || 
+        r.products.some((product) => product.includes("H")),
     ),
   },
   O: {
@@ -18,7 +19,8 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
     compounds: compounds.filter((c) => c.elements.includes("O")),
     reactions: reactions.filter(
       (r) =>
-        r.reactants.some((reactant) => reactant.includes("O")) || r.products.some((product) => product.includes("O")),
+        r.reactants.some((reactant) => reactant.includes("O")) || 
+        r.products.some((product) => product.includes("O")),
     ),
   },
   Fe: {
@@ -26,15 +28,20 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
     compounds: compounds.filter((c) => c.elements.includes("Fe")),
     reactions: reactions.filter(
       (r) =>
-        r.reactants.some((reactant) => reactant.includes("Fe")) || r.products.some((product) => product.includes("Fe")),
+        r.reactants.some((reactant) => reactant.includes("Fe")) || 
+        r.products.some((product) => product.includes("Fe")),
     ),
   },
   // 他の元素の詳細情報も同様に追加...
 }
 
 // 基本データと詳細情報を結合
-export const elements: Element[] = periodicTableData.map((element) => ({
-  ...element,
-  ...elementDetails[element.symbol],
-}))
-
+export const elements: PeriodicTableDataType[] = periodicTableData.map((element) => {
+  const details = elementDetails[element.symbol] ?? {} // undefined を防ぐ
+  return {
+    ...element,
+    description: details.description ?? "",  // description がない場合は空文字
+    compounds: details.compounds ?? [],     // undefined の場合は空配列をセット
+    reactions: details.reactions ?? [],     // undefined の場合は空配列をセット
+  }
+})

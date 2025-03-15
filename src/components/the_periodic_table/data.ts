@@ -26,14 +26,14 @@ export const reactions: Reaction[] = [
   {
     reactants: ["H2O"],
     products: ["H2", "O2"],
-    type: "電気分解",
+    type: "electrolysis",
     description: "水の電気分解",
     note: "水の分解",
   },
   {
     reactants: ["CH4"],
     products: ["CO2", "H2O"],
-    type: "燃焼",
+    type: "combustion",
     description: "メタンの燃焼",
     note: "燃焼反応",
   },
@@ -44,8 +44,8 @@ export const elements: Element[] = [
   {
     symbol: "H",
     name: "水素",
-    number: 1,
-    group: "nonmetal",
+    atomicNumber: 1,  // ✅ 修正
+    category: "nonmetal",
     description: "最も軽い元素",
     emoji: "💧",
     funFact: "宇宙で最も豊富な元素です！",
@@ -54,9 +54,11 @@ export const elements: Element[] = [
     reactions: reactions.filter(
       (r) =>
         r.reactants.some((reactant) => compounds.find((c) => c.formula === reactant)?.elements.includes("H")) ||
-        r.products.some((product) => compounds.find((c) => c.formula === product)?.elements.includes("H")),
+        r.products.some((product) => compounds.find((c) => c.formula === product)?.elements.includes("H"))
     ),
+    boilingPoint: 20.27, // ✅ ケルビン単位
+    meltingPoint: 13.99, // ✅ ケルビン単位
+    color: "rgb(255,255,255)", // ✅ 水素の色
   },
-  // 他の元素も同様に定義...
 ]
 

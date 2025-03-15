@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { ColorType } from "./data/colorType.ts"
 
 export type ElementCategory =
   | "nonmetal"
@@ -17,6 +18,7 @@ export type ElementCategory =
 export type ReactionType = "electrolysis" | "combustion" | "heating" | "photosynthesis" | "oxidation" | "spark"
 
 export type Element = {
+  emoji: string
   commonUse: ReactNode
   funFact: ReactNode
   boilingPoint: number
@@ -46,3 +48,11 @@ export type Reaction = {
   note: string
 }
 
+export type PeriodicTableDataType = {
+  symbol: string
+  name: string
+  atomicNumber: number
+  category: ElementCategory
+  group: number
+  color: ColorType
+}
