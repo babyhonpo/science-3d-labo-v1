@@ -22,6 +22,7 @@ import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import { LightningEffect } from "../components/LightningEffect";
+import { Stars } from "@react-three/drei"
 
 const Home = () => {
   // すべてのオブジェクトのrefを格納するリスト
@@ -32,16 +33,16 @@ const Home = () => {
   const [isModalOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log("周期表を開くボタンが押された");
+    // console.log("周期表を開くボタンが押された");
     setOpen(true);
   };
   const handleClose = () => {
-    console.log("周期表を閉じる");
+    // console.log("周期表を閉じる");
     setOpen(false);
   };
 
   useEffect(() => {
-    console.log("isModalOpen の値:", isModalOpen);
+    // console.log("isModalOpen の値:", isModalOpen);
   }, [isModalOpen]);
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
@@ -66,27 +67,30 @@ const Home = () => {
     setSelectedItems((prev) => [...prev, id]);
   }, []);
 
-  const handleCollision = (idA: string, idB: string) => {
-    const objA = objectRefs.current.get(idA);
-    const objB = objectRefs.current.get(idB);
+  const handleCollision = (ids: string[]) => {
+    if (ids.length < 2 ) return; // 2つ未満では何も起こさない
 
-    if (!objA || !objB) return;
+    const objects = ids
+      .map((id) => objectRefs.current.get(id))
+      .filter((obj): obj is DraggableObject => obj !== undefined);
 
-    // Ensure symbols are defined before proceeding
-    const symbolA = objA.objInfo.symbol;
-    const symbolB = objB.objInfo.symbol;
-    if (!symbolA || !symbolB) return;
+    if (objects.length != ids.length) return;
 
-    const newType = getCollisionResult(symbolA, symbolB);
+    const symbols = objects.map((obj) => obj.objInfo.symbol);
+    // if (symbols.includes(undefined)) return;
+
+    const newType = getCollisionResult(symbols);
     if (newType === null) return;
 
-    const newPosition = objA.position.clone().lerp(objB.position, 0.5); // 先に `position` を取得
-    objectRefs.current.delete(idA);
-    objectRefs.current.delete(idB);
+    const newPosition = objects
+    .map((obj) => obj.position)
+    .reduce((acc, pos) => acc.add(pos.clone()), new THREE.Vector3())
+    .multiplyScalar(1 / objects.length);
+
+    ids.forEach((id) => objectRefs.current.delete(id)); // 衝突したアイテムを削除
 
     const newId = uuidv4();
     // **衝突した位置の中間地点に新しいアイテムを配置**
-
     const newObj: DraggableObject = {
       id: newId,
       objInfo: {
@@ -100,11 +104,14 @@ const Home = () => {
     };
 
     objectRefs.current.set(newId, newObj);
+
     setSelectedItems((prev) => [
-      ...prev.filter((id) => id !== idA && id !== idB),
+      ...prev.filter((id) => !ids.includes(id)),
       newId,
-    ]); // 配列順を明示
+    ]);
   };
+
+
   useEffect(() => {
     setSelectedItems(Array.from(objectRefs.current.keys())); // `objectRefs` を `selectedItems` に同期
   }, []);
@@ -115,15 +122,15 @@ const Home = () => {
       if (!refData) return null;
 
       return refData.objInfo.symbol === "Bom" ? (
-        <ExplosionEffect position={refData.position} />
+        <ExplosionEffect key={id} position={refData.position} />
       ) : refData.objInfo.symbol === "EnergyBurst" ? (
-        <EnergyBurst />
+        <EnergyBurst key={id} />
       ) : refData.objInfo.symbol === "ToxicGasEffect" ? (
-        <ToxicGasEffect position={refData.position} />
+        <ToxicGasEffect key={id} position={refData.position} />
       ) : refData.objInfo.symbol === "SmokeEffect" ? (
-        <SmokeEffect />
+        <SmokeEffect key={id}  />
       ) : refData.objInfo.symbol === "LightningEffect" ? (
-        <LightningEffect position={refData.position} />
+        <LightningEffect key={id} position={refData.position} />
       ) : (
         <DraggableSphere
           key={id}
@@ -142,6 +149,16 @@ const Home = () => {
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
       <Canvas camera={{ position: [0, 5, 10] }}>
+      <color attach="background" args={["#000"]} />
+        <Stars
+          radius={100} // 星が配置される球体の半径
+          depth={50} // 星の奥行きの深さ
+          count={7000} // 星の数
+          factor={4} // 星の大きさの係数
+          saturation={0} // 彩度（0で白色）
+          fade // フェードエフェクトを有効化
+          speed={0.5} // アニメーションの速度
+        />
         <ambientLight />
         <pointLight position={[100, 10, 10]} />
         {/* 環境光 */}
