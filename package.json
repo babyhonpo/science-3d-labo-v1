@@ -17,8 +17,8 @@
     "@eslint/eslintrc": "^3.3.0",
     "@mui/material": "^6.4.2",
     "@mui/styled-engine-sc": "^6.4.2",
-    "@react-three/drei": "^9.121.4",
-    "@react-three/fiber": "^8.17.14",
+    "@react-three/drei": "^10.0.0-rc.1",
+    "@react-three/fiber": "^9.0.0-alpha.8",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
     "@vitejs/plugin-react": "^4.3.4",
@@ -52,5 +52,6 @@
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.11"
-  }
+  },
+  "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af"
 }
