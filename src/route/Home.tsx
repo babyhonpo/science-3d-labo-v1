@@ -41,9 +41,6 @@ const Home = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    // console.log("isModalOpen の値:", isModalOpen);
-  }, [isModalOpen]);
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType) => {
