@@ -9,6 +9,11 @@ import { v4 as uuidv4 } from "uuid";
 import { getCollisionResult } from "../utils/collisionRules";
 import { DraggableObject, ObjectType } from "../types/types";
 
+/**
+ * 
+ * 
+ * @returns 
+ */
 export const useSceneLogic = () => {
     const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
     const [selectedItems, setSelectedItems] = useState<string[]>([]);

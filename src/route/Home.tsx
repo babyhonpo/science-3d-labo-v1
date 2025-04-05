@@ -1,7 +1,6 @@
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
 import React from "react";
-// import Button from "@mui/material/Button";
 import { Box, Modal, Button } from "@mui/material";
 import PeriodicTable from "../components/PeriodicTable";
 

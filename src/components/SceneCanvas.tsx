@@ -7,9 +7,8 @@ import DraggableSphere from "../components/DraggableSphere";
 import ExplosionEffect from "../components/ExplosionEffect";
 import { EnergyBurst } from "../components/EnergyBurst";
 import { LightningEffect } from "../components/LightningEffect";
+import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
-import * as THREE from "three";
-import { DraggableObject, ObjectType } from "../types/types";
 import { SceneCanvasProps } from "../types/types"
 
 export const SceneCanvas = ({
