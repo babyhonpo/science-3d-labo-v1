@@ -49,7 +49,7 @@ export const SceneCanvas = ({
                     );
                 }
             });
-        }, [selectedItems]);
+        },  [selectedItems, objectRefs, setIsDragging, handleCollision]);
 
     return(
         <Canvas camera={{ position: [0, 5, 10] }}>
