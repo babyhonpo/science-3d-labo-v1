@@ -5,6 +5,7 @@ import "./periodic_table/styles/preriodic_table.css"; // CSS適用
 import { ObjectType } from "../types/types";
 import { Snackbar } from "@mui/material";
 import { useObjInfo } from "../hooks/useObjInfo";
+import { periodicTableData } from "./the_periodic_table/data/periodic-table-data";
 
 interface PeriodicTableProps {
   onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
