@@ -7,6 +7,14 @@ export type ObjectType = {
   name?: string;
 };
 
+export type SceneCanvasProps = {
+  objectRefs: React.MutableRefObject<Map<string, DraggableObject>>;
+  selectedItems: string[];
+  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCollision: (ids: string[]) => void;
+  isModalOpen: boolean;
+};
+
 export type DraggableObject = {
   id: string;
   objInfo: ObjectType;
@@ -19,7 +27,7 @@ export type DraggableProps = {
   refData: DraggableObject;
   position: THREE.Vector3;
   onDragStateChange: (isDragging: boolean) => void;
-  onCollide: (idA: string, idB: string) => void; // ✅ handleCollision に統一
+  onCollide: (ids: string[]) => void;
   objectsRef: Map<string, DraggableObject>;
   objInfo: ObjectType;
 };
