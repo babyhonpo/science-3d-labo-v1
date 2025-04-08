@@ -11,6 +11,16 @@ import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
 
+/**
+ * @param {SceneCanvas} props - シーンに必要なprops群
+ * @param {React.MutableRefObject<Map<string, DraggableObject>>} props.objectRefs - オブジェクト参照マップ
+ * @param {string[]} props.selectedItems - 選択されたアイテムのIDリスト
+ * @param {(isDragging: boolean) => void} props.setIsDragging - ドラッグ中かどうかを設定する関数
+ * @param {(ids: string[]) => void} props.handleCollision - 衝突判定後の処理を行う関数
+ * @param {boolean} props.isModalOpen - 周期表モーダル開閉状態
+ *
+ * @returns {JSX.Element} 3Dシーンを描画するCanvas
+ */
 export const SceneCanvas = ({
     objectRefs,
     selectedItems,
