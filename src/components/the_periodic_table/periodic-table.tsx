@@ -7,23 +7,13 @@ import { getCategoryName } from "./utils/element-helpers"
 import CloseIcon from "@mui/icons-material/Close"
 
 // === MUI Components ===
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Box,
-  Tab,
-  Paper,
-  Tabs,
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, 
+  Select, MenuItem, FormControl, InputLabel, Box, Tab, Paper, Tabs
 } from "@mui/material"
-
-import { Science, ElectricBolt, Favorite, BubbleChart } from "@mui/icons-material"
+import { Atom } from "lucide-react"
+import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-material"
+import { useObjInfo } from "../../hooks/useObjInfo"
+import { ObjectType } from "../../types/types"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -31,6 +21,7 @@ interface TabPanelProps {
   index: number
   value: number
 }
+
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
@@ -55,10 +46,17 @@ function a11yProps(index: number) {
   }
 }
 
-export default function PeriodicTable() {
+interface PeriodicTableProps {
+  onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
+}
+
+  export const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => { 
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
+  const [selectedValue, setSelectedValue] = useState<ObjectType | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const { setObjInfo } = useObjInfo();
 
   const handleElementClick = (element: Element) => {
     setSelectedElement(element)
@@ -73,9 +71,16 @@ export default function PeriodicTable() {
     (element) => reactionFilter === "all" || element.reactions?.some((reaction) => reaction.type === reactionFilter),
   )
 
+  const handleClick = (obj: ObjectType) => {
+    setSelectedValue(obj); // 選択された要素を状態にセット
+    onAddItem(obj); // 選択された要素を onAddItem に渡す
+    setObjInfo(undefined);
+    setOpen(true);
+  };
+
   return (
     <Box
-      minHeight="100vh"
+      minHeight="60vh"
       sx={{
         background: "linear-gradient(to bottom right, #1f2937, #374151)",
         overflow: "auto",
@@ -83,7 +88,7 @@ export default function PeriodicTable() {
     >
       <Box textAlign="center" py={4}>
         <Typography variant="h3" fontWeight="bold" color="#fff">
-          <Science sx={{ mr: 1, animation: "spin 4s linear infinite" }} />
+          <Atom className="inline-block mr-2 animate-spin-slow" />
           元素の魔法世界
         </Typography>
         <Typography variant="subtitle1" color="#fff">
@@ -122,10 +127,14 @@ export default function PeriodicTable() {
         gridTemplateColumns={{
           xs: "repeat(5, 1fr)", // スマホ
           sm: "repeat(7, 1fr)", // タブレット
-          md: "repeat(9, 1fr)", // PC
+          md: "repeat(10, 1fr)", // PC
         }}
         gap={1}
         px={2}
+        sx={{
+          maxHeight: "60vh", // 高さ制限（必要に応じて調整）
+          overflowY: "auto", // 縦スクロールを許可
+        }}
       >
         {filteredElements.map((element) =>
           element.category !== "placeholder" ? (
@@ -143,20 +152,33 @@ export default function PeriodicTable() {
 
       {/* 元素詳細ダイアログ */}
       {selectedElement && (
-        <Dialog open={!!selectedElement} onClose={() => setSelectedElement(null)} maxWidth="md">
+        <Dialog open={!!selectedElement} onClose={() => setSelectedElement(null)} maxWidth="md"
+          slotProps={{
+            paper: {
+              sx: {
+                width: "800px", // 固定幅
+                height: "600px", // 固定高さ
+              },
+            },
+          }}
+        >
           <DialogActions>
             <CloseIcon onClick={() => setSelectedElement(null)} style={{ cursor: "pointer", paddingTop:0 }} />
           </DialogActions>
           <DialogTitle style={{paddingTop:0}}>
             {selectedElement.name} ({selectedElement.symbol})
-          </DialogTitle>
-          <DialogContent>
             <Typography variant="body1">
               原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
             </Typography>
+            <button style={{ display:"flex", alignItems:"center" }} onClick={() => handleClick({
+              symbol: selectedElement.symbol,
+              name: selectedElement.name, 
+              color: selectedElement.color,
+            })}>
+              <Cyclone sx={{ color: '#ba03fc' }} /> 元素を召喚
+            </button>
 
-            <Box mt={2}>
-              <Paper elevation={0} sx={{ bgcolor: "background.paper" }}>
+            <Paper elevation={0} sx={{ bgcolor: "background.paper" }}>
                 <Tabs
                   value={tabValue}
                   onChange={handleTabChange}
@@ -169,6 +191,10 @@ export default function PeriodicTable() {
                   <Tab label="反応" {...a11yProps(2)} />
                 </Tabs>
               </Paper>
+          </DialogTitle>
+          <DialogContent>
+
+            <Box mt={2}>
 
               {/* 基本情報タブ */}
               <TabPanel value={tabValue} index={0}>
