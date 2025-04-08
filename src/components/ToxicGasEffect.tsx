@@ -17,18 +17,10 @@ export default function ToxicGasEffect({ position }: ToxicGasEffectProps) {
   useEffect(() => {
     const sound = new Audio("/explosion1.mp3");
 
-    const playSound = () => {
       sound.volume = 1;
       sound.currentTime = 0; // 毎回最初から再生
       sound.play().catch((error) => console.error("音声再生エラー:", error));
-    };
 
-    // クリックするたびに音を再生
-    document.addEventListener("click", playSound);
-
-    return () => {
-      document.removeEventListener("click", playSound);
-    };
   }, []);
 
   // パーティクルのプロパティを初期化
