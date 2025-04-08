@@ -7,6 +7,9 @@ export type ObjectType = {
   name?: string;
 };
 
+/**
+ * SceneCanvas コンポーネントで使用する props の型定義
+ */
 export type SceneCanvasProps = {
   objectRefs: React.MutableRefObject<Map<string, DraggableObject>>;
   selectedItems: string[];
