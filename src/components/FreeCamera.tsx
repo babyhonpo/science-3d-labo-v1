@@ -29,33 +29,23 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      if (!isMouseDown.current || isModalOpen) return;
+      if (!isPointerLocked || !isMouseDown.current || isModalOpen) return;
       pitch.current.y -= event.movementX * lookSpeed; // 左右の回転
       pitch.current.x -= event.movementY * lookSpeed; // 上下の回転
     };
 
-    const handleMouseDown = (event: MouseEvent) => {
-      if (isModalOpen) return; // モーダルが開いているときは `Pointer Lock` を適用しない
-
-      // 右クリック (button === 2) のときだけ Pointer Lock を適用
-      if (event.button === 2) {
-        if (isPointerLocked) {
-          document.exitPointerLock(); // 解除
-        } else {
-          gl.domElement.requestPointerLock(); // 適用
-        }
-      } else if (isPointerLocked) {
+    const handleMouseDown = () => {
+      if (!isModalOpen && isPointerLocked) {
         isMouseDown.current = true;
       }
-      // isMouseDown.current = true;
     };
+
 
     const handleMouseUp = () => {
       isMouseDown.current = false;
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (isModalOpen) return;
       switch (event.code) {
         case "KeyW":
           velocity.current.z = moveSpeed;
@@ -68,6 +58,13 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
           break;
         case "KeyD":
           velocity.current.x = moveSpeed;
+          break;
+        case "Space":
+          if (isPointerLocked) {
+            document.exitPointerLock();
+          } else {
+            gl.domElement.requestPointerLock();
+          }
           break;
       }
     };
@@ -85,48 +82,38 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
       }
     };
 
-    // Esc キーで Pointer Lock を解除
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.code === "Escape") {
-        document.exitPointerLock();
-      }
-    };
-
     // Pointer Lock の状態を監視
     const handlePointerLockChange = () => {
       setIsPointerLocked(document.pointerLockElement === gl.domElement);
     };
 
-    document.addEventListener("pointerlockchange", handlePointerLockChange);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    document.addEventListener("keydown", handleEscKey);
+    const addEventListeners = () => {
+      document.addEventListener("pointerlockchange", handlePointerLockChange);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mousedown", handleMouseDown);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+    };
 
-    return () => {
-      document.removeEventListener(
-        "pointerlockchange",
-        handlePointerLockChange
-      );
+    const removeEventListeners = () => {
+      document.removeEventListener("pointerlockchange", handlePointerLockChange);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
-      document.removeEventListener("keydown", handleEscKey);
+    };
+
+    addEventListeners();
+
+    return () => {
+      removeEventListeners();
     };
   }, [gl, isPointerLocked, isModalOpen]);
 
   useFrame(() => {
     if (isModalOpen) return;
-
-    // if (!isPointerLocked) {
-    //   pitch.current.y = 0; // 視点をリセット
-    // }
-
-    // y 軸の回転はしない
 
     // カメラの前方ベクトルを更新
     camera.getWorldDirection(direction.current);
