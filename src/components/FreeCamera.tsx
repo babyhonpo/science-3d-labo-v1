@@ -82,37 +82,33 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
       }
     };
 
-    // Esc キーで Pointer Lock を解除
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.code === "Escape") {
-        document.exitPointerLock();
-      }
-    };
-
     // Pointer Lock の状態を監視
     const handlePointerLockChange = () => {
       setIsPointerLocked(document.pointerLockElement === gl.domElement);
     };
 
-    document.addEventListener("pointerlockchange", handlePointerLockChange);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    document.addEventListener("keydown", handleEscKey);
+    const addEventListeners = () => {
+      document.addEventListener("pointerlockchange", handlePointerLockChange);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mousedown", handleMouseDown);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+    };
 
-    return () => {
-      document.removeEventListener(
-        "pointerlockchange",
-        handlePointerLockChange
-      );
+    const removeEventListeners = () => {
+      document.removeEventListener("pointerlockchange", handlePointerLockChange);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
-      document.removeEventListener("keydown", handleEscKey);
+    };
+
+    addEventListeners();
+
+    return () => {
+      removeEventListeners();
     };
   }, [gl, isPointerLocked, isModalOpen]);
 
