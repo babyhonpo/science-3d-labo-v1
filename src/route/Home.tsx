@@ -22,6 +22,8 @@ import { EnergyBurst } from "../components/EnergyBurst";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import { LightningEffect } from "../components/LightningEffect";
+import { useSceneLogic } from "../hooks/useSceneLogic";
+import { SceneCanvas } from "../components/SceneCanvas";
 
 export default function Home(){
   const {
