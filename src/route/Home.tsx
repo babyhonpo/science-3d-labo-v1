@@ -1,27 +1,8 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
-import { Canvas } from "@react-three/fiber";
+import React from "react";
 // import { OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
-import { v4 as uuidv4 } from "uuid";
-import Background from "../components/Backgroud";
-import DraggableSphere from "../components/DraggableSphere";
-import { DraggableObject, ObjectType } from "../types/types";
-import { getCollisionResult } from "../utils/collisionRules";
-import FreeCamera from "../components/FreeCamera";
 import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
 import Button from "@mui/material/Button";
 import { Box, Modal } from "@mui/material";
-import ExplosionEffect from "../components/ExplosionEffect";
-import { EnergyBurst } from "../components/EnergyBurst";
-import ToxicGasEffect from "../components/ToxicGasEffect";
-import SmokeEffect from "../components/SmokeEffect";
-import { LightningEffect } from "../components/LightningEffect";
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
 
