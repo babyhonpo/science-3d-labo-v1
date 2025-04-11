@@ -30,7 +30,8 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isMouseDown.current || isModalOpen) return;
-      pitch.current.y -= event.movementX * lookSpeed; // 左右の回転のみ
+      pitch.current.y -= event.movementX * lookSpeed; // 左右の回転
+      pitch.current.x -= event.movementY * lookSpeed; // 上下の回転
     };
 
     const handleMouseDown = (event: MouseEvent) => {
