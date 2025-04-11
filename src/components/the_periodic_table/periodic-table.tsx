@@ -54,8 +54,8 @@ interface PeriodicTableProps {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
-  const [selectedValue, setSelectedValue] = useState<ObjectType | null>(null);
-  const [open, setOpen] = React.useState(false);
+  const [, setSelectedValue] = useState<ObjectType | null>(null);
+  const [, setOpen] = React.useState(false);
   const { setObjInfo } = useObjInfo();
 
   const handleElementClick = (element: Element) => {
