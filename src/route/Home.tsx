@@ -1,8 +1,10 @@
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Modal, Button } from "@mui/material";
 import PeriodicTable from "../components/PeriodicTable";
+import { ObjectType } from "../types/types";
+
 
 export default function Home(){
   const {
@@ -16,6 +18,11 @@ export default function Home(){
     setIsDragging,
   } = useSceneLogic();
 
+
+  const [addItemFront, setAddItemFront] = useState<
+    ((type: ObjectType ) => void) | null
+  >(null);
+
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -25,6 +32,8 @@ export default function Home(){
         setIsDragging={setIsDragging}
         handleCollision={handleCollision}
         isModalOpen={isModalOpen}
+        onAddItem={handleAddItem}
+        onAddItemToFront={( fn ) => setAddItemFront(() => fn)}
       />
       <Box
         sx={{
@@ -60,11 +69,16 @@ export default function Home(){
             top: "10%",
           }}
         >
-          <PeriodicTable onAddItem={handleAddItem} />
+          <PeriodicTable
+            onAddItem={(type) => {
+              if (addItemFront) {
+                addItemFront(type)
+              }
+            }}
+          />
         </Box>
       </Modal>
     </div>
   );
 };
 
-// export default Home;

@@ -23,7 +23,7 @@ import { DraggableObject, ObjectType } from "../types/types";
 * isModalOpen: boolean;
 * handleOpen: () => void;
 * handleClose: () => void;
-* handleAddItem: (type: ObjectType) => void;
+* handleAddItem: (type: ObjectType, position: THREE.Vector3) => void;
 * handleCollision: (ids: string[]) => void;
 * setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
 * }} シーン操作に必要な状態や操作関数のオブジェクト
@@ -45,20 +45,14 @@ useEffect(() => {
 // アイテム追加ボタンがクリックされたときのオブジェクトを追加
 
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
-  const handleAddItem = useCallback((type: ObjectType) => {
+  const handleAddItem = useCallback((type: ObjectType, position: THREE.Vector3) => {
     const id = uuidv4();
-    const distance = 2;
-    const direction = new THREE.Vector3(1, 0, 0).normalize();
-    const offset = objectRefs.current.size * 2;
-    const initialPosition = new THREE.Vector3(-2, 0, -0.6); // 初期位置を設定
 
     const newObj: DraggableObject = {
       id,
       objInfo: type, // ここで type を直接格納
       mesh: React.createRef<THREE.Mesh>(),
-      position: initialPosition.add(
-        direction.multiplyScalar(distance + offset)
-      ), // 初期位置に基づいて位置を設定
+      position,
       radius: 1,
     };
 

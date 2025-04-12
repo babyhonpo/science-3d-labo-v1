@@ -1,5 +1,5 @@
 import React,{ useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas} from "@react-three/fiber";
 import { Stars } from "@react-three/drei"
 import Background from "../components/Backgroud";
 import FreeCamera from "../components/FreeCamera";
@@ -10,6 +10,7 @@ import { LightningEffect } from "../components/LightningEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
+import { SceneCanvasInner } from "./SceneCanvasInner";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -27,7 +28,11 @@ export const SceneCanvas = ({
     setIsDragging,
     handleCollision,
     isModalOpen,
+    onAddItem,
+    onAddItemToFront,
 }: SceneCanvasProps) => {
+
+
 
     const renderObjects = useMemo(() => {
         return selectedItems.map((id) => {
@@ -63,6 +68,10 @@ export const SceneCanvas = ({
 
     return(
         <Canvas camera={{ position: [0, 5, 10] }}>
+            <SceneCanvasInner
+                onAddItem={onAddItem}
+                onAddItemToFront={onAddItemToFront}
+            />
             <color attach="background" args={["#000"]} />
             <Stars
                 radius={100} // 星が配置される球体の半径
