@@ -54,8 +54,8 @@ interface PeriodicTableProps {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
-  const [, setSelectedValue] = useState<ObjectType | null>(null);
-  const [, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = useState<ObjectType | null>(null);
+  const [open, setOpen] = React.useState(false);
   const { setObjInfo } = useObjInfo();
 
   const handleElementClick = (element: Element) => {
@@ -158,6 +158,8 @@ interface PeriodicTableProps {
               sx: {
                 width: "800px", // 固定幅
                 height: "600px", // 固定高さ
+                background: "linear-gradient(to bottom right, #1f2937, #374151)",
+                overflow: "auto",
               },
             },
           }}
@@ -165,12 +167,12 @@ interface PeriodicTableProps {
           <DialogActions>
             <CloseIcon onClick={() => setSelectedElement(null)} style={{ cursor: "pointer", paddingTop:0 }} />
           </DialogActions>
-          <DialogTitle style={{paddingTop:0}}>
+          <DialogTitle style={{paddingTop:0, color:"#fff"}}>
             {selectedElement.name} ({selectedElement.symbol})
             <Typography variant="body1">
               原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
             </Typography>
-            <button style={{ display:"flex", alignItems:"center" }} onClick={() => handleClick({
+            <button style={{ display:"flex", alignItems:"center", marginTop:"10px", marginBottom:"10px" }} onClick={() => handleClick({
               symbol: selectedElement.symbol,
               name: selectedElement.name, 
               color: selectedElement.color,
@@ -192,12 +194,12 @@ interface PeriodicTableProps {
                 </Tabs>
               </Paper>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ color: "#fff" }}>
 
             <Box mt={2}>
 
               {/* 基本情報タブ */}
-              <TabPanel value={tabValue} index={0}>
+              <TabPanel value={tabValue} index={0} >
                 <Box mt={2}>
                   <Typography display="flex" alignItems="center" gap={1} variant="h6">
                     <BubbleChart color="primary" /> 特徴
