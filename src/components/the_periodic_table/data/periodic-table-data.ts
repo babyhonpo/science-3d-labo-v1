@@ -1,6 +1,5 @@
 import type { ElementCategory, PeriodicTableDataType } from "../types"
 
-
 export const periodicTableData: PeriodicTableDataType[] = [
   {
     symbol: "H",
@@ -9,6 +8,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "He",
@@ -17,6 +21,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Li",
@@ -25,6 +34,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Be",
@@ -33,6 +47,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "B",
@@ -41,6 +60,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "C",
@@ -49,6 +73,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "N",
@@ -57,6 +86,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "O",
@@ -65,6 +99,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "F",
@@ -73,6 +112,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "halogen" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ne",
@@ -81,6 +125,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Na",
@@ -89,6 +138,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Mg",
@@ -97,6 +151,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Al",
@@ -105,6 +164,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Si",
@@ -113,6 +177,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "P",
@@ -121,6 +190,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "S",
@@ -129,6 +203,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cl",
@@ -137,6 +216,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "halogen" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ar",
@@ -145,6 +229,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "K",
@@ -153,6 +242,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ca",
@@ -161,6 +255,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sc",
@@ -169,6 +268,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ti",
@@ -177,6 +281,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "V",
@@ -185,6 +294,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cr",
@@ -193,6 +307,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Mn",
@@ -201,6 +320,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Fe",
@@ -209,6 +333,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Co",
@@ -217,6 +346,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ni",
@@ -225,6 +359,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cu",
@@ -233,6 +372,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Zn",
@@ -241,6 +385,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ga",
@@ -249,6 +398,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ge",
@@ -257,6 +411,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "As",
@@ -265,6 +424,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Se",
@@ -273,6 +437,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "nonmetal" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Br",
@@ -281,6 +450,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "halogen" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Kr",
@@ -289,6 +463,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Rb",
@@ -297,6 +476,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sr",
@@ -305,6 +489,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Y",
@@ -313,6 +502,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Zr",
@@ -321,6 +515,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Nb",
@@ -329,6 +528,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Mo",
@@ -337,6 +541,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Tc",
@@ -345,6 +554,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ru",
@@ -353,6 +567,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Rh",
@@ -361,6 +580,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pd",
@@ -369,6 +593,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ag",
@@ -377,6 +606,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cd",
@@ -385,6 +619,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "In",
@@ -393,6 +632,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sn",
@@ -401,6 +645,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sb",
@@ -409,6 +658,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Te",
@@ -417,6 +671,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "metalloid" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "I",
@@ -425,6 +684,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "halogen" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Xe",
@@ -433,6 +697,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cs",
@@ -441,6 +710,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ba",
@@ -449,6 +723,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "La",
@@ -457,6 +736,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ce",
@@ -465,6 +749,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pr",
@@ -473,6 +762,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Nd",
@@ -481,6 +775,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pm",
@@ -489,6 +788,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sm",
@@ -497,6 +801,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Eu",
@@ -505,6 +814,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Gd",
@@ -513,6 +827,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Tb",
@@ -521,6 +840,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Dy",
@@ -529,6 +853,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ho",
@@ -537,6 +866,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Er",
@@ -545,6 +879,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Tm",
@@ -553,6 +892,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Yb",
@@ -561,6 +905,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Lu",
@@ -569,6 +918,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "lanthanide" as ElementCategory,
     group: 4,
     color: "rgb(129,209,214)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Hf",
@@ -577,6 +931,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ta",
@@ -585,6 +944,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "W",
@@ -593,6 +957,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Re",
@@ -601,6 +970,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Os",
@@ -609,6 +983,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ir",
@@ -617,6 +996,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pt",
@@ -625,6 +1009,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Au",
@@ -633,6 +1022,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Hg",
@@ -641,6 +1035,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Tl",
@@ -649,6 +1048,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pb",
@@ -657,6 +1061,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Bi",
@@ -665,6 +1074,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Po",
@@ -673,6 +1087,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "At",
@@ -681,6 +1100,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "halogen" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Rn",
@@ -689,6 +1113,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "noble-gas" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Fr",
@@ -697,6 +1126,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkali-metal" as ElementCategory,
     group: 1,
     color: "rgb(244,129,132)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ra",
@@ -705,6 +1139,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "alkaline-earth" as ElementCategory,
     group: 2,
     color: "rgb(247,158,85)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ac",
@@ -713,6 +1152,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Th",
@@ -721,6 +1165,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pa",
@@ -729,6 +1178,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "U",
@@ -737,6 +1191,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Np",
@@ -745,6 +1204,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Pu",
@@ -753,6 +1217,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Am",
@@ -761,6 +1230,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cm",
@@ -769,6 +1243,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Bk",
@@ -777,6 +1256,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cf",
@@ -785,6 +1269,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Es",
@@ -793,6 +1282,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Fm",
@@ -801,6 +1295,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Md",
@@ -809,6 +1308,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "No",
@@ -817,6 +1321,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Lr",
@@ -825,6 +1334,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "actinide" as ElementCategory,
     group: 5,
     color: "rgb(74,174,80)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Rf",
@@ -833,6 +1347,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Db",
@@ -841,6 +1360,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Sg",
@@ -849,6 +1373,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Bh",
@@ -857,6 +1386,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Hs",
@@ -865,6 +1399,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Mt",
@@ -873,6 +1412,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ds",
@@ -881,6 +1425,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Rg",
@@ -889,6 +1438,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Cn",
@@ -897,6 +1451,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "transition-metal" as ElementCategory,
     group: 3,
     color: "rgb(106,161,191)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Nh",
@@ -905,6 +1464,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 6,
     color: "rgb(128,128,128)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Fl",
@@ -913,6 +1477,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 7,
     color: "rgb(205,165,69)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Mc",
@@ -921,6 +1490,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 8,
     color: "rgb(129,210,101)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Lv",
@@ -929,6 +1503,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "post-transition-metal" as ElementCategory,
     group: 9,
     color: "rgb(74,187,185)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Ts",
@@ -937,6 +1516,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 10,
     color: "rgb(76,118,184)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
   {
     symbol: "Og",
@@ -945,6 +1529,11 @@ export const periodicTableData: PeriodicTableDataType[] = [
     category: "unknown" as ElementCategory,
     group: 11,
     color: "rgb(185,144,188)",
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "",
+    commonUse: undefined,
+    funFact: undefined
   },
 ]
 

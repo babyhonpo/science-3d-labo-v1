@@ -43,7 +43,7 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
 
 // 基本データと詳細情報を結合
 export const elements: PeriodicTableDataType[] = periodicTableData.map((element) => {
-  const details: Partial<Pick<Element, "description" | "compounds" | "reactions" | "funFact" | "commonUse">> = elementDetails[element.symbol] ?? {} // undefined を防ぐ
+  const details: Partial<Pick<Element, "description" | "compounds" | "reactions" | "funFact" | "commonUse" >> = elementDetails[element.symbol] ?? {} // undefined を防ぐ
   return {
     ...element,
     description: details.description ?? "",  // description がない場合は空文字

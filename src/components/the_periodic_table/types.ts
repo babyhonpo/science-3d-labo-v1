@@ -1,5 +1,4 @@
 import { ReactNode } from "react"
-import { ColorType } from "./data/colorType.ts"
 
 export type ElementCategory =
   | "nonmetal"
@@ -33,11 +32,19 @@ export type Element = {
   reactions?: Reaction[]
 }
 
-export type Compound = {
-  formula: string
+export type PeriodicTableDataType = {
+  symbol: string
   name: string
-  elements: string[]
-  description: string
+  atomicNumber: number
+  category: ElementCategory
+  group: number
+  color: string
+  boilingPoint: number
+  meltingPoint: number
+  emoji: string
+  commonUse: ReactNode
+  funFact: ReactNode
+  reactions?: Reaction[]
 }
 
 export type Reaction = {
@@ -48,11 +55,9 @@ export type Reaction = {
   note: string
 }
 
-export type PeriodicTableDataType = {
-  symbol: string
+export type Compound = {
+  formula: string
   name: string
-  atomicNumber: number
-  category: ElementCategory
-  group: number
-  color: ColorType
+  elements: string[]
+  description: string
 }
