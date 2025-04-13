@@ -1,8 +1,10 @@
+import React from "react";
+// import { OrbitControls } from "@react-three/drei";
+import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
+import Button from "@mui/material/Button";
+import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
-import React from "react";
-import { Box, Modal, Button } from "@mui/material";
-import PeriodicTable from "../components/PeriodicTable";
 
 export default function Home(){
   const {
