@@ -1,10 +1,10 @@
+import React, { useState } from "react";
+import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
+import { Box, Modal, Button } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
-import React, { useState } from "react";
-import { Box, Modal, Button } from "@mui/material";
-import PeriodicTable from "../components/PeriodicTable";
+// import PeriodicTable from "../components/PeriodicTable";
 import { ObjectType } from "../types/types";
-
 
 export default function Home(){
   const {
