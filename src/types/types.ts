@@ -16,6 +16,8 @@ export type SceneCanvasProps = {
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
   handleCollision: (ids: string[]) => void;
   isModalOpen: boolean;
+  onAddItem: (type: ObjectType, position: THREE.Vector3) => void;
+  onAddItemToFront: (fn: (type: ObjectType) => void) => void;
 };
 
 export type DraggableObject = {
