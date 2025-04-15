@@ -109,8 +109,7 @@ interface PeriodicTableProps {
             value={reactionFilter}
             onChange={(e) => setReactionFilter(e.target.value as ReactionType | "all")}
           >
-            {/* <MenuItem value="all">すべての反応</MenuItem> */}
-            <MenuItem value="">選択してください</MenuItem>
+            <MenuItem value="all">すべての反応</MenuItem>
             <MenuItem value="electrolysis">電気分解</MenuItem>
             <MenuItem value="combustion">燃焼</MenuItem>
             <MenuItem value="heating">加熱</MenuItem>

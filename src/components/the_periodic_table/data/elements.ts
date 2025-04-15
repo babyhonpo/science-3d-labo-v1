@@ -7,7 +7,7 @@ import { reactions } from "./reactions"
 const elementDetails: Partial<Record<string, Pick<Element, "description" | "compounds" | "reactions" | "funFact" | "commonUse" >>> = {
   H: {
     description: "最も軽い元素で、宇宙で最も豊富に存在する",
-    funFact: "水素は宇宙の約75%を占めています",
+    funFact: "水素は宇宙の約75%を占めています。おならの10～20%が水素で、おならを集めて火をつけると燃えます。",
     commonUse: "水素燃料電池や化学工業で使用される",
     compounds: compounds.filter((c) => c.elements.includes("H")),
     reactions: reactions.filter(
@@ -18,7 +18,7 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
   },
   O: {
     description: "生命に不可欠な元素で、地球の大気の主成分",
-    funFact: "酸素は地球の大気の約21%を占めています",
+    funFact: "酸素は地球の大気の約21%を占めています。太古の地球では酸素は生物にとって猛毒ガスだった！",
     commonUse: "呼吸や燃焼に必要な元素",
     compounds: compounds.filter((c) => c.elements.includes("O")),
     reactions: reactions.filter(
@@ -29,7 +29,7 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
   },
   Fe: {
     description: "最も一般的な金属元素の一つ",
-    funFact: "鉄は地球の中心に最も多く存在する元素の一つ",
+    funFact: "鉄は室温では α鉄（フェライト）、熱すると γ鉄（オーステナイト）、γ鉄をさらに熱すると δ鉄（デルタフェライト）へと変化します",
     commonUse: "建設や製造業で広く使用される",
     compounds: compounds.filter((c) => c.elements.includes("Fe")),
     reactions: reactions.filter(
