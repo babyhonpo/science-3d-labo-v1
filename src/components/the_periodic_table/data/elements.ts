@@ -150,7 +150,7 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
   },
   Si: {
     description: "半導体の主役で、現代社会を支える元素",
-    funFact: "スマホもパソコンも、シリコンチップがなきゃ動かない！",
+    funFact: "ガラスや半導体、シリカゲル、珪藻土など、身の回りに身近な様々な素材に含まれています！",
     commonUse: "ガラス、コンピュータのCPU、建材、化粧品など",
     compounds: compounds.filter((c) => c.elements.includes("Si")),
     reactions: reactions.filter(
