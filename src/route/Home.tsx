@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useEffect,useState,useRef } from "react";
 import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
 import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
@@ -7,6 +7,12 @@ import { ObjectType } from "../types/types";
 import Orb  from "../components/Orb";
 
 export default function Home(){
+  const [mode, setMode] = useState<"creation" | "reaction">("reaction");
+
+  useEffect(() => {
+    console.log("現在のモード:", mode);
+  }, [mode]);
+
   const {
     objectRefs,
     selectedItems,
@@ -16,7 +22,7 @@ export default function Home(){
     handleAddItem,
     handleCollision,
     setIsDragging,
-  } = useSceneLogic();
+  } = useSceneLogic(mode);
 
 
   const [addItemFront, setAddItemFront] = useState<
@@ -45,6 +51,7 @@ export default function Home(){
         isModalOpen={isModalOpen}
         onAddItem={handleAddItem}
         onAddItemToFront={( fn ) => setAddItemFront(() => fn)}
+        mode={mode}
       />
       <Box
         ref={buttonRef}
@@ -96,6 +103,15 @@ export default function Home(){
             </div>
         </div>
       </Box>
+
+      <button
+        style={{ position: "absolute", top: 20, left: 20, zIndex: 10 }}
+        onClick={() =>
+          setMode((prev) => (prev === "creation" ? "reaction" : "creation"))
+        }
+      >
+        現在モード: {mode === "reaction" ? "元素反応" : "物質作成"}
+      </button>
 
       <Modal
         open={isModalOpen}

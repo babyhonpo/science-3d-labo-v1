@@ -28,7 +28,7 @@ import { DraggableObject, ObjectType } from "../types/types";
 * setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
 * }} シーン操作に必要な状態や操作関数のオブジェクト
 */
-export const useSceneLogic = () => {
+export const useSceneLogic = (mode: "creation" | "reaction") => {
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -79,7 +79,8 @@ useEffect(() => {
     const symbols = objects.map((obj) => obj.objInfo.symbol);
     // if (symbols.includes(undefined)) return;
 
-    const newType = getCollisionResult(symbols);
+    const newType = getCollisionResult(symbols, mode);
+    console.log("symbols:", symbols, "mode:", mode, "→ result:", newType);
     if (newType === null) return;
 
     const newPosition = objects
@@ -109,7 +110,7 @@ useEffect(() => {
       ...prev.filter((id) => !ids.includes(id)),
       newId,
     ]);
-  }, []);
+  }, [mode]);
 
   return {
     objectRefs, // 全オブジェクトの参照を保持
