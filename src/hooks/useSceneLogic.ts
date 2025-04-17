@@ -110,7 +110,7 @@ useEffect(() => {
       ...prev.filter((id) => !ids.includes(id)),
       newId,
     ]);
-  }, []);
+  }, [mode]);
 
   return {
     objectRefs, // 全オブジェクトの参照を保持
