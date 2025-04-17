@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { RefObject } from "react";
+import { CollisionMode } from "../utils/collisionRules";
 
 export type ObjectType = {
   symbol: string;
@@ -18,6 +19,7 @@ export type SceneCanvasProps = {
   isModalOpen: boolean;
   onAddItem: (type: ObjectType, position: THREE.Vector3) => void;
   onAddItemToFront: (fn: (type: ObjectType) => void) => void;
+  mode: CollisionMode;
 };
 
 export type DraggableObject = {
