@@ -214,7 +214,7 @@ interface PeriodicTableProps {
             <Typography variant="body1">
               原子番号: {selectedElement.atomicNumber} | 分類: {getCategoryName(selectedElement.category)}
             </Typography>
-            <button style={{ display:"flex", alignItems:"center", marginTop:"10px", marginBottom:"10px" }} onClick={() => handleClick({
+            <button style={{ display:"flex", alignItems:"center", marginTop:"10px", marginBottom:"10px", color:"#666" }} onClick={() => handleClick({
               symbol: selectedElement.symbol,
               name: selectedElement.name, 
               color: selectedElement.color,

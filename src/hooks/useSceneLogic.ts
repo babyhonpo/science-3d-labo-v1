@@ -28,25 +28,30 @@ import { DraggableObject, ObjectType } from "../types/types";
 * setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
 * }} シーン操作に必要な状態や操作関数のオブジェクト
 */
-export const useSceneLogic = () => {
+export const useSceneLogic = (mode: "creation" | "reaction") => {
   const objectRefs = useRef<Map<string, DraggableObject>>(new Map());
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_isDragging, setIsDragging] = useState(false); // ドラッグ状態を管理
   const [isModalOpen, setOpen] = useState(false);
 
+  const summonOffset = useRef(new THREE.Vector3(0, 0, 0));
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    summonOffset.current.set(0, 0, 0);
+  }
 
 useEffect(() => {
   setSelectedItems(Array.from(objectRefs.current.keys())); // `objectRefs` を `selectedItems` に同期
 }, []);
 
-// アイテム追加ボタンがクリックされたときのオブジェクトを追加
-
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
-  const handleAddItem = useCallback((type: ObjectType, position: THREE.Vector3) => {
+  const handleAddItem = useCallback((type: ObjectType, basePosition: THREE.Vector3) => {
     const id = uuidv4();
+
+    const position = basePosition.clone().add(summonOffset.current);
 
     const newObj: DraggableObject = {
       id,
@@ -58,6 +63,8 @@ useEffect(() => {
 
     objectRefs.current.set(id, newObj);
     setSelectedItems((prev) => [...prev, id]);
+
+    summonOffset.current.add(new THREE.Vector3(2, 0, 0)); // 次のアイテムの位置を調整
   }, []);
 
   const handleCollision = useCallback((ids: string[]) => {
@@ -72,7 +79,8 @@ useEffect(() => {
     const symbols = objects.map((obj) => obj.objInfo.symbol);
     // if (symbols.includes(undefined)) return;
 
-    const newType = getCollisionResult(symbols);
+    const newType = getCollisionResult(symbols, mode);
+    console.log("symbols:", symbols, "mode:", mode, "→ result:", newType);
     if (newType === null) return;
 
     const newPosition = objects
@@ -102,7 +110,7 @@ useEffect(() => {
       ...prev.filter((id) => !ids.includes(id)),
       newId,
     ]);
-  }, []);
+  }, [mode]);
 
   return {
     objectRefs, // 全オブジェクトの参照を保持

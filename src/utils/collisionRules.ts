@@ -1,35 +1,20 @@
-const rule = (types: string[], effect: string) =>
-  [types.sort().join("-"), effect] as const;
+import { creationModeRules } from "./collisionRules.creation";
+import { reactionModeRules } from "./collisionRules.reaction";
 
-// **衝突ルール**
-export const collisionRules = new Map<string,string>([
-  rule(["N", "O"], "Bom"),
-  rule(["H", "H"], "Bom"),
+// モードのの型定義
+export type CollisionMode = "creation" | "reaction";
 
-  rule(["Cl", "H"], "EnergyBurst"),
-  rule(["Al", "Si"], "EnergyBurst"),
-
-  rule(["Ga", "Ge"], "ToxicGasEffect"),
-  rule(["H", "H"], "ToxicGasEffect"),
-
-  rule(["C", "O"], "SmokeEffect"),
-  rule(["S", "O"], "SmokeEffect"),
-  rule(["P", "O"], "SmokeEffect"),
-  rule(["Mg", "O"], "SmokeEffect"),
-
-  rule(["H", "O"], "LightningEffect"),
-  rule(["Na", "S"], "LightningEffect"),
-  rule(["Ni", "Cd"], "LightningEffect"),
-
-  rule(["Ru", "Ru", "Ru"], "LightningEffect"),
-  rule(["H", "Ru", "Ru"], "ToxicGasEffect"),
-  rule(["H", "Fe", "Co", "Ru"], "ToxicGasEffect"),
-]);
+export const collisionRulesByMode: Record<CollisionMode, Map<string, string>> = {
+  creation: creationModeRules,
+  reaction: reactionModeRules,
+};
 
 // **衝突結果を取得**
 export const getCollisionResult = (
-  types: string[] // ["O", "N"] ["H", "O", "H"]など
+  types: string[],
+  mode: CollisionMode,
 ) : string | null => {
   const key = [...types].sort().join("-");
-  return collisionRules.get(key) || null;
+  // console.log(getCollisionResult(["H", "H"], "reaction"));
+  return collisionRulesByMode[mode].get(key) || null;
 }
