@@ -8,12 +8,14 @@ import CloseIcon from "@mui/icons-material/Close"
 
 // === MUI Components ===
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, 
-  Select, MenuItem, FormControl, InputLabel, Box, Tab, Paper, Tabs
+  Select, MenuItem, FormControl, InputLabel, Box, Tab, Paper, Tabs,
+  IconButton
 } from "@mui/material"
 import { Atom } from "lucide-react"
 import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-material"
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
+import { FireElementCard } from "../fire-element"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -54,6 +56,7 @@ interface PeriodicTableProps {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
+  const [showFireEffect, setShowFireEffect] = useState(false)
   const [, setSelectedValue] = useState<ObjectType | null>(null);
   const [, setOpen] = React.useState(false);
   const { setObjInfo } = useObjInfo();
@@ -123,29 +126,69 @@ interface PeriodicTableProps {
       {/* 元素一覧 */}
       <Box
         display="grid"
-        gridTemplateColumns={{
-          xs: "repeat(5, 1fr)", // スマホ
-          sm: "repeat(7, 1fr)", // タブレット
-          md: "repeat(10, 1fr)", // PC
-        }}
+        gridTemplateColumns="repeat(auto-fit, minmax(80px, 1fr))"
         gap={1}
         px={2}
         sx={{
-          maxHeight: "60vh", // 高さ制限（必要に応じて調整）
-          overflowY: "auto", // 縦スクロールを許可
+          maxHeight: "60vh",
+          overflowY: "auto",
+          width: "100%",
         }}
       >
         {filteredElements.map((element) =>
           element.category !== "placeholder" ? (
-            <ElementCard
+            <Box
               key={element.symbol}
-              backgroundColor={element.color}
-              element={element}
-              onClick={handleElementClick}
-            />
+              position="relative"
+              sx={{
+                width: "100%",
+                aspectRatio: "1 / 1", // ← 正方形にする
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* 火出すためのやーつ */}
+              <Box sx={{ width: "100%", height: "100%" }}>
+                {element.symbol === "Fi" && element.name === "Fire" ? (
+                  <FireElementCard backgroundColor={element.color} />
+                ) : (
+                  <ElementCard
+                    backgroundColor={element.color}
+                    element={element}
+                    onClick={() => handleElementClick(element)}
+                  />
+                )}
+              </Box>
+
+              {/* Cyclone ボタン */}
+              <IconButton
+                size="small"
+                onClick={() => {
+                  if (element.symbol === "Fi") {
+                    setShowFireEffect(true);
+                  } else {
+                    handleClick({
+                      symbol: element.symbol,
+                      name: element.name,
+                      color: element.color,
+                    });
+                  }
+                }}
+                sx={{
+                  position: "absolute",
+                  top: 4,
+                  right: 4,
+                  bgcolor: "rgba(255,255,255,0.2)",
+                  "&:hover": { bgcolor: "rgba(255,255,255,0.3)" },
+                }}
+              >
+                <Cyclone sx={{ color: "#ba03fc" }} />
+              </IconButton>
+            </Box>
           ) : (
             <Box key={`placeholder-${element.atomicNumber}`} />
-          ),
+          )
         )}
       </Box>
 
@@ -283,6 +326,18 @@ interface PeriodicTableProps {
           </DialogContent>
         </Dialog>
       )}
+      {/* 火のエフェクト用モーダル */}
+      <Dialog open={showFireEffect} onClose={() => setShowFireEffect(false)} maxWidth="sm">
+        <DialogActions>
+          <CloseIcon onClick={() => setShowFireEffect(false)} sx={{ cursor: "pointer", p: 1 }} />
+        </DialogActions>
+        <DialogContent>
+          <FireElementCard backgroundColor="#ff6b6b" />
+          <Typography align="center" mt={2}>
+            🔥 火を召喚しました！ 🔥
+          </Typography>
+        </DialogContent>
+      </Dialog>
     </Box>
   )
 }

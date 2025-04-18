@@ -1,6 +1,19 @@
 import type { ElementCategory, PeriodicTableDataType } from "../types"
 
 export const periodicTableData: PeriodicTableDataType[] = [
+    {
+    symbol: "Fi",
+    name: "Fire",
+    atomicNumber: 999, 
+    category: "custom" as ElementCategory, 
+    group: 5, 
+    color: "rgb(255, 80, 0)", 
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "🔥",
+    commonUse: "エネルギーの象徴",
+    funFact: "火は元素じゃないけど、めちゃくちゃ大事な存在🔥"
+  },
   {
     symbol: "H",
     name: "水素",
