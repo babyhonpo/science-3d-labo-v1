@@ -1,4 +1,4 @@
-import React,{ useMemo } from "react";
+import React,{ useMemo, useCallback } from "react";
 import { Canvas} from "@react-three/fiber";
 import { Stars } from "@react-three/drei"
 import Background from "../components/Backgroud";
@@ -11,6 +11,9 @@ import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
 import { SceneCanvasInner } from "./SceneCanvasInner";
+import { getCollisionResult } from "../utils/collisionRules";
+import * as THREE from "three";
+import WaterSphere from "./WaterSphere";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -27,12 +30,45 @@ export const SceneCanvas = ({
     selectedItems,
     setIsDragging,
     handleCollision,
+    mode,
     isModalOpen,
     onAddItem,
     onAddItemToFront,
 }: SceneCanvasProps) => {
 
 
+    const handleCollisionExtended = useCallback((ids: string[]) => {
+        const symbols = ids.map(id => objectRefs.current.get(id)?.objInfo.symbol || "");
+        const result = getCollisionResult(symbols, mode);
+
+        if (result) {
+            if (mode === "creation") {
+            const newId = `${result}-${Date.now()}`;
+            const sourceObj = objectRefs.current.get(ids[0]);
+            if (!sourceObj) return;
+
+            const basePos = sourceObj.position ?? new THREE.Vector3(0, 0, 0);
+            const baseColor = sourceObj.objInfo.color;
+            const mesh = sourceObj.mesh;
+            const radius = sourceObj.radius;
+
+            objectRefs.current.set(newId, {
+                id: newId,
+                position: basePos,
+                objInfo: {
+                    symbol: result,
+                    name: result,
+                    color: baseColor,
+                },
+                mesh,
+                radius,
+                });
+    }
+
+        handleCollision?.(ids);
+
+        }
+    }, [objectRefs, mode, handleCollision]);
 
     const renderObjects = useMemo(() => {
         return selectedItems.map((id) => {
@@ -58,13 +94,13 @@ export const SceneCanvas = ({
                             position={refData.position}
                             onDragStateChange={setIsDragging}
                             objectsRef={objectRefs.current}
-                            onCollide={handleCollision}
+                            onCollide={handleCollisionExtended}
                             objInfo={refData.objInfo}
                         />
                     );
                 }
             });
-        },  [selectedItems, objectRefs, setIsDragging, handleCollision]);
+        },  [selectedItems, objectRefs, setIsDragging, handleCollisionExtended]);
 
     return(
         <Canvas camera={{ position: [0, 5, 10] }}>
@@ -117,6 +153,7 @@ export const SceneCanvas = ({
             {renderObjects}
             {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
             <FreeCamera isModalOpen={isModalOpen} />
+            <WaterSphere />
         </Canvas>
     )
 };
