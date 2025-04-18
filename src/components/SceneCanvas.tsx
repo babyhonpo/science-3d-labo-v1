@@ -13,6 +13,7 @@ import { SceneCanvasProps } from "../types/types"
 import { SceneCanvasInner } from "./SceneCanvasInner";
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
+import WaterSphere from "./WaterSphere";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -152,6 +153,7 @@ export const SceneCanvas = ({
             {renderObjects}
             {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
             <FreeCamera isModalOpen={isModalOpen} />
+            <WaterSphere />
         </Canvas>
     )
 };
