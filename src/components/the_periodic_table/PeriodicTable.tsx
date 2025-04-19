@@ -17,7 +17,6 @@ import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-materia
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
-import { WaterElementCard } from "../WaterElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {
