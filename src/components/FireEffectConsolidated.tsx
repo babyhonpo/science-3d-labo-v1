@@ -5,7 +5,8 @@ import { extend, useFrame, useThree } from "@react-three/fiber"
 import { shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
-import { useDraggable } from "../hooks/useDraggable"
+import DraggableBase from "./DraggableBase"
+import { DraggableObject } from "../types/types"
 
 // シェーダーマテリアルの型定義
 type FireMaterialImpl = {
@@ -554,17 +555,34 @@ function Fire() {
   )
 }
 
-export default function FireEffect({ position }: { position: THREE.Vector3}) {
-  // カメラの初期位置を設定
-  const { ref, bind } = useDraggable<THREE.Group>()
+export default function FireEffect({
+  position,
+  refData,
+  onDragStateChange,
+  onCollide,
+  objectsRef,
+}: {
+  position: THREE.Vector3,
+  refData: DraggableObject,
+  onDragStateChange: (isDragging: boolean) => void,
+  onCollide: (ids: string[]) => void,
+  objectsRef: Map<string, DraggableObject>
+}) {
   return (
-    <group position={position} ref={ref} {...(bind() as JSX.IntrinsicElements['group'])}>
-      <color attach="background" args={["#000"]} />
+    <DraggableBase
+      refData={refData}
+      position={position}
+      onDragStateChange={onDragStateChange}
+      onCollide={onCollide}
+      objectsRef={objectsRef}
+    >
+    <group>
+      {/* <color/> */}
       <ambientLight intensity={0.2} />
-      <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />
-      {/* <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={45} /> */}
+      <pointLight/>
       <Fire />
       <FireCore />
     </group>
+    </DraggableBase>
   )
 }

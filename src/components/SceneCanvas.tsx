@@ -91,7 +91,16 @@ export const SceneCanvas = ({
         case "LightningEffect":
           return <LightningEffect key={id} position={refData.position} />;
         case "Fi":
-          return <FireEffect key={id} position={refData.position} />;
+          return (
+            <FireEffect
+              key={id}
+              position={refData.position}
+              refData={refData}
+              onDragStateChange={setIsDragging}
+              onCollide={handleCollisionExtended}
+              objectsRef={objectRefs.current}
+            />
+          );
         case "AmmoniaEffect":
           return <AmmoniaBottle key={id} />;
         case "GlassShardsFall":
