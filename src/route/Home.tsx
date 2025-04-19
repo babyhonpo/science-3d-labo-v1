@@ -8,6 +8,7 @@ import Orb from "../components/Orb";
 import CosmicToggle from "../components/Cosmic-toggle";
 import * as THREE from "three";
 import { getSpawnPositionFromCamera } from "../utils/getSpawnPositionFromCamera";
+import { Toaster } from 'react-hot-toast'
 
 
 export default function Home() {
@@ -138,6 +139,7 @@ export default function Home() {
           <PeriodicTable onElementSelect={handleAddInFront} />
         </Box>
       </Modal>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 }

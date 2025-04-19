@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
+// import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 interface GlassShardsFallProps {
@@ -26,7 +27,7 @@ type GlassShard = {
 export function GlassShardsFall({
   position = new THREE.Vector3(0, 0, 0),
 }: GlassShardsFallProps) {
-  const { scene } = useThree();
+  //const { scene } = useThree();
   const shardsRef = useRef<GlassShard[]>([]);
   const startTimeRef = useRef<number>(Date.now());
   const isCreatingShardsRef = useRef<boolean>(true);

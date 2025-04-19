@@ -17,6 +17,7 @@ import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-materia
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
+import toast from 'react-hot-toast'
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -80,6 +81,13 @@ interface PeriodicTableProps {
     setObjInfo(undefined);
     onElementSelect(obj); // 位置は親(Home.tsx)が判断して決める
     setOpen(true);
+    toast.success(`${obj.symbol} が召喚されました！`, {
+      style: {
+        borderRadius: '12px',
+        background: '#1f2937',
+        color: '#fff',
+      },
+    })
   };
 
   return (
