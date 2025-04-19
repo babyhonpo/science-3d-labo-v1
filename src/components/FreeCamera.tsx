@@ -15,8 +15,11 @@ const FreeCamera = ({ isModalOpen }: { isModalOpen: boolean }) => {
   const [isPointerLocked, setIsPointerLocked] = useState(false);
 
   useEffect(() => {
+    if (!camera.userData.initialized) {
     camera.position.set(0, 0, 10);
     camera.lookAt(new THREE.Vector3(0, 5, 10));
+    camera.userData.initialized = true; // 初期化フラグを立てる
+    }
   }, [camera]);
 
   // モーダルが開いたらPointer Lockを解除
