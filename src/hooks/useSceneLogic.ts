@@ -36,12 +36,17 @@ export const useSceneLogic = (mode: "creation" | "reaction") => {
   const [isModalOpen, setOpen] = useState(false);
 
   const summonOffset = useRef(new THREE.Vector3(0, 0, 0));
+  const summonBase = useRef<THREE.Vector3 | null>(null); // 最初に渡されたbasePositionを保持
+
 
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
+    console.log("[Modal閉] summonBaseリセット");
     setOpen(false);
     summonOffset.current.set(0, 0, 0);
-  }
+    summonBase.current = null; // 🔸基準点もリセット
+  };
 
 useEffect(() => {
   setSelectedItems(Array.from(objectRefs.current.keys())); // `objectRefs` を `selectedItems` に同期
@@ -50,6 +55,11 @@ useEffect(() => {
   // アイテム追加ボタンがクリックされたときのオブジェクトを追加
   const handleAddItem = useCallback((type: ObjectType, basePosition: THREE.Vector3) => {
     const id = uuidv4();
+
+    // 最初の1回だけ基準位置を保存
+    if (!summonBase.current) {
+      summonBase.current = basePosition.clone();
+    }
 
     const position = basePosition.clone().add(summonOffset.current);
 

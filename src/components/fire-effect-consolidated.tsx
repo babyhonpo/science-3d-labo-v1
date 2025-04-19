@@ -540,9 +540,9 @@ function Fire() {
   )
 }
 
-export default function FireEffect() {
+export default function FireEffect({ position }: { position: THREE.Vector3}) {
   return (
-    <group position={[0, 0, 0]}>
+    <group position={position}>
       <color attach="background" args={["#000"]} />
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />

@@ -1,4 +1,4 @@
-import React,{ useMemo, useCallback, useRef } from "react";
+import React,{ useMemo, useCallback } from "react";
 import { Canvas} from "@react-three/fiber";
 import { Stars, PerspectiveCamera } from "@react-three/drei"
 import Background from "../components/Backgroud";
@@ -12,7 +12,7 @@ import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
-import WaterSphere from "./WaterSphere";
+// import WaterSphere from "./WaterSphere";
 import FireEffect from "./fire-effect-consolidated";
 
 
@@ -33,8 +33,9 @@ export const SceneCanvas = ({
     handleCollision,
     mode,
     isModalOpen,
+    // onAddItem,
+    cameraRef,
 }: SceneCanvasProps) => {
-    const cameraRef = useRef<THREE.PerspectiveCamera>(null);
 
 
     const handleCollisionExtended = useCallback(
@@ -88,7 +89,7 @@ export const SceneCanvas = ({
                 case "LightningEffect":
                     return <LightningEffect key={id} position={refData.position} />;
                 case "Fi":
-                    return <FireEffect key={id} />;
+                    return <FireEffect key={id} position={refData.position} />;
                 default:
                     return (
                         <DraggableSphere
@@ -106,7 +107,7 @@ export const SceneCanvas = ({
         },  [selectedItems, objectRefs, setIsDragging, handleCollisionExtended]);
 
     return(
-        <Canvas camera={{ position: [0, 5, 10] }}>
+        <Canvas camera={{ position: [0, 5, 0] }}>
             <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 5, 10]} />
             <color attach="background" args={["#000"]} />
             <Stars
@@ -153,7 +154,7 @@ export const SceneCanvas = ({
             {renderObjects}
             {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
             <FreeCamera isModalOpen={isModalOpen} />
-            <WaterSphere />
+            {/* <WaterSphere /> */}
         </Canvas>
     )
 };

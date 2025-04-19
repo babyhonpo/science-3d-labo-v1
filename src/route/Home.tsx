@@ -1,4 +1,4 @@
-import React, { useEffect,useState,useRef } from "react";
+import React, { useEffect,useState,useRef, useCallback } from "react";
 import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
 import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
@@ -40,11 +40,14 @@ export default function Home(){
   }
 
   // カメラ前方にオブジェクトを召喚するロジック
-  const handleAddInFront = (type: ObjectType) => {
-    if (!cameraRef.current) return;
+  const handleAddInFront = useCallback((type: ObjectType) => {
+    if (!cameraRef.current) {
+      console.warn("cameraRef is not ready");
+      return;
+    }
     const pos = getSpawnPositionFromCamera(cameraRef.current);
     handleAddItem(type, pos);
-  }
+  }, [cameraRef, handleAddItem]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている

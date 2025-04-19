@@ -187,15 +187,11 @@ interface PeriodicTableProps {
               <IconButton
                 size="small"
                 onClick={() => {
-                  if (element.symbol === "Fi") {
-                    setShowFireEffect(true);
-                  } else {
                     handleClick({
                       symbol: element.symbol,
                       name: element.name,
                       color: element.color,
                     });
-                  }
                 }}
                 sx={{
                   position: "absolute",
@@ -238,7 +234,7 @@ interface PeriodicTableProps {
             </Typography>
             <button style={{ display:"flex", alignItems:"center", marginTop:"10px", marginBottom:"10px", color:"#666" }} onClick={() => handleClick({
               symbol: selectedElement.symbol,
-              name: selectedElement.name, 
+              name: selectedElement.name,
               color: selectedElement.color,
             })}>
               <Cyclone sx={{ color: '#ba03fc' }} /> 元素を召喚
