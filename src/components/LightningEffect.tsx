@@ -2,6 +2,16 @@ import { useRef, useMemo, useCallback, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import React from 'react';
+import { DraggableObject } from '../types/types';
+import DraggableBase from './DraggableBase';
+
+interface LightningEffectProps {
+  position: THREE.Vector3;
+  refData: DraggableObject;
+  onDragStateChange: (isDragging: boolean) => void;
+  onCollide: (ids: string[]) => void;
+  objectsRef: Map<string, DraggableObject>;
+}
 
 const lightningVertexShader = `
   varying vec2 vUv;
@@ -60,11 +70,13 @@ const lightningFragmentShader = `
   }
 `;
 
-interface LightningEffectProps {
-  position: THREE.Vector3;
-}
-
-export function LightningEffect({ position }: LightningEffectProps) {
+export function LightningEffect({
+  position,
+  refData,
+  onDragStateChange,
+  onCollide,
+  objectsRef,
+}: LightningEffectProps) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   
   const uniforms = useMemo(
@@ -172,23 +184,30 @@ export function LightningEffect({ position }: LightningEffectProps) {
   }, [createLightningBranch]);
 
   return (
-    <group position={position}>
-      {branches.map((geometry, index) => (
-        <mesh key={index} geometry={geometry}>
-          <shaderMaterial
-            ref={materialRef}
-            vertexShader={lightningVertexShader}
-            fragmentShader={lightningFragmentShader}
-            uniforms={uniforms}
-            transparent
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-      ))}
-      
+    <DraggableBase
+    refData={refData}
+    position={position}
+    onDragStateChange={onDragStateChange}
+    onCollide={onCollide}
+    objectsRef={objectsRef}
+    >
+      <group>
+        {branches.map((geometry, index) => (
+          <mesh key={index} geometry={geometry}>
+            <shaderMaterial
+              ref={materialRef}
+              vertexShader={lightningVertexShader}
+              fragmentShader={lightningFragmentShader}
+              uniforms={uniforms}
+              transparent
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        ))}
       <pointLight color="#ffff80" intensity={8} distance={6} decay={2} />
       <pointLight color="#ffffff" intensity={4} distance={3} decay={2} />
     </group>
+    </DraggableBase>
   );
 }

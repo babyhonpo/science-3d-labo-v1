@@ -126,7 +126,14 @@ export const SceneCanvas = ({
         case "SmokeEffect":
           return <SmokeEffect key={id} />;
         case "LightningEffect":
-          return <LightningEffect key={id} position={refData.position} />;
+          return <LightningEffect
+            key={id}
+            position={refData.position}
+            refData={refData}
+            onDragStateChange={setIsDragging}
+            onCollide={handleCollisionExtended}
+            objectsRef={objectRefs.current}
+          />
         case "Fi":
           return (
             <FireEffect
@@ -211,7 +218,25 @@ export const SceneCanvas = ({
       {renderObjects}
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
-      <WaterSphere />
+      {/* <WaterSphere /> */}
+      <LightningEffect
+        key="lightning-test"
+        position={new THREE.Vector3(0, 0, 0)} // お好みの位置に
+        refData={{
+        id: "lightning-test",
+        position: new THREE.Vector3(0, 0, 0),
+        objInfo: {
+        symbol: "LightningEffect",
+        name: "LightningEffect",
+        color: "#ffff00",
+    },
+    mesh: React.createRef<THREE.Mesh>(),
+    radius: 1,
+  }}
+  onDragStateChange={() => {}}
+  onCollide={() => {}}
+  objectsRef={new Map()}
+/>
     </Canvas>
   );
 };
