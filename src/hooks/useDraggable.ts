@@ -19,7 +19,7 @@ export function useDraggable<T extends THREE.Object3D>() {
     up.copy(camera.up).normalize()           // 上方向（世界）
 
     // スケーリング係数（速度調整）
-    const factor = 0.01
+    const factor = 0.005
 
     // ドラッグ量を方向ベクトルに反映
     const moveX = right.multiplyScalar(dx * factor)
