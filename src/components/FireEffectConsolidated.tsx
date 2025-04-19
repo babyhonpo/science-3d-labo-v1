@@ -5,6 +5,7 @@ import { extend, useFrame, useThree } from "@react-three/fiber"
 import { PerspectiveCamera, shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
+import { useDraggable } from "../hooks/useDraggable"
 
 // シェーダーマテリアルの型定義
 type FireMaterialImpl = {
@@ -554,8 +555,10 @@ function Fire() {
 }
 
 export default function FireEffect({ position }: { position: THREE.Vector3}) {
+  // カメラの初期位置を設定
+  const { ref, bind } = useDraggable<THREE.Group>()
   return (
-    <group position={position}>
+    <group position={position} ref={ref} {...(bind() as JSX.IntrinsicElements['group'])}>
       <color attach="background" args={["#000"]} />
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />
