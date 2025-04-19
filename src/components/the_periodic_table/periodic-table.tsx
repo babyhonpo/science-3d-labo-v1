@@ -49,10 +49,11 @@ function a11yProps(index: number) {
 }
 
 interface PeriodicTableProps {
-  onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
+  onElementSelect: (obj: ObjectType) => void; // ← 実際の召喚処理は親(Home.tsx)に任せる
 }
 
-  export const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => { 
+
+  export const PeriodicTable: React.FC<PeriodicTableProps> = ({ onElementSelect }) => {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
@@ -74,9 +75,9 @@ interface PeriodicTableProps {
   )
 
   const handleClick = (obj: ObjectType) => {
-    setSelectedValue(obj); // 選択された要素を状態にセット
-    onAddItem(obj); // 選択された要素を onAddItem に渡す
+    setSelectedValue(obj);
     setObjInfo(undefined);
+    onElementSelect(obj); // 位置は親(Home.tsx)が判断して決める
     setOpen(true);
   };
 

@@ -2,7 +2,7 @@
 
 import { useRef, useMemo } from "react"
 import { extend, useFrame, useThree } from "@react-three/fiber"
-import { OrbitControls, PerspectiveCamera, shaderMaterial } from "@react-three/drei"
+import { PerspectiveCamera, shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
 
