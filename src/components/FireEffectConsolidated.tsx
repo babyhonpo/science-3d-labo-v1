@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useEffect } from "react"
 import { extend, useFrame, useThree } from "@react-three/fiber"
-import { PerspectiveCamera, shaderMaterial } from "@react-three/drei"
+import { shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
 import { useDraggable } from "../hooks/useDraggable"
