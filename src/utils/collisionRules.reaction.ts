@@ -6,6 +6,7 @@ const rule = (types: string[], effect: string) =>
 // **衝突ルール**
 export const reactionModeRules = new Map<string, string>([
   rule(["N", "O"], "Bom"),
+  rule(["Fi", "H"], "ToxicGasEffect"),
 
   rule(["Cl", "H"], "EnergyBurst"),
   rule(["Al", "Si"], "EnergyBurst"),
