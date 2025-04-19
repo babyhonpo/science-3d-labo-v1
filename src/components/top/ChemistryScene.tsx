@@ -1,7 +1,7 @@
 import { useRef, useMemo, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { ScrollControls, useScroll, Environment, Stars } from "@react-three/drei"
-import { ScienceItem } from "./science-items"
+import { ScienceItem } from "./ScienceItems"
 import * as THREE from "three"
 import React from "react"
 
