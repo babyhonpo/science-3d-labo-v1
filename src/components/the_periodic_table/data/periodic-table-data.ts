@@ -15,6 +15,19 @@ export const periodicTableData: PeriodicTableDataType[] = [
     funFact: "火は元素じゃないけど、めちゃくちゃ大事な存在🔥"
   },
   {
+    symbol: "Wa",
+    name: "Water",
+    atomicNumber: 999, 
+    category: "custom" as ElementCategory, 
+    group: 5, 
+    color: "rgb(80, 0, 255)", 
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "💧",
+    commonUse: "生命の源",
+    funFact: "水は元素じゃないけど、めちゃくちゃ大事な存在💧"
+  },
+  {
     symbol: "H",
     name: "水素",
     atomicNumber: 1,
