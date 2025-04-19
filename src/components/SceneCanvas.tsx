@@ -114,8 +114,12 @@ export const SceneCanvas = ({
   }, [selectedItems, objectRefs, setIsDragging, handleCollisionExtended]);
 
   return (
-    <Canvas camera={{ position: [0, 5, 0] }}>
-      <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 5, 10]} />
+    <Canvas>
+      <PerspectiveCamera
+        ref={cameraRef}
+        makeDefault
+        position={[0, 0, 0]}
+      />
       <color attach="background" args={["#000"]} />
       <Stars
         radius={100} // 星が配置される球体の半径

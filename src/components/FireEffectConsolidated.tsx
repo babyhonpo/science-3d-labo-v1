@@ -562,7 +562,7 @@ export default function FireEffect({ position }: { position: THREE.Vector3}) {
       <color attach="background" args={["#000"]} />
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />
-      <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={45} />
+      {/* <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={45} /> */}
       <Fire />
       <FireCore />
     </group>
