@@ -148,6 +148,19 @@ interface PeriodicTableProps {
                 justifyContent: "center",
               }}
             >
+            {/* 火出すためのやーつ */}
+            {/* <Box sx={{ width: "100%", height: "100%" }}>
+                {element.symbol === "Fi" && element.name === "Fire" ? (
+                  <FireElementCard backgroundColor={element.color} />
+                ) : (
+                  <ElementCard
+                    backgroundColor={element.color}
+                    element={element}
+                    onClick={() => handleElementClick(element)}
+                  />
+                )}
+              </Box> */}
+
               {/* 火出すためのやーつ */}
               <Box sx={{ width: "100%", height: "100%" }}>
                 {element.symbol === "Fi" && element.name === "Fire" ? (
