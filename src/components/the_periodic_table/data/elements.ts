@@ -1,7 +1,7 @@
 import type { Element, PeriodicTableDataType } from "../types"
-import { periodicTableData } from "./periodic-table-data"
 import { compounds } from "./compounds"
 import { reactions } from "./reactions"
+import { periodicTableData } from "./periodic-table-data" 
 
 // 元素ごとの追加情報
 const elementDetails: Partial<Record<string, Pick<Element, "description" | "compounds" | "reactions" | "funFact" | "commonUse" >>> = {

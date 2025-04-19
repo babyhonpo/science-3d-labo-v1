@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useRef, useMemo } from "react"
-import { useFrame } from "@react-three/fiber"
 import { Center, PerspectiveCamera, MeshTransmissionMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import { useDraggable } from "../hooks/useDraggable"
@@ -109,12 +108,6 @@ function Water() {
     return geometry
   }, [])
 
-  useFrame((state) => {
-    if (waterMaterialRef.current) {
-      waterMaterialRef.current.uniforms.uTime.value = state.clock.getElapsedTime()
-    }
-  })
-
   return (
     <mesh ref={waterRef} geometry={waterGeometry}>
       <shaderMaterial ref={waterMaterialRef} args={[WaterShader]} transparent={true} side={THREE.DoubleSide} />
@@ -129,7 +122,7 @@ function Scene() {
   const { ref, bind } = useDraggable<THREE.Group>()
 
   return (
-    <group ref={ref} {...bind()}>
+    <group ref={ref} {...(bind() as JSX.IntrinsicElements['group'])}>
       {/* 透明な球体 */}
       <Center>
         <mesh>

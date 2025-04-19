@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // import ChemistryScene from "../components/top/chemistry-scene";
-import ChemistryScene from "../components/top/chemistry-scene"
+import ChemistryScene from "../components/top/ChemistryScene"
 import "../css/Top.css"
 import { Link } from "react-router";
 

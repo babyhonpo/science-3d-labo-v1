@@ -1,8 +1,9 @@
 import React from "react"
 import { useState } from "react"
-import { elements } from "./data/elements"
+
+import { elements } from "./data/Elements"
 import type { Element, ReactionType } from "./types"
-import { ElementCard } from "./parts/element-card"
+import { ElementCard } from "./parts/ElementCard"
 import { getCategoryName } from "./utils/element-helpers"
 import CloseIcon from "@mui/icons-material/Close"
 
@@ -15,7 +16,8 @@ import { Atom } from "lucide-react"
 import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-material"
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
-import { FireElementCard } from "../FireElementCard"
+import { FireElementCard } from "../FireElement"
+import { WaterElementCard } from "../WaterElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {

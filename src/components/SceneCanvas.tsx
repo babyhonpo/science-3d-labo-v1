@@ -12,9 +12,9 @@ import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
-// import WaterSphere from "./WaterSphere";
-import FireEffect from "./fire-effect-consolidated";
-
+import FireEffect from "./FireEffectConsolidated";
+import WaterSphere from "./WaterSphere";
+import AmmoniaBottle from "./AmmoniaBottle";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -90,6 +90,8 @@ export const SceneCanvas = ({
                     return <LightningEffect key={id} position={refData.position} />;
                 case "Fi":
                     return <FireEffect key={id} position={refData.position} />;
+                case "AmmoniaEffect":
+                    return <AmmoniaBottle key={id} />;
                 default:
                     return (
                         <DraggableSphere
