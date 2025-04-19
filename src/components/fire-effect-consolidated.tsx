@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useMemo } from "react"
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber"
+import { extend, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera, shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
@@ -551,7 +551,7 @@ function FireBase() {
 
 export default function FireEffect() {
   return (
-    <>
+    <group position={[0, 0, 0]}>
       <color attach="background" args={["#000"]} />
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />
@@ -560,6 +560,6 @@ export default function FireEffect() {
       <FireCore />
       <FireBase />
       <OrbitControls enablePan={false} />
-    </>
+    </group>
   )
 }

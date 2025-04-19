@@ -14,6 +14,8 @@ import { SceneCanvasInner } from "./SceneCanvasInner";
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
 import WaterSphere from "./WaterSphere";
+import FireEffect from "./fire-effect-consolidated";
+
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -86,6 +88,8 @@ export const SceneCanvas = ({
                     return <SmokeEffect key={id}  />;
                 case "LightningEffect":
                     return <LightningEffect key={id} position={refData.position} />;
+                case "Fi":
+                    return <FireEffect key={id} />;
                 default:
                     return (
                         <DraggableSphere

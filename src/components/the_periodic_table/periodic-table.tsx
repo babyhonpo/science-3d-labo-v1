@@ -15,7 +15,7 @@ import { Atom } from "lucide-react"
 import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-material"
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
-import { FireElementCard } from "../fire-element"
+import { FireElementCard } from "../FireElementCard"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -164,7 +164,16 @@ interface PeriodicTableProps {
               {/* 火出すためのやーつ */}
               <Box sx={{ width: "100%", height: "100%" }}>
                 {element.symbol === "Fi" && element.name === "Fire" ? (
-                  <FireElementCard backgroundColor={element.color} />
+                  <FireElementCard
+                  backgroundColor={element.color}
+                  onClick={() =>
+                    handleClick({
+                      symbol: "Fi",
+                      name: "Fire",
+                      color: element.color,
+                    })
+                  }
+                />
                 ) : (
                   <ElementCard
                     backgroundColor={element.color}
@@ -339,18 +348,6 @@ interface PeriodicTableProps {
           </DialogContent>
         </Dialog>
       )}
-      {/* 火のエフェクト用モーダル */}
-      <Dialog open={showFireEffect} onClose={() => setShowFireEffect(false)} maxWidth="sm">
-        <DialogActions>
-          <CloseIcon onClick={() => setShowFireEffect(false)} sx={{ cursor: "pointer", p: 1 }} />
-        </DialogActions>
-        <DialogContent>
-          <FireElementCard backgroundColor="#ff6b6b" />
-          <Typography align="center" mt={2}>
-            🔥 火を召喚しました！ 🔥
-          </Typography>
-        </DialogContent>
-      </Dialog>
     </Box>
   )
 }
