@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { PeriodicTable } from "../components/the_periodic_table/periodic-table";
+import { PeriodicTable } from "../components/the_periodic_table/PeriodicTable";
 import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
 import { ObjectType } from "../types/types";
 import Orb from "../components/Orb";
-import CosmicToggle from "../components/cosmic-toggle"; // コンポーネントのパスを適切に調整してください
+import CosmicToggle from "../components/Cosmic-toggle";
 
 export default function Home() {
   const [mode, setMode] = useState<"creation" | "reaction">("reaction");
