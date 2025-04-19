@@ -1,12 +1,13 @@
-import React, { useEffect,useState,useRef } from "react";
-import {PeriodicTable} from "../components/the_periodic_table/periodic-table";
+import React, { useEffect, useState, useRef } from "react";
+import { PeriodicTable } from "../components/the_periodic_table/periodic-table";
 import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
 import { SceneCanvas } from "../components/SceneCanvas";
 import { ObjectType } from "../types/types";
-import Orb  from "../components/Orb";
+import Orb from "../components/Orb";
+import CosmicToggle from "../components/cosmic-toggle"; // コンポーネントのパスを適切に調整してください
 
-export default function Home(){
+export default function Home() {
   const [mode, setMode] = useState<"creation" | "reaction">("reaction");
 
   useEffect(() => {
@@ -24,21 +25,20 @@ export default function Home(){
     setIsDragging,
   } = useSceneLogic(mode);
 
-
   const [addItemFront, setAddItemFront] = useState<
-    ((type: ObjectType ) => void) | null
+    ((type: ObjectType) => void) | null
   >(null);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleCloseModal =() => {
+  const handleCloseModal = () => {
     handleClose();
     setTimeout(() => {
       if (buttonRef.current) {
         buttonRef.current.blur(); // ボタンのフォーカスを外す
       }
     }, 0);
-  }
+  };
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -50,7 +50,7 @@ export default function Home(){
         handleCollision={handleCollision}
         isModalOpen={isModalOpen}
         onAddItem={handleAddItem}
-        onAddItemToFront={( fn ) => setAddItemFront(() => fn)}
+        onAddItemToFront={(fn) => setAddItemFront(() => fn)}
         mode={mode}
       />
       <Box
@@ -70,48 +70,46 @@ export default function Home(){
         }}
       >
         <div
-        style={{
-          width: '100%',
-          height: '180px',
-          position: 'relative',
-        }}>
-            <Orb
-              hoverIntensity={0.5}
-              rotateOnHover={true}
-              hue={0}
-              forceHoverState={false}
-            />
+          style={{
+            width: "100%",
+            height: "180px",
+            position: "relative",
+          }}
+        >
+          <Orb
+            hoverIntensity={0.5}
+            rotateOnHover={true}
+            hue={0}
+            forceHoverState={false}
+          />
 
-            <div
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "white",
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              pointerEvents: "none",
+            }}
+          >
+            <p
               style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "white",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                pointerEvents: "none",
+                color: "#718FCD",
               }}
             >
-              <p
-                style={{
-                  color: "#718FCD",
-                }}>
-                元素を召喚
-              </p>
-            </div>
+              元素を召喚
+            </p>
+          </div>
         </div>
       </Box>
 
-      <button
-        style={{ position: "absolute", top: 20, left: 20, zIndex: 10 }}
-        onClick={() =>
-          setMode((prev) => (prev === "creation" ? "reaction" : "creation"))
-        }
-      >
-        現在モード: {mode === "reaction" ? "元素反応" : "物質作成"}
-      </button>
+      {/* 元のボタンをCosmicToggleコンポーネントに置き換え */}
+      <div style={{ position: "absolute", top: 20, left: 20, zIndex: 10 }}>
+        <CosmicToggle mode={mode} setMode={setMode} />
+      </div>
 
       <Modal
         open={isModalOpen}
@@ -130,7 +128,7 @@ export default function Home(){
           <PeriodicTable
             onAddItem={(type) => {
               if (addItemFront) {
-                addItemFront(type)
+                addItemFront(type);
               }
             }}
           />
@@ -138,5 +136,4 @@ export default function Home(){
       </Modal>
     </div>
   );
-};
-
+}
