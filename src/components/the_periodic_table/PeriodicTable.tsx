@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
 
-import { elements } from "./data/Elements"
+import { elements } from "./data/elements"
 import type { Element, ReactionType } from "./types"
 import { ElementCard } from "./parts/ElementCard"
 import { getCategoryName } from "./utils/element-helpers"
@@ -17,7 +17,6 @@ import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-materia
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
-import { WaterElementCard } from "../WaterElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {

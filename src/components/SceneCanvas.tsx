@@ -13,7 +13,6 @@ import { SceneCanvasProps } from "../types/types"
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
 import FireEffect from "./FireEffectConsolidated";
-import WaterSphere from "./WaterSphere";
 import AmmoniaBottle from "./AmmoniaBottle";
 
 /**

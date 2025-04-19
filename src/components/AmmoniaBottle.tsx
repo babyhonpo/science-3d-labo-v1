@@ -2,7 +2,7 @@
 
 import React,{ useRef } from "react"
 import { useFrame } from "@react-three/fiber"
-import { Environment, OrbitControls, ContactShadows, Text, MeshTransmissionMaterial } from "@react-three/drei"
+import { Environment, ContactShadows, Text, MeshTransmissionMaterial } from "@react-three/drei"
 import { Group, Mesh } from "three"
 
 
@@ -16,7 +16,7 @@ export default function AmmoniaBottle() {
         </Text>
         <ContactShadows position={[0, -3, 0]} opacity={0.4} scale={20} blur={1.5} far={4} />
         <Environment preset="studio" />
-        <OrbitControls minPolarAngle={Math.PI / 6} maxPolarAngle={Math.PI / 2} />
+        {/* <OrbitControls minPolarAngle={Math.PI / 6} maxPolarAngle={Math.PI / 2} /> */}
       </group>
     );
 }
