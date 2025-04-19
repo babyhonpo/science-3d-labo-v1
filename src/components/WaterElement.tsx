@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 
 import { useState } from "react"
 import { Box, Typography, Dialog, DialogContent } from "@mui/material"
@@ -15,6 +15,19 @@ interface WaterElementProps {
 export const WaterElementCard: React.FC<WaterElementProps> = ({ backgroundColor = "#1E88E5" }) => {
   const [showWaterModal, setShowWaterModal] = useState(false)
 
+  useEffect(() => {
+    const sound = new Audio("/water.mp3")
+    sound.volume = 0.5
+    sound.loop = true // 永続的に再生
+    sound.play().catch((error) => console.error("音声再生エラー:", error))
+  
+    return () => {
+      sound.pause() // コンポーネントがアンマウントされたときに停止
+      sound.currentTime = 0 // 毎回最初から再生
+    }
+  }, []);
+
+  
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
     setShowWaterModal(true)

@@ -75,7 +75,7 @@ export function LightningEffect({ position }: LightningEffectProps) {
   );
 
   useEffect(() => {
-    const sound = new Audio('/lightning.mp3');
+    const sound = new Audio('/electonic.mp3');
     sound.volume = 0.5;
     sound.loop = true; // 永続的に再生
     sound.play().catch((error) => console.error('音声再生エラー:', error));
