@@ -279,7 +279,7 @@ function FireCore() {
   const coreRef = useRef<THREE.Points>(null)
 
   // 芯のパーティクル数
-  const coreCount = 1500
+  const coreCount = 2000
 
   // 芯のパーティクルの初期設定
   const coreParticles = useMemo(() => {
@@ -540,15 +540,6 @@ function Fire() {
   )
 }
 
-function FireBase() {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
-      <circleGeometry args={[1.5, 64]} />
-      <meshStandardMaterial color="#422" metalness={0.8} roughness={0.4} />
-    </mesh>
-  )
-}
-
 export default function FireEffect() {
   return (
     <group position={[0, 0, 0]}>
@@ -558,8 +549,6 @@ export default function FireEffect() {
       <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={45} />
       <Fire />
       <FireCore />
-      <FireBase />
-      <OrbitControls enablePan={false} />
     </group>
   )
 }

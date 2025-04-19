@@ -18,7 +18,7 @@ export type SceneCanvasProps = {
   handleCollision: (ids: string[]) => void;
   isModalOpen: boolean;
   onAddItem: (type: ObjectType, position: THREE.Vector3) => void;
-  onAddItemToFront: (fn: (type: ObjectType) => void) => void;
+  onAddItemToFront: (type: ObjectType, position: THREE.Vector3) => void;
   mode: CollisionMode;
 };
 

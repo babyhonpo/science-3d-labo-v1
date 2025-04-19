@@ -1,4 +1,4 @@
-import React,{ useMemo, useCallback } from "react";
+import React,{ useMemo, useCallback, useRef } from "react";
 import { Canvas} from "@react-three/fiber";
 import { Stars } from "@react-three/drei"
 import Background from "../components/Backgroud";
@@ -15,6 +15,8 @@ import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
 import WaterSphere from "./WaterSphere";
 import FireEffect from "./fire-effect-consolidated";
+import { getSpawnPositionFromCamera } from "../utils/getSpawnPositionFromCamera";
+import { ObjectType } from "../types/types";
 
 
 /**
@@ -37,6 +39,17 @@ export const SceneCanvas = ({
     onAddItem,
     onAddItemToFront,
 }: SceneCanvasProps) => {
+
+    const cameraRef = useRef<THREE.PerspectiveCamera>(null);
+
+    const handleAddInFront = useCallback(
+        (type: ObjectType) => {
+            if (!cameraRef.current) return;
+            const pos = getSpawnPositionFromCamera(cameraRef.current);
+            onAddItemToFront?.(type, pos);
+        },
+        [onAddItemToFront]
+    )
 
 
     const handleCollisionExtended = useCallback((ids: string[]) => {
