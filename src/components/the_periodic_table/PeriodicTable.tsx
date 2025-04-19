@@ -18,6 +18,7 @@ import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
 import toast from 'react-hot-toast'
+import { WaterElementCard } from "../WaterElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -157,32 +158,12 @@ interface PeriodicTableProps {
                 justifyContent: "center",
               }}
             >
-            {/* 火出すためのやーつ */}
-            {/* <Box sx={{ width: "100%", height: "100%" }}>
-                {element.symbol === "Fi" && element.name === "Fire" ? (
-                  <FireElementCard backgroundColor={element.color} />
-                ) : (
-                  <ElementCard
-                    backgroundColor={element.color}
-                    element={element}
-                    onClick={() => handleElementClick(element)}
-                  />
-                )}
-              </Box> */}
-
               {/* 火出すためのやーつ */}
               <Box sx={{ width: "100%", height: "100%" }}>
                 {element.symbol === "Fi" && element.name === "Fire" ? (
-                  <FireElementCard
-                  backgroundColor={element.color}
-                  onClick={() =>
-                    handleClick({
-                      symbol: "Fi",
-                      name: "Fire",
-                      color: element.color,
-                    })
-                  }
-                />
+                  <FireElementCard backgroundColor={element.color} />
+                ) : element.symbol === "Wa" && element.name === "Water" ? (
+                  <WaterElementCard backgroundColor={element.color} />
                 ) : (
                   <ElementCard
                     backgroundColor={element.color}
