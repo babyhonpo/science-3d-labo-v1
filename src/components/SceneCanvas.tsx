@@ -1,6 +1,8 @@
+
 import React,{ useMemo, useCallback } from "react";
 import { Canvas} from "@react-three/fiber";
 import { Stars, PerspectiveCamera } from "@react-three/drei"
+
 import Background from "../components/Backgroud";
 import FreeCamera from "../components/FreeCamera";
 import DraggableSphere from "../components/DraggableSphere";
@@ -9,11 +11,13 @@ import { EnergyBurst } from "../components/EnergyBurst";
 import { LightningEffect } from "../components/LightningEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
+import { GlassShardsFall } from "./GlassShardsFall";
 import { SceneCanvasProps } from "../types/types"
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
 import FireEffect from "./FireEffectConsolidated";
 import AmmoniaBottle from "./AmmoniaBottle";
+
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -26,6 +30,7 @@ import AmmoniaBottle from "./AmmoniaBottle";
  * @returns {JSX.Element} 3Dシーンを描画するCanvas
  */
 export const SceneCanvas = ({
+
     objectRefs,
     selectedItems,
     setIsDragging,
@@ -34,7 +39,20 @@ export const SceneCanvas = ({
     isModalOpen,
     // onAddItem,
     cameraRef,
+
 }: SceneCanvasProps) => {
+  const handleCollisionExtended = useCallback(
+    (ids: string[]) => {
+      const symbols = ids.map(
+        (id) => objectRefs.current.get(id)?.objInfo.symbol || ""
+      );
+      const result = getCollisionResult(symbols, mode);
+
+      if (result) {
+        if (mode === "creation") {
+          const newId = `${result}-${Date.now()}`;
+          const sourceObj = objectRefs.current.get(ids[0]);
+          if (!sourceObj) return;
 
 
     const handleCollisionExtended = useCallback(
@@ -68,13 +86,25 @@ export const SceneCanvas = ({
 
         handleCollision?.(ids);
 
-        }
-    }, [objectRefs, mode, handleCollision]);
 
-    const renderObjects = useMemo(() => {
-        return selectedItems.map((id) => {
-            const refData = objectRefs.current.get(id);
-            if (!refData) return null;
+          objectRefs.current.set(newId, {
+            id: newId,
+            position: basePos,
+            objInfo: {
+              symbol: result,
+              name: result,
+              color: baseColor,
+            },
+            mesh,
+            radius,
+          });
+        }
+
+        handleCollision?.(ids);
+      }
+    },
+    [objectRefs, mode, handleCollision]
+  );
 
             switch (refData.objInfo.symbol) {
                 case "Bom":
@@ -91,6 +121,8 @@ export const SceneCanvas = ({
                     return <FireEffect key={id} position={refData.position} />;
                 case "AmmoniaEffect":
                     return <AmmoniaBottle key={id} />;
+                case "GlassShardsFall":
+                    return <GlassShardsFall key={id} position={refData.position} />;
                 default:
                     return (
                         <DraggableSphere
