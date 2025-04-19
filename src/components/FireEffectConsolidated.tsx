@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useEffect } from "react"
 import { extend, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera, shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
@@ -409,6 +409,19 @@ function Fire() {
 
   // パーティクルの数
   const count = 12000
+
+  //音声再生処理
+  useEffect(() => {
+    const audio = new Audio("/fire.mp3")
+    audio.loop = true
+    audio.volume = 0.2
+    audio.play()
+
+    return () => {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  }, []);
 
   // パーティクルの初期設定
   const particles = useMemo(() => {

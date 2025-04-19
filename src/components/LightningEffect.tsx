@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react';
+import { useRef, useMemo, useCallback, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import React from 'react';
@@ -73,6 +73,18 @@ export function LightningEffect({ position }: LightningEffectProps) {
     }),
     []
   );
+
+  useEffect(() => {
+    const sound = new Audio('/lightning.mp3');
+    sound.volume = 0.5;
+    sound.loop = true; // 永続的に再生
+    sound.play().catch((error) => console.error('音声再生エラー:', error));
+
+    return () => {
+      sound.pause(); // コンポーネントがアンマウントされたときに停止
+      sound.currentTime = 0;
+    };
+  }, []);
 
   useFrame((state) => {
     if (materialRef.current) {
