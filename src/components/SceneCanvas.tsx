@@ -15,6 +15,7 @@ import * as THREE from "three";
 import FireEffect from "./FireEffectConsolidated";
 import AmmoniaBottle from "./AmmoniaBottle";
 import GlassShardsFall from "./GlassShardsFall";
+import SaltShaker from "./SaltShaker";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -161,6 +162,7 @@ export const SceneCanvas = ({
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
       {/* <WaterSphere /> */}
+      <SaltShaker />
     </Canvas>
   );
 };
