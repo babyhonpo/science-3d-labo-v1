@@ -1,6 +1,6 @@
 import React,{ useMemo, useCallback } from "react";
 import { Canvas} from "@react-three/fiber";
-import { Stars } from "@react-three/drei"
+import { Stars, PerspectiveCamera } from "@react-three/drei"
 import Background from "../components/Backgroud";
 import FreeCamera from "../components/FreeCamera";
 import DraggableSphere from "../components/DraggableSphere";
@@ -10,9 +10,9 @@ import { LightningEffect } from "../components/LightningEffect";
 import SmokeEffect from "../components/SmokeEffect";
 import ToxicGasEffect from "../components/ToxicGasEffect";
 import { SceneCanvasProps } from "../types/types"
-import { SceneCanvasInner } from "./SceneCanvasInner";
 import { getCollisionResult } from "../utils/collisionRules";
 import * as THREE from "three";
+import FireEffect from "./FireEffectConsolidated";
 import WaterSphere from "./WaterSphere";
 import AmmoniaBottle from "./AmmoniaBottle";
 
@@ -33,12 +33,13 @@ export const SceneCanvas = ({
     handleCollision,
     mode,
     isModalOpen,
-    onAddItem,
-    onAddItemToFront,
+    // onAddItem,
+    cameraRef,
 }: SceneCanvasProps) => {
 
 
-    const handleCollisionExtended = useCallback((ids: string[]) => {
+    const handleCollisionExtended = useCallback(
+        (ids: string[]) => {
         const symbols = ids.map(id => objectRefs.current.get(id)?.objInfo.symbol || "");
         const result = getCollisionResult(symbols, mode);
 
@@ -87,6 +88,8 @@ export const SceneCanvas = ({
                     return <SmokeEffect key={id}  />;
                 case "LightningEffect":
                     return <LightningEffect key={id} position={refData.position} />;
+                case "Fi":
+                    return <FireEffect key={id} position={refData.position} />;
                 case "AmmoniaEffect":
                     return <AmmoniaBottle key={id} />;
                 default:
@@ -106,11 +109,8 @@ export const SceneCanvas = ({
         },  [selectedItems, objectRefs, setIsDragging, handleCollisionExtended]);
 
     return(
-        <Canvas camera={{ position: [0, 5, 10] }}>
-            <SceneCanvasInner
-                onAddItem={onAddItem}
-                onAddItemToFront={onAddItemToFront}
-            />
+        <Canvas camera={{ position: [0, 5, 0] }}>
+            <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 5, 10]} />
             <color attach="background" args={["#000"]} />
             <Stars
                 radius={100} // 星が配置される球体の半径
@@ -156,7 +156,7 @@ export const SceneCanvas = ({
             {renderObjects}
             {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
             <FreeCamera isModalOpen={isModalOpen} />
-            <WaterSphere />
+            {/* <WaterSphere /> */}
         </Canvas>
     )
 };

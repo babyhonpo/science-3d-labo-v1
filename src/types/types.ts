@@ -8,9 +8,6 @@ export type ObjectType = {
   name?: string;
 };
 
-/**
- * SceneCanvas コンポーネントで使用する props の型定義
- */
 export type SceneCanvasProps = {
   objectRefs: React.MutableRefObject<Map<string, DraggableObject>>;
   selectedItems: string[];
@@ -18,8 +15,8 @@ export type SceneCanvasProps = {
   handleCollision: (ids: string[]) => void;
   isModalOpen: boolean;
   onAddItem: (type: ObjectType, position: THREE.Vector3) => void;
-  onAddItemToFront: (fn: (type: ObjectType) => void) => void;
   mode: CollisionMode;
+  cameraRef: RefObject<THREE.PerspectiveCamera>;
 };
 
 export type DraggableObject = {

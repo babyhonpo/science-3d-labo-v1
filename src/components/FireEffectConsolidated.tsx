@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useEffect } from "react"
 import { extend, useFrame, useThree } from "@react-three/fiber"
-import { OrbitControls, PerspectiveCamera, shaderMaterial } from "@react-three/drei"
+import { PerspectiveCamera, shaderMaterial } from "@react-three/drei"
 import * as THREE from "three"
 import React from "react"
 
@@ -279,7 +279,7 @@ function FireCore() {
   const coreRef = useRef<THREE.Points>(null)
 
   // 芯のパーティクル数
-  const coreCount = 1500
+  const coreCount = 2000
 
   // 芯のパーティクルの初期設定
   const coreParticles = useMemo(() => {
@@ -553,26 +553,15 @@ function Fire() {
   )
 }
 
-function FireBase() {
+export default function FireEffect({ position }: { position: THREE.Vector3}) {
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
-      <circleGeometry args={[1.5, 64]} />
-      <meshStandardMaterial color="#422" metalness={0.8} roughness={0.4} />
-    </mesh>
-  )
-}
-
-export default function FireEffect() {
-  return (
-    <>
+    <group position={position}>
       <color attach="background" args={["#000"]} />
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 5, 0]} intensity={2} color="#ff7700" />
       <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={45} />
       <Fire />
       <FireCore />
-      <FireBase />
-      <OrbitControls enablePan={false} />
-    </>
+    </group>
   )
 }
