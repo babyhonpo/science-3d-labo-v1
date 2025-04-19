@@ -7,6 +7,8 @@ export const creationModeRules = new Map<string, string>([
   rule(["H", "H"], "H2"), //水素ガス
   rule(["O", "O"], "O2"), //酸素
 
+  rule(["Fi", "LightningEffect"], "SpawnH2O"), // 電気分解でH2個とO1個生成
+
   rule(["H", "H", "O"], "H2O"), //水
   rule(["N", "H", "H", "H"], "NH3"), //アンモニア
   rule(["Na", "Cl"], "NaCl"), //塩

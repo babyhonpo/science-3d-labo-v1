@@ -15,7 +15,8 @@ import * as THREE from "three";
 import FireEffect from "./FireEffectConsolidated";
 import AmmoniaBottle from "./AmmoniaBottle";
 import GlassShardsFall from "./GlassShardsFall";
-import SaltShaker from "./SaltShaker";
+import WaterSphere from "./WaterSphere";
+
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
@@ -44,8 +45,43 @@ export const SceneCanvas = ({
       );
       const result = getCollisionResult(symbols, mode);
 
+      // 通常の生成処理
       if (result) {
         if (mode === "creation") {
+          if (result === "SpawnHO" ) {
+            const sourceObj = objectRefs.current.get(ids[0]);
+            if (!sourceObj) return;
+
+            const basePos = sourceObj.position ?? new THREE.Vector3(0, 0, 0);
+
+            const spawnOffsets = [
+              new THREE.Vector3(-1, 0, 0),
+              new THREE.Vector3(1, 0, 0),
+              new THREE.Vector3(0, 1, 0),
+              new THREE.Vector3(0, -1, 0),
+            ];
+            const elements = ["H", "H", "O", "O"];
+
+            elements.forEach((symbol, i) => {
+              const newId = '${symbol}-${Date.now()}';
+              const newPos = basePos.clone().add(spawnOffsets[i]);
+
+              objectRefs.current.set(newId, {
+                id: newId,
+                position: newPos,
+                objInfo: {
+                  symbol: symbol,
+                  name: symbol,
+                  color: symbol === "H" ? "#00ffff" : "#ff6600",
+                },
+                mesh: sourceObj.mesh,
+                radius: sourceObj.radius,
+              })
+            })
+            return;
+          }
+          // 通常の生成処理
+          if (result) {
           const newId = `${result}-${Date.now()}`;
           const sourceObj = objectRefs.current.get(ids[0]);
           if (!sourceObj) return;
@@ -67,6 +103,7 @@ export const SceneCanvas = ({
             radius,
           });
         }
+      }
 
         handleCollision?.(ids);
       }
@@ -174,7 +211,7 @@ export const SceneCanvas = ({
       {renderObjects}
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
-      {/* <WaterSphere /> */}
+      <WaterSphere />
     </Canvas>
   );
 };
