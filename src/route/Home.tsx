@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { PeriodicTable } from "../components/the_periodic_table/PeriodicTable";
 import { Box, Modal } from "@mui/material";
 import { useSceneLogic } from "../hooks/useSceneLogic";
@@ -6,6 +6,9 @@ import { SceneCanvas } from "../components/SceneCanvas";
 import { ObjectType } from "../types/types";
 import Orb from "../components/Orb";
 import CosmicToggle from "../components/Cosmic-toggle";
+import * as THREE from "three";
+import { getSpawnPositionFromCamera } from "../utils/getSpawnPositionFromCamera";
+
 
 export default function Home() {
   const [mode, setMode] = useState<"creation" | "reaction">("reaction");
@@ -25,11 +28,9 @@ export default function Home() {
     setIsDragging,
   } = useSceneLogic(mode);
 
-  const [addItemFront, setAddItemFront] = useState<
-    ((type: ObjectType) => void) | null
-  >(null);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null); // カメラ参照 → 後にhandleAddItemへ
 
   const handleCloseModal = () => {
     handleClose();
@@ -39,6 +40,16 @@ export default function Home() {
       }
     }, 0);
   };
+
+  // カメラ前方にオブジェクトを召喚するロジック
+  const handleAddInFront = useCallback((type: ObjectType) => {
+    if (!cameraRef.current) {
+      console.warn("cameraRef is not ready");
+      return;
+    }
+    const pos = getSpawnPositionFromCamera(cameraRef.current);
+    handleAddItem(type, pos);
+  }, [cameraRef, handleAddItem]);
 
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
@@ -50,12 +61,11 @@ export default function Home() {
         handleCollision={handleCollision}
         isModalOpen={isModalOpen}
         onAddItem={handleAddItem}
-        onAddItemToFront={(fn) => setAddItemFront(() => fn)}
         mode={mode}
+        cameraRef={cameraRef}
       />
       <Box
         ref={buttonRef}
-        // variant="contained"
         onClick={handleOpen}
         sx={{
           display: "inline-flex",
@@ -125,13 +135,7 @@ export default function Home() {
             top: "10%",
           }}
         >
-          <PeriodicTable
-            onAddItem={(type) => {
-              if (addItemFront) {
-                addItemFront(type);
-              }
-            }}
-          />
+          <PeriodicTable onElementSelect={handleAddInFront} />
         </Box>
       </Modal>
     </div>

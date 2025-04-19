@@ -51,14 +51,14 @@ function a11yProps(index: number) {
 }
 
 interface PeriodicTableProps {
-  onAddItem: (obj: ObjectType) => void; // onAddItem 関数を props として受け取る
+  onElementSelect: (obj: ObjectType) => void; // ← 実際の召喚処理は親(Home.tsx)に任せる
 }
 
-  export const PeriodicTable: React.FC<PeriodicTableProps> = ({ onAddItem }) => { 
+
+  export const PeriodicTable: React.FC<PeriodicTableProps> = ({ onElementSelect }) => {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null)
   const [reactionFilter, setReactionFilter] = useState<ReactionType | "all">("all")
   const [tabValue, setTabValue] = useState(0)
-  const [showFireEffect, setShowFireEffect] = useState(false)
   const [, setSelectedValue] = useState<ObjectType | null>(null);
   const [, setOpen] = React.useState(false);
   const { setObjInfo } = useObjInfo();
@@ -77,9 +77,9 @@ interface PeriodicTableProps {
   )
 
   const handleClick = (obj: ObjectType) => {
-    setSelectedValue(obj); // 選択された要素を状態にセット
-    onAddItem(obj); // 選択された要素を onAddItem に渡す
+    setSelectedValue(obj);
     setObjInfo(undefined);
+    onElementSelect(obj); // 位置は親(Home.tsx)が判断して決める
     setOpen(true);
   };
 
@@ -150,12 +150,32 @@ interface PeriodicTableProps {
                 justifyContent: "center",
               }}
             >
-              {/* 火、水出すためのやーつ */}
-              <Box sx={{ width: "100%", height: "100%" }}>
+            {/* 火出すためのやーつ */}
+            {/* <Box sx={{ width: "100%", height: "100%" }}>
                 {element.symbol === "Fi" && element.name === "Fire" ? (
                   <FireElementCard backgroundColor={element.color} />
-                ) : element.symbol === "Wa" && element.name === "Water" ? (
-                  <WaterElementCard backgroundColor={element.color} />
+                ) : (
+                  <ElementCard
+                    backgroundColor={element.color}
+                    element={element}
+                    onClick={() => handleElementClick(element)}
+                  />
+                )}
+              </Box> */}
+
+              {/* 火出すためのやーつ */}
+              <Box sx={{ width: "100%", height: "100%" }}>
+                {element.symbol === "Fi" && element.name === "Fire" ? (
+                  <FireElementCard
+                  backgroundColor={element.color}
+                  onClick={() =>
+                    handleClick({
+                      symbol: "Fi",
+                      name: "Fire",
+                      color: element.color,
+                    })
+                  }
+                />
                 ) : (
                   <ElementCard
                     backgroundColor={element.color}
@@ -169,15 +189,11 @@ interface PeriodicTableProps {
               <IconButton
                 size="small"
                 onClick={() => {
-                  if (element.symbol === "Fi") {
-                    setShowFireEffect(true);
-                  } else {
                     handleClick({
                       symbol: element.symbol,
                       name: element.name,
                       color: element.color,
                     });
-                  }
                 }}
                 sx={{
                   position: "absolute",
@@ -220,7 +236,7 @@ interface PeriodicTableProps {
             </Typography>
             <button style={{ display:"flex", alignItems:"center", marginTop:"10px", marginBottom:"10px", color:"#666" }} onClick={() => handleClick({
               symbol: selectedElement.symbol,
-              name: selectedElement.name, 
+              name: selectedElement.name,
               color: selectedElement.color,
             })}>
               <Cyclone sx={{ color: '#ba03fc' }} /> 元素を召喚
@@ -330,18 +346,6 @@ interface PeriodicTableProps {
           </DialogContent>
         </Dialog>
       )}
-      {/* 火のエフェクト用モーダル */}
-      <Dialog open={showFireEffect} onClose={() => setShowFireEffect(false)} maxWidth="sm">
-        <DialogActions>
-          <CloseIcon onClick={() => setShowFireEffect(false)} sx={{ cursor: "pointer", p: 1 }} />
-        </DialogActions>
-        <DialogContent>
-          <FireElementCard backgroundColor="#ff6b6b" />
-          <Typography align="center" mt={2}>
-            🔥 火を召喚しました！ 🔥
-          </Typography>
-        </DialogContent>
-      </Dialog>
     </Box>
   )
 }
