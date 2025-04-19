@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
 import { elements } from "./data/Elements"
-import type { Element, ReactionType } from "./Types"
+import type { Element, ReactionType } from "./types"
 import { ElementCard } from "./parts/ElementCard"
 import { getCategoryName } from "./utils/element-helpers"
 import CloseIcon from "@mui/icons-material/Close"
@@ -16,6 +16,7 @@ import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-materia
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
+import { WaterElementCard } from "../WaterElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -148,10 +149,12 @@ interface PeriodicTableProps {
                 justifyContent: "center",
               }}
             >
-              {/* 火出すためのやーつ */}
+              {/* 火、水出すためのやーつ */}
               <Box sx={{ width: "100%", height: "100%" }}>
                 {element.symbol === "Fi" && element.name === "Fire" ? (
                   <FireElementCard backgroundColor={element.color} />
+                ) : element.symbol === "Wa" && element.name === "Water" ? (
+                  <WaterElementCard backgroundColor={element.color} />
                 ) : (
                   <ElementCard
                     backgroundColor={element.color}
