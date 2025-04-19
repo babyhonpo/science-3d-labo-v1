@@ -26,4 +26,6 @@ const rule = (types: string[], effect: string) =>
     rule(["Ru", "Ru", "Ru"], "LightningEffect"),
     rule(["H", "Ru", "Ru"], "ToxicGasEffect"),
     rule(["H", "Fe", "Co", "Ru"], "ToxicGasEffect"),
+
+    rule(["H","S"], "AmmoniaEffect"),
   ]);

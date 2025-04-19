@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { elements } from "./data/Elements"
+import { elements } from "./data/elements"
 import type { Element, ReactionType } from "./Types"
 import { ElementCard } from "./parts/ElementCard"
 import { getCategoryName } from "./utils/element-helpers"
