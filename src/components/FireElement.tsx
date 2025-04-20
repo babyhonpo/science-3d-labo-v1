@@ -66,7 +66,6 @@ export const FireElementCard: React.FC<FireElementProps> = ({ backgroundColor = 
         }}
       >
         <DialogContent sx={{ padding: 0, height: "100%" }}>
-          
         </DialogContent>
       </Dialog>
     </>

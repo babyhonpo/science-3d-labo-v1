@@ -9,6 +9,7 @@ import CosmicToggle from "../components/Cosmic-toggle";
 import * as THREE from "three";
 import { getSpawnPositionFromCamera } from "../utils/getSpawnPositionFromCamera";
 import { Toaster } from 'react-hot-toast'
+import KeyboardControls from "../components/KeyboardControls";
 
 
 export default function Home() {
@@ -55,6 +56,9 @@ export default function Home() {
   return (
     // 画面いっぱいにCanvasが表示されるようdivでラップしている
     <div style={{ width: "100vw", height: "100vh" }}>
+      <div>
+        <KeyboardControls />
+      </div>
       <SceneCanvas
         objectRefs={objectRefs}
         selectedItems={selectedItems}

@@ -20,9 +20,10 @@ export const creationModeRules = new Map<string, string>([
   rule(["Si", "O", "O"], "GlassShardsFall"), //ガラス
   rule(["Si", "O2"], "GlassShardsFall"), //ガラス
   rule(["H", "Cl"], "HCl"), //塩化水素
+  rule(["Fi", "LightningEffect"], "SpawnH2O"), // 電気分解でH2個とO1個生成
 
   // 以下は元素の玉を生成
-  rule(["H", "H", "O", "O"], "H2O2"),
+  rule(["H", "H", "O"], "H2O"),
   rule(["H", "H", "S"], "H2S"),
   rule(["Ca", "H", "H"], "CaH2"),
   rule(["Mg", "H", "H"], "MgH2"),
