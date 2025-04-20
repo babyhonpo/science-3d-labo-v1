@@ -5,15 +5,21 @@ const rule = (types: string[], result: string) =>
 
 export const creationModeRules = new Map<string, string>([
   rule(["H", "H"], "H2"), //水素ガス
+  rule(["H", "H", "H"], "H3"),
   rule(["O", "O"], "O2"), //酸素
+  rule(["O", "O", "O"], "O3"),
 
-  rule(["H", "H", "O"], "H2O"), //水
-  rule(["N", "H", "H", "H"], "NH3"), //アンモニア
-  rule(["Na", "Cl"], "NaCl"), //塩
-  rule(["Fe", "S"], "FeS"), //硫化鉱物
-  rule(["Al", "Al", "O", "O", "O"], "Al2O3"), //サファイア
-  // rule(["Si", "O", "O"], "GlassShardsFall"), //ガラス
-  // rule(["Si", "O2"], "GlassShardsFall"), //test
+  rule(["H", "H", "O"], "Wa"), //水
+  rule(["H2", "O"], "Wa"), //水
+  rule(["N", "H", "H", "H"], "AmmoniaEffect"), //アンモニア
+  rule(["N", "H3"], "AmmoniaEffect"), //アンモニア
+  rule(["Na", "Cl"], "SaltEffect"), //塩
+  rule(["Fe", "S"], "SulfideMinerals"), //硫化鉱物
+  rule(["Al", "Al", "O", "O", "O"], "SapphireEffect"), //サファイア
+  rule(["Al2", "O3"], "SapphireEffect"), //サファイア
+  rule(["Si", "O", "O"], "GlassShardsFall"), //ガラス
+  rule(["Si", "O2"], "GlassShardsFall"), //ガラス
+  rule(["H", "Cl"], "HCl"), //塩化水素
 
   // 以下は元素の玉を生成
   rule(["H", "H", "O", "O"], "H2O2"),

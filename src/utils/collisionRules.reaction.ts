@@ -5,10 +5,10 @@ const rule = (types: string[], effect: string) =>
 
 // **衝突ルール**
 export const reactionModeRules = new Map<string, string>([
-  rule(["N", "O"], "Bom"),
-  rule(["Fi", "H"], "ToxicGasEffect"),
+  rule(["N", "O"], "ToxicGasEffect"),
+  rule(["Fe", "H"], "EnergyBurst"),
 
-  rule(["Cl", "H"], "EnergyBurst"),
+  rule(["Cl", "H"], "ToxicGasEffect"),
   rule(["Al", "Si"], "EnergyBurst"),
 
   rule(["Ga", "Ge"], "ToxicGasEffect"),
@@ -36,12 +36,4 @@ export const reactionModeRules = new Map<string, string>([
   rule(["Ru", "Ru", "Ru"], "LightningEffect"),
   rule(["H", "Ru", "Ru"], "ToxicGasEffect"),
   rule(["H", "Fe", "Co", "Ru"], "ToxicGasEffect"),
-
-  rule(["H", "H", "O"], "H2O"), //水
-  rule(["N", "H", "H", "H"], "NH3"), //アンモニア
-  rule(["Na", "Cl"], "NaCl"), //塩
-  rule(["Fe", "S"], "FeS"), //硫化鉱物
-  rule(["Al", "Al", "O", "O", "O"], "Al2O3"), //サファイア
-  rule(["Si", "O", "O"], "GlassShardsFall"), //ガラス
-  rule(["Si", "O2"], "GlassShardsFall"), //test
 ]);
