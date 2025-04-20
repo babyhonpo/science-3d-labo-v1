@@ -33,9 +33,10 @@ export const SceneCanvas = ({
   selectedItems,
   setIsDragging,
   handleCollision,
+  handleAddItem,
   mode,
   isModalOpen,
-  // onAddItem,
+  setSelectedItems,
   cameraRef,
 }: SceneCanvasProps) => {
   const handleCollisionExtended = useCallback(
@@ -45,43 +46,38 @@ export const SceneCanvas = ({
       );
       const result = getCollisionResult(symbols, mode);
 
-      // 通常の生成処理
       if (result) {
         if (mode === "creation") {
-          if (result === "SpawnHO" ) {
+          if (result === "SpawnH2O" ) {
             const sourceObj = objectRefs.current.get(ids[0]);
             if (!sourceObj) return;
 
             const basePos = sourceObj.position ?? new THREE.Vector3(0, 0, 0);
 
+            const elements = ["H", "H", "O"];
             const spawnOffsets = [
               new THREE.Vector3(-1, 0, 0),
               new THREE.Vector3(1, 0, 0),
               new THREE.Vector3(0, 1, 0),
-              new THREE.Vector3(0, -1, 0),
             ];
-            const elements = ["H", "H", "O", "O"];
+
 
             elements.forEach((symbol, i) => {
-              const newId = '${symbol}-${Date.now()}';
               const newPos = basePos.clone().add(spawnOffsets[i]);
+              handleAddItem({ symbol, color: "#ffffff" }, newPos);
+            });
 
-              objectRefs.current.set(newId, {
-                id: newId,
-                position: newPos,
-                objInfo: {
-                  symbol: symbol,
-                  name: symbol,
-                  color: symbol === "H" ? "#00ffff" : "#ff6600",
-                },
-                mesh: sourceObj.mesh,
-                radius: sourceObj.radius,
-              })
+            // 衝突に使われたオブジェクトを削除
+            ids.forEach((id) => {
+              objectRefs.current.delete(id);
             })
+
+            setSelectedItems((prev) => prev.filter((id) => !ids.includes(id)));
+
             return;
           }
           // 通常の生成処理
-          if (result) {
+
           const newId = `${result}-${Date.now()}`;
           const sourceObj = objectRefs.current.get(ids[0]);
           if (!sourceObj) return;
@@ -106,9 +102,8 @@ export const SceneCanvas = ({
       }
 
         handleCollision?.(ids);
-      }
     },
-    [objectRefs, mode, handleCollision]
+    [objectRefs, mode, handleCollision, handleAddItem, setSelectedItems]
   );
 
   const renderObjects = useMemo(() => {
@@ -219,7 +214,7 @@ export const SceneCanvas = ({
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
       {/* <WaterSphere /> */}
-      <LightningEffect
+      {/* <LightningEffect
         key="lightning-test"
         position={new THREE.Vector3(0, 0, 0)} // お好みの位置に
         refData={{
@@ -234,9 +229,10 @@ export const SceneCanvas = ({
     radius: 1,
   }}
   onDragStateChange={() => {}}
-  onCollide={() => {}}
-  objectsRef={new Map()}
-/>
+  onCollide={handleCollisionExtended}
+  objectsRef={objectRefs.current}
+/> */}
+      {/* <WaterSphere /> */}
     </Canvas>
   );
 };
