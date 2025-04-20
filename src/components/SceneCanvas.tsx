@@ -219,24 +219,6 @@ export const SceneCanvas = ({
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
       {/* <WaterSphere /> */}
-      <LightningEffect
-        key="lightning-test"
-        position={new THREE.Vector3(0, 0, 0)} // お好みの位置に
-        refData={{
-        id: "lightning-test",
-        position: new THREE.Vector3(0, 0, 0),
-        objInfo: {
-        symbol: "LightningEffect",
-        name: "LightningEffect",
-        color: "#ffff00",
-    },
-    mesh: React.createRef<THREE.Mesh>(),
-    radius: 1,
-  }}
-  onDragStateChange={() => {}}
-  onCollide={() => {}}
-  objectsRef={new Map()}
-/>
     </Canvas>
   );
 };

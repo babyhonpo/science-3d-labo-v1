@@ -137,7 +137,7 @@ const DraggableBase: React.FC<Props> = ({
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerMove={handlePointerMove}
-      onWheel={handleWheel} // ✅ マウスホイールのイベントを追加
+      onWheel={handleWheel} // マウスホイールのイベントを追加
     >
       {children}
     </group>
