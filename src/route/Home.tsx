@@ -60,6 +60,7 @@ export default function Home() {
         selectedItems={selectedItems}
         setIsDragging={setIsDragging}
         handleCollision={handleCollision}
+        handleAddItem={handleAddItem}
         isModalOpen={isModalOpen}
         onAddItem={handleAddItem}
         mode={mode}

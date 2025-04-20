@@ -13,10 +13,12 @@ export type SceneCanvasProps = {
   selectedItems: string[];
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
   handleCollision: (ids: string[]) => void;
+  handleAddItem: (type: ObjectType, position: THREE.Vector3) => void;
   isModalOpen: boolean;
   onAddItem: (type: ObjectType, position: THREE.Vector3) => void;
   mode: CollisionMode;
   cameraRef: RefObject<THREE.PerspectiveCamera>;
+  setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export type DraggableObject = {
