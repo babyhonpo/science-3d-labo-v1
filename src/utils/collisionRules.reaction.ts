@@ -5,7 +5,9 @@ const rule = (types: string[], effect: string) =>
 
 // **衝突ルール**
 export const reactionModeRules = new Map<string, string>([
+  rule(["Fi", "H"], "ToxicGasEffect"),
   rule(["Cu", "Cl", "Cl"], "LightningEffect"), // 電気化合物
+  rule(["O", "O", "C"], "CO2"),
   rule(["H", "H", "O"], "H2O"), //水
   rule(["N", "H", "H", "H"], "NH3"), //アンモニア
   rule(["Na", "Cl"], "NaCl"), //塩

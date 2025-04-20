@@ -16,10 +16,9 @@ export const compounds: Compound[] = [
   {
     formula: "CO2",
     name: "二酸化炭素",
-    elements: ["C", "O"],
+    elements: ["O", "Fi"],
     description: "燃焼反応で生成",
   },
-  // 他の化合物も同様に定義...
 ]
 
 export const reactions: Reaction[] = [
