@@ -21,7 +21,6 @@ export const reactionModeRules = new Map<string, string>([
   rule(["Mg", "O"], "SmokeEffect"),
   rule(["Na", "Cl"], "SmokeEffect"),
   rule(["C", "H"], "SmokeEffect"),
-  rule(["H", "O"], "SmokeEffect"),
   rule(["N", "H"], "SmokeEffect"),
   rule(["H", "F"], "SmokeEffect"),
   rule(["H", "Br"], "SmokeEffect"),
