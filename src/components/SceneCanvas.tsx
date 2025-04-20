@@ -44,8 +44,43 @@ export const SceneCanvas = ({
       );
       const result = getCollisionResult(symbols, mode);
 
+      // 通常の生成処理
       if (result) {
         if (mode === "creation") {
+          if (result === "SpawnHO" ) {
+            const sourceObj = objectRefs.current.get(ids[0]);
+            if (!sourceObj) return;
+
+            const basePos = sourceObj.position ?? new THREE.Vector3(0, 0, 0);
+
+            const spawnOffsets = [
+              new THREE.Vector3(-1, 0, 0),
+              new THREE.Vector3(1, 0, 0),
+              new THREE.Vector3(0, 1, 0),
+              new THREE.Vector3(0, -1, 0),
+            ];
+            const elements = ["H", "H", "O", "O"];
+
+            elements.forEach((symbol, i) => {
+              const newId = '${symbol}-${Date.now()}';
+              const newPos = basePos.clone().add(spawnOffsets[i]);
+
+              objectRefs.current.set(newId, {
+                id: newId,
+                position: newPos,
+                objInfo: {
+                  symbol: symbol,
+                  name: symbol,
+                  color: symbol === "H" ? "#00ffff" : "#ff6600",
+                },
+                mesh: sourceObj.mesh,
+                radius: sourceObj.radius,
+              })
+            })
+            return;
+          }
+          // 通常の生成処理
+          if (result) {
           const newId = `${result}-${Date.now()}`;
           const sourceObj = objectRefs.current.get(ids[0]);
           if (!sourceObj) return;
@@ -67,6 +102,7 @@ export const SceneCanvas = ({
             radius,
           });
         }
+      }
 
         handleCollision?.(ids);
       }
@@ -184,24 +220,6 @@ export const SceneCanvas = ({
       {/* <ExplosionEffect position={new THREE.Vector3(0, 0, 0)} /> */}
       <FreeCamera isModalOpen={isModalOpen} />
       {/* <WaterSphere /> */}
-      <LightningEffect
-  key="lightning-test"
-  position={new THREE.Vector3(0, 0, 0)} // お好みの位置に
-  refData={{
-    id: "lightning-test",
-    position: new THREE.Vector3(0, 0, 0),
-    objInfo: {
-      symbol: "LightningEffect",
-      name: "LightningEffect",
-      color: "#ffff00",
-    },
-    mesh: React.createRef<THREE.Mesh>(),
-    radius: 1,
-  }}
-  onDragStateChange={() => {}}
-  onCollide={() => {}}
-  objectsRef={new Map()}
-/>
     </Canvas>
   );
 };
