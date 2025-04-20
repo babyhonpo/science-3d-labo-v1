@@ -14,7 +14,7 @@ export type ElementCategory =
   | "unknown"
   | "placeholder"
 
-export type ReactionType = "electrolysis" | "combustion" | "heating" | "photosynthesis" | "oxidation" | "spark"
+export type ReactionType = "electrolysis" | "combustion" | "heating" | "photosynthesis" | "oxidation" | "spark" | "carbon-dioxide"
 
 export type Element = {
   emoji: string

@@ -128,7 +128,7 @@ interface PeriodicTableProps {
             <MenuItem value="heating">加熱</MenuItem>
             <MenuItem value="photosynthesis">光合成</MenuItem>
             <MenuItem value="oxidation">酸化</MenuItem>
-            <MenuItem value="spark">火花</MenuItem>
+            {/* <MenuItem value="spark">火花</MenuItem> */}
           </Select>
         </FormControl>
       </Box>
