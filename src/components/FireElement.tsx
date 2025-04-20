@@ -5,7 +5,6 @@ import React from "react"
 import { useState } from "react"
 import { Box, Typography, Dialog, DialogContent } from "@mui/material"
 import { Flame } from "lucide-react"
-import FireEffect from "./FireEffectConsolidated"
 
 interface FireElementProps {
   onClick?: () => void
