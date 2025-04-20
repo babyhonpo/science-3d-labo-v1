@@ -15,6 +15,7 @@ import * as THREE from "three";
 import FireEffect from "./FireEffectConsolidated";
 import AmmoniaBottle from "./AmmoniaBottle";
 import GlassShardsFall from "./GlassShardsFall";
+import WaterSphere from "./WaterSphere";
 
 /**
  * @param {SceneCanvas} props - シーンに必要なprops群
