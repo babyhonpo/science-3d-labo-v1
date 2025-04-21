@@ -19,6 +19,7 @@ import { ObjectType } from "../../types/types"
 import { FireElementCard } from "../FireElement"
 import toast from 'react-hot-toast'
 import { WaterElementCard } from "../WaterElement"
+import { LightningElementCard } from "../LightningElement"
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -164,6 +165,8 @@ interface PeriodicTableProps {
                   <FireElementCard backgroundColor={element.color} />
                 ) : element.symbol === "Wa" && element.name === "Water" ? (
                   <WaterElementCard backgroundColor={element.color} />
+                ) : element.symbol === "Lig" && element.name === "Lightning" ? (
+                  <LightningElementCard />
                 ) : (
                   <ElementCard
                     backgroundColor={element.color}

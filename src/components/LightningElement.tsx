@@ -6,14 +6,16 @@ import { useState } from "react"
 import { Box, Typography, Dialog, DialogContent } from "@mui/material"
 import { Droplet } from "lucide-react"
 import { LightningEffect } from "./LightningEffect"
+import { Vector3, Mesh } from "three"
+import { DraggableObject } from "../types/types"
 
 interface LightningEffectProps {
   onClick?: () => void
   backgroundColor?: string
 }
 
-export const WaterElementCard: React.FC<LightningEffectProps> = ({ backgroundColor = "#1E88E5" }) => {
-  const [showWaterModal, setShowWaterModal] = useState(false)
+export const LightningElementCard: React.FC<LightningEffectProps> = ({ backgroundColor = "rgb(255, 208, 0)" }) => {
+  const [showLightningModal, setShowLightningModal] = useState(false)
 
   useEffect(() => {
     const sound = new Audio("/public/lightning.mp3") 
@@ -30,7 +32,7 @@ export const WaterElementCard: React.FC<LightningEffectProps> = ({ backgroundCol
   
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setShowWaterModal(true)
+    setShowLightningModal(true)
   }
 
   return (
@@ -55,17 +57,17 @@ export const WaterElementCard: React.FC<LightningEffectProps> = ({ backgroundCol
         }}
       >
         <Typography variant="h4" component="div" color="white" fontWeight="bold">
-          Wa
+          Lig
         </Typography>
         <Typography variant="caption" color="white">
-          Water
+          Lightning
         </Typography>
         <Droplet color="white" size={20} style={{ marginTop: "5px" }} />
       </Box>
 
       <Dialog
-        open={showWaterModal}
-        onClose={() => setShowWaterModal(false)}
+        open={showLightningModal}
+        onClose={() => setShowLightningModal(false)}
         maxWidth="md"
         fullWidth
         slotProps={{
@@ -80,7 +82,21 @@ export const WaterElementCard: React.FC<LightningEffectProps> = ({ backgroundCol
         }}
       >
         <DialogContent sx={{ padding: 0, height: "100%" }}>
-          <LightningEffect position={}/>
+          <LightningEffect position={new Vector3} refData={{
+                      id: "",
+                      objInfo: {
+                          symbol: "",
+                          color: "",
+                          name: undefined
+                      },
+                      mesh: React.createRef<Mesh>(),
+                      position: new Vector3,
+                      radius: 0
+                  }} onDragStateChange={function (): void {
+                      throw new Error("Function not implemented.")
+                  } } onCollide={function (): void {
+                      throw new Error("Function not implemented.")
+                  } } objectsRef={new Map<string, DraggableObject>()} />
         </DialogContent>
       </Dialog>
     </>

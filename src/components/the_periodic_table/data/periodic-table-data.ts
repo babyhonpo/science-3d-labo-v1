@@ -28,7 +28,7 @@ export const periodicTableData: PeriodicTableDataType[] = [
     funFact: "水は元素じゃないけど、めちゃくちゃ大事な存在💧"
   },
     {
-    symbol: "Lit",
+    symbol: "Lig",
     name: "Lightning",
     atomicNumber: 999, 
     category: "custom" as ElementCategory, 
