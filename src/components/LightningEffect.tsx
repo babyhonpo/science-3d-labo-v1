@@ -70,7 +70,7 @@ const lightningFragmentShader = `
   }
 `;
 
-export function LightningEffect({
+export function   LightningEffect({
   position,
   refData,
   onDragStateChange,

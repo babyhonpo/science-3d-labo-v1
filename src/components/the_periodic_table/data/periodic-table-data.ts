@@ -27,6 +27,19 @@ export const periodicTableData: PeriodicTableDataType[] = [
     commonUse: "生命の源",
     funFact: "水は元素じゃないけど、めちゃくちゃ大事な存在💧"
   },
+    {
+    symbol: "Lig",
+    name: "Lightning",
+    atomicNumber: 999, 
+    category: "custom" as ElementCategory, 
+    group: 5, 
+    color: "rgb(255, 208, 0)", 
+    boilingPoint: 0,
+    meltingPoint: 0,
+    emoji: "⚡",
+    commonUse: "エネルギーの象徴",
+    funFact: "雷は元素じゃないけど、めちゃくちゃ大事な存在⚡"
+  },
   {
     symbol: "H",
     name: "水素",
