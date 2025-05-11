@@ -281,7 +281,7 @@ function FireCore() {
   const coreRef = useRef<THREE.Points>(null)
 
   // 芯のパーティクル数
-  const coreCount = 2000
+  const coreCount = 200
 
   // 芯のパーティクルの初期設定
   const coreParticles = useMemo(() => {
@@ -410,7 +410,7 @@ function Fire() {
   useThree()
 
   // パーティクルの数
-  const count = 12000
+  const count = 2500
 
   //音声再生処理
   useEffect(() => {
