@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { FC } from "react"
 
 export type ElementCategory =
   | "nonmetal"
@@ -45,6 +46,9 @@ export type PeriodicTableDataType = {
   commonUse: ReactNode
   funFact: ReactNode
   reactions?: Reaction[]
+  compounds?: Compound[]
+
+  component?: FC<{ backgroundColor: string }>
 }
 
 export type Reaction = {

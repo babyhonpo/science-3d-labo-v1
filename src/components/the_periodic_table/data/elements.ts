@@ -1,10 +1,31 @@
 import type { Element, PeriodicTableDataType } from "../types"
 import { compounds } from "./compounds"
 import { reactions } from "./reactions"
-import { periodicTableData } from "./periodic-table-data" 
+import { periodicTableData } from "./periodic-table-data"
+// import { FireElementCard } from "../../FireElement"
+// import { WaterElementCard } from "../../FireElement"
+
 
 // 元素ごとの追加情報
-const elementDetails: Partial<Record<string, Pick<Element, "description" | "compounds" | "reactions" | "funFact" | "commonUse" >>> = {
+const elementDetails: Partial<Record<string, Pick<Element,
+  "description" | "compounds" | "reactions" | "funFact" | "commonUse"
+  >>> = {
+  Fi: {
+    description: "...",
+    funFact: "...",
+    commonUse: "...",
+    // component: FireElementCard,
+    compounds: compounds.filter((c) => c.elements.includes("Fi")),
+    reactions: reactions.filter((r) => r.reactants.includes("Fi") || r.products.includes("Fi")),
+  },
+  Wa: {
+    description: "...",
+    funFact: "...",
+    commonUse: "...",
+    // component: WaterElementCard,
+    compounds: compounds.filter((c) => c.elements.includes("Wa")),
+    reactions: reactions.filter((r) => r.reactants.includes("Wa") || r.products.includes("Wa")),
+  },
   H: {
     description: "最も軽い元素で、宇宙で最も豊富に存在する",
     funFact: "おならの10〜20%が水素で、火を近づけると燃えるって知ってた？（やらないでね）",
@@ -12,7 +33,7 @@ const elementDetails: Partial<Record<string, Pick<Element, "description" | "comp
     compounds: compounds.filter((c) => c.elements.includes("H")),
     reactions: reactions.filter(
       (r) =>
-        r.reactants.some((reactant) => reactant.includes("H")) || 
+        r.reactants.some((reactant) => reactant.includes("H")) ||
         r.products.some((product) => product.includes("H")),
     ),
   },

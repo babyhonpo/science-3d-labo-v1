@@ -16,9 +16,8 @@ import { Atom } from "lucide-react"
 import { ElectricBolt, Favorite, BubbleChart, Cyclone } from "@mui/icons-material"
 import { useObjInfo } from "../../hooks/useObjInfo"
 import { ObjectType } from "../../types/types"
-import { FireElementCard } from "../FireElement"
 import toast from 'react-hot-toast'
-import { WaterElementCard } from "../WaterElement"
+
 
 // TabPanel component for MUI
 interface TabPanelProps {
@@ -160,11 +159,9 @@ interface PeriodicTableProps {
             >
               {/* 火出すためのやーつ */}
               <Box sx={{ width: "100%", height: "100%" }}>
-                {element.symbol === "Fi" && element.name === "Fire" ? (
-                  <FireElementCard backgroundColor={element.color} />
-                ) : element.symbol === "Wa" && element.name === "Water" ? (
-                  <WaterElementCard backgroundColor={element.color} />
-                ) : (
+                {element.component ? (
+                  React.createElement(element.component, {backgroundColor: element.color})
+                  ) : (
                   <ElementCard
                     backgroundColor={element.color}
                     element={element}

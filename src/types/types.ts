@@ -1,11 +1,14 @@
 import * as THREE from "three";
 import { RefObject } from "react";
 import { CollisionMode } from "../utils/collisionRules";
+import { FC } from "react";
 
 export type ObjectType = {
   symbol: string;
   color: string;
   name?: string;
+
+  component? : FC<{ backgroundColor: string}>;
 };
 
 export type SceneCanvasProps = {
